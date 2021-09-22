@@ -1,0 +1,50 @@
+---
+title: "Assignment-1"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{assignment-1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Description
+
+Please complete the following problems.
+
+Remember:
+
+- **Annotate** your script by using `#`.
+- You will be graded on:
+  - The **correctness** of your answers.
+  - The **efficiency** of your code. Don't make your script unnecessarily long and only do the essential tasks.
+  - The **clarity** of your code. Make sure you explain the steps in your script with annotations (`#`)
+
+### Part 1
+
+Extract the following values from the *vegdata1* dataset: 
+
+- Store the column with name *Elevation* in a vector called **my_vector**.
+- Store the number in the *18th* row and *6th* column in an object called **my_number**.
+- Create a new vector **my_vector_2** which contains both *my_vector* and *my_number*.
+- Calculate the mean of the *12th* column and store it in **my_mean**.
+- What kind of class is stored in the *sixth* column? Store this as a string in **my_data_type**.
+- What are the dimensions of *vegdata1*? Store this as a vector in **my_dim**.
+
+### Part 2
+
+Merge *vegdata1* and *vegdata2* into one data frame. Store your result in **my_data_frame**. Hint: the resulting dataframe has 144 rows.
+
+### Part 3
+
+Use the package *"dplyr"* to only select rows containing data from *Grassland* from your merged data frame. Store your result in **my_grassland**. 
+
+### Submit your work
+
+Remember to delete any line of code with **setwd()**. Save your R-script as **Surname_FirstName_Task1.R**. Upload this on Toledo before **September 30, 12 am** in the assignments folder!
