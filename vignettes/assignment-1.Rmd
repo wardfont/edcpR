@@ -12,6 +12,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(devtools)
+library(edcpR)
+
 ```
 
 ## Description
@@ -25,6 +29,16 @@ Remember:
   - The **correctness** of your answers.
   - The **efficiency** of your code. Don't make your script unnecessarily long and only do the essential tasks.
   - The **clarity** of your code. Make sure you explain the steps in your script with annotations (`#`)
+
+### Data
+
+Load in the data you will need as follows:
+
+```{r}
+data(vegdata1, vegdata2)
+```
+
+
 
 ### Part 1
 
