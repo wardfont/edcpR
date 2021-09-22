@@ -1,6 +1,6 @@
 ---
 title: "session-1"
-output: rmarkdown::beamer_presentation
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{session-1}
   %\VignetteEngine{knitr::rmarkdown}
