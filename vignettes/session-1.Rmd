@@ -20,6 +20,9 @@ library(edcpR)
 
 See the slides for this session [here](https://htmlpreview.github.io/?https://github.com/wardfont/edcpR/blob/master/course-slides/session-1/session-1-slides.html)
 
+[doc](`r paste0('file:///',file.path(find.package('edcpR'),'course-slides','session-1,'session-1-slides.html'))`)
+
+
 In this session, you can explore the possibilities of R:
 
 - [Intro to R](https://ourcodingclub.github.io/2016/11/13/intro-to-r.html)
@@ -31,9 +34,9 @@ In this session, you can explore the possibilities of R:
 
 Make sure you understand what is done in these tutorials.
 
-Once you understand the above, you can work on your first assignment:
+Once you understand the above, you can work on your first assignment. To access the assignment:
 
-```{r}
+```{r, echo=T, eval=F}
 vignette("assignment-1", package = "edcpR")
 ```
 
