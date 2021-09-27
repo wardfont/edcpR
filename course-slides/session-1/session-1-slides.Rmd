@@ -5,8 +5,8 @@ author: "Ward Fonteyn & Stef Haesen"
 date: "9/24/2021"
 output:
   ioslides_presentation:
-    keep_md: true
     widescreen: true
+knit: (function(inputFile, encoding){ rmarkdown::render("session-1-slides.Rmd", output_format = "html_document", output_file = "session-1-document.html")})
 ---
 
 ```{r setup, include=F, echo=F}
