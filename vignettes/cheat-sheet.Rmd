@@ -1,0 +1,119 @@
+---
+title: "Cheat Sheet"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cheat-sheet}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Troubleshooting
+
+When you don’t see any `>` at the bottom of your console, hitting escape
+might help. If it doesn’t, clicking teh stop sign in the top right
+corner of the console might help.
+
+You will be able to solve any other problem when you google it.
+
+## Shortcuts
+
+| Shortcut        | Result                        |
+| --------------- | ----------------------------- |
+| `Alt` + `-`     | `<-`                          |
+| `Ctrl`+ `Enter` | Run selected code from Script |
+| `Enter`         | Run line of code in Console   |
+
+## Useful packages
+
+  - dplyr
+  - olsrr
+  - ggplot2
+  - vegan
+  - betapart
+  - FD
+
+## Useful functions
+
+### Packages
+
+  - `install.packages()` - only needs to happen once
+  - `library()` - needs to happen every session
+
+### Loading data
+
+  - `data()` - loading data from package
+  - `read.csv()` - loading data form .csv file. If your data is not displayed as seperate columns,
+    explore the use of the `sep` and `dec` arguments.
+
+### Examining objects
+
+  - `class()`
+  - `str()`
+  - `length()`
+  - `dim()`
+  - `summary()`
+  - `head()`
+  - `tail()`
+  - `names()` or `colnames()`
+  - `ncol()`and `nrow()`
+  - `levels()`
+
+#### Checking for special values
+
+  - `is.na()`
+  - `anyNA()`
+  - `is.nan()`
+  - `is.infinite()`
+
+### Creating objects
+
+  - `c()`
+  - `vector()`
+  - `matrix()`
+  - `list()`
+  - `data.frame()`
+  - `cbind()` and `rbind()`
+
+### Selecting subsets of objects
+
+When `a` is a data.frame
+
+  - `a$plot` - selects the column from `a` which is called “plot”
+  - `a[,"plot"]` - selects the column from `a` which is called “plot”
+  - `a[1,2]` - selects the value at the first row, second column
+  - `a[,2]` - selects the second column as a numeric vector
+  - `a[1,]` - selects the first row as a numeric vector
+  - `a[2]` - selects the second column as a data frame
+
+### Visualisation
+
+  - `plot()`
+  - `points()`
+  - `lines()`
+  - `pairs()`
+  - `hist()`
+  - `boxplots()`
+  - `par()`
+
+### Iterating
+
+  - `apply()`
+  
+### Diversity analysis
+  
+  - `specnumber()`
+  - `diversity()`
+  - `tsallis()`
+  - `specpool()`
+  - `specaccum()`
+  - `betadiver()`
+  - `beta.pair()`
+  - `beta.multi()`
+  
