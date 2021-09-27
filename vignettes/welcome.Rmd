@@ -1,0 +1,17 @@
+---
+title: "Welcome"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{welcome}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This is the R package for the course "Ecological data collection and processing". In the exercise sessions for this course, we will use this package to access data and instructions for the sessions and assignments.
