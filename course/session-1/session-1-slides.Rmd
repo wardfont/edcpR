@@ -5,7 +5,7 @@ author: "Ward Fonteyn & Stef Haesen"
 date: "9/24/2021"
 knit: (function(inputFile, encoding){
   rmarkdown::render(inputFile, encoding = encoding, output_file = "session-1-document.html", output_format = "html_document",  output_dir = "knitted");
-  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-1-presentation.html", output_format = "ioslides_presentation",
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-1-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
   output_dir = "knitted") })
 ---
 
@@ -43,6 +43,14 @@ For the exercise portion of this course, there is **permanent evaluation**.
 - Deadline: **The day before the next session at noon (12 am)**
 - Late submission is **zero score** for that assignment
 
+## Why use R
+
+![](session-1-pictures/excel.jpg){height=500px}
+
+## Why use R
+
+![](session-1-pictures/R-python.jpg){height=500px}
+
 ## R
 
 **R** is a programming language used for data analysis and visualization. To use R effectively, we need to know about:
@@ -70,6 +78,18 @@ When you open Rstudio, go to "*File - New File - R Script*" to create a new **Sc
 Under your script you will see the **Console**. This is your dialogue with R.
 
 If you type something in the **Console** and press "Enter", it will be run. If you write something in your **script**, select the part you want to run and press "Ctrl" + "Enter", that part will appear in your console and will be run.
+
+## Scripts
+
+A .R document is just a .txt document that is associated with R.
+
+```{r, echo=T, eval=F}
+# These are comments to make clear what is happening
+# Here I wil put input in a function and assign the output to the "result" object
+
+result <- function(Input, option = "setting")
+
+```
 
 ## Structure of R
 
@@ -201,6 +221,33 @@ vignette("dplyr", package = "dplyr")
 - Reframe your question
 - Try again
 - Copy and paste the answer
+
+## How the exercises work
+
+- Toledo:
+  - Slides
+  - How to use edcpR package
+- edcpR package:
+  - Session instructions
+  - Assignments
+  - Data
+
+## How to access and update the package
+
+```{r, echo=T, eval= F}
+# Package you need to install a github package
+library(devtools)
+
+# Make sure edcpR is not in use before installing
+unloadNamespace("edcpR")
+
+# Install course package
+install_github("https://github.com/wardfont/edcpR", build_vignettes = T)
+
+# Load library
+library(edcpR)
+
+```
 
 ## Assignment
 
