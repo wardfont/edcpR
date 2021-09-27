@@ -5,7 +5,6 @@ author: "Ward Fonteyn & Stef Haesen"
 date: "9/24/2021"
 output:
   ioslides_presentation:
-    keep_md: true
     widescreen: true
 ---
 
@@ -42,7 +41,6 @@ For the exercise portion of this course, there is **permanent evaluation**.
 
 **R** is a programming language used for data analysis and visualization. To use R effectively, we need to know about:
 
-
 - Scripts
 - Console
 - Environment
@@ -74,8 +72,8 @@ If you type something in the **Console** and press "Enter", it will be run. If y
 
 
 ```{=html}
-<div id="htmlwidget-80f9b47d31a63205f838" style="width:720px;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-80f9b47d31a63205f838">{"x":{"diagram":"\ndigraph dot {\ngraph [layout = dot, rankdir = LR]\n  \nnode [shape = rectangle, style = filled, color = grey, fillcolor = grey]\n  a1 [label = Object]\n  a2 [label = Object]\n  a3 [label = Object]\n  c [label = Object]\n  \nnode [shape = oval, fillcolor = orange]\n  b [label = Function]\n  \nedge [color = grey]\na1,a2,a3 -> b -> c\n\n\n\n  \n}\n\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0332d17352e85f892e95" style="width:720px;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0332d17352e85f892e95">{"x":{"diagram":"\ndigraph dot {\ngraph [layout = dot, rankdir = LR]\n  \nnode [shape = rectangle, style = filled, color = grey, fillcolor = grey]\n  a1 [label = Object]\n  a2 [label = Object]\n  a3 [label = Object]\n  c [label = Object]\n  \nnode [shape = oval, fillcolor = orange]\n  b [label = Function]\n  \nedge [color = grey]\na1,a2,a3 -> b -> c\n\n\n\n  \n}\n\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## Objects
