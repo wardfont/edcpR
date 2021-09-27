@@ -1,5 +1,5 @@
 ---
-title: "Session 1"
+title: "Session 1 Presentation"
 subtitle: "Ecological Data Collection and Processing: Exercises"
 author: "Ward Fonteyn & Stef Haesen"
 date: "9/24/2021"
@@ -74,8 +74,8 @@ If you type something in the **Console** and press "Enter", it will be run. If y
 
 
 ```{=html}
-<div id="htmlwidget-fb1c9a7bed00de065338" style="width:720px;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fb1c9a7bed00de065338">{"x":{"diagram":"\ndigraph dot {\ngraph [layout = dot, rankdir = LR]\n  \nnode [shape = rectangle, style = filled, color = grey, fillcolor = grey]\n  a1 [label = Object]\n  a2 [label = Object]\n  a3 [label = Object]\n  c [label = Object]\n  \nnode [shape = oval, fillcolor = orange]\n  b [label = Function]\n  \nedge [color = grey]\na1,a2,a3 -> b -> c\n\n\n\n  \n}\n\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-80f9b47d31a63205f838" style="width:720px;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-80f9b47d31a63205f838">{"x":{"diagram":"\ndigraph dot {\ngraph [layout = dot, rankdir = LR]\n  \nnode [shape = rectangle, style = filled, color = grey, fillcolor = grey]\n  a1 [label = Object]\n  a2 [label = Object]\n  a3 [label = Object]\n  c [label = Object]\n  \nnode [shape = oval, fillcolor = orange]\n  b [label = Function]\n  \nedge [color = grey]\na1,a2,a3 -> b -> c\n\n\n\n  \n}\n\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## Objects
