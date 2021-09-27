@@ -17,3 +17,23 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(edcpR)
 ```
+
+See the slides for this session [here](https://htmlpreview.github.io/?https://github.com/wardfont/edcpR/blob/master/course-slides/session-1/session-1-slides.html)
+
+In this session, you can explore the possibilities of R:
+
+- [Intro to R](https://ourcodingclub.github.io/2016/11/13/intro-to-r.html)
+- [Troubleshooting](https://ourcodingclub.github.io/2016/11/15/troubleshooting.html)  
+- [Etiquette](https://ourcodingclub.github.io/2017/04/25/etiquette.html)  
+- [Data visualisation](https://ourcodingclub.github.io/2017/01/29/datavis.html)  
+- [Data visualisation 2](https://ourcodingclub.github.io/2017/03/29/data-vis-2.html)  
+- [R Style guide](http://adv-r.had.co.nz/Style.html)
+
+Make sure you understand what is done in these tutorials.
+
+Once you understand the above, you can work on your first assignment:
+
+```{r}
+vignette("assignment-1", package = "edcpR")
+```
+
