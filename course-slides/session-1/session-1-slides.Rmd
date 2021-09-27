@@ -1,11 +1,12 @@
 ---
-title: "Session 1 Presentation"
+title: "Session 1"
 subtitle: "Ecological Data Collection and Processing: Exercises"
 author: "Ward Fonteyn & Stef Haesen"
 date: "9/24/2021"
-output:
-  ioslides_presentation:
-    widescreen: true
+knit: (function(inputFile, encoding){
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-1-document.html", output_format = "html_document",  output_dir = "knitted");
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-1-presentation.html", output_format = "ioslides_presentation",
+  output_dir = "knitted") })
 ---
 
 ```{r setup, include=F, echo=F}
