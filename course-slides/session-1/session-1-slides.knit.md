@@ -9,12 +9,7 @@ knit: (function(inputFile, encoding){
   output_dir = "knitted") })
 ---
 
-```{r setup, include=F, echo=F}
-knitr::opts_chunk$set(echo = FALSE)
-library(DiagrammeR)
-library(knitr)
-library(kableExtra)
-```
+
 
 ## Contact
 
@@ -80,7 +75,8 @@ If you type something in the **Console** and press "Enter", it will be run. If y
 
 ## Objects
 
-```{r, echo=T}
+
+```r
 a <- 1
 ```
 
@@ -88,13 +84,19 @@ In R values are assigned using `<-` . A shortcut for these two symbols in Rstudi
 
 `a` is now saved as an object and is assigned the value 1. If you ask R for the object `a`, it will return its value.
 
-```{r, echo=T}
+
+```r
 a
+```
+
+```
+## [1] 1
 ```
 
 ## A bigger object
 
-```{r, echo=T, eval=F}
+
+```r
 data <- cars
 ```
 
@@ -133,7 +135,8 @@ These data types can be used on their own, or arranged in data structures:
 
 Linear regression model for the relationship between yield and spacing for apple trees:
 
-```{r, eval=F, echo=T}
+
+```r
 lm(yield ~ spacing, data = apples)
 ```
 
@@ -149,7 +152,8 @@ BUT how do you know this?
 
 Try:
 
-```{r, echo = T, eval=F}
+
+```r
 ?lm()
 ```
 
@@ -161,14 +165,16 @@ Try:
 
 The power of R lies in its packages. They are collections of functions written by other people.
 
-```{r, echo=T, eval=F}
+
+```r
 install.packages("dplyr")
 library(dplyr)
 ```
 
 You download packages to your computer using `install.packages()`. Your R session can only use the package after you load it to your library using `library()`.
 
-```{r, echo=T, eval=F}
+
+```r
 ?dplyr
 ```
 
@@ -178,16 +184,16 @@ You can alwys use "?" to get more information on the package.
 
 Vignettes are longer form documentation and tutorials. See which are available:
 
-```{r, echo=T, eval=F}
-vignette(package = "dplyr")
 
+```r
+vignette(package = "dplyr")
 ```
 
 Open the one you want using the title.
 
-```{r, echo=T, eval=F}
-vignette("dplyr", package = "dplyr")
 
+```r
+vignette("dplyr", package = "dplyr")
 ```
 
 ## Google is your friend
