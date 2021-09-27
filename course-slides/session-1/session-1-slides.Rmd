@@ -46,7 +46,6 @@ For the exercise portion of this course, there is **permanent evaluation**.
 
 **R** is a programming language used for data analysis and visualization. To use R effectively, we need to know about:
 
-
 - Scripts
 - Console
 - Environment
