@@ -9,7 +9,7 @@ Authors@R:
 Description: Ecological data collection and processing practicals package.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: false
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Suggests: 
