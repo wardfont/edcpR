@@ -23,11 +23,11 @@ Please complete the following problems.
 
 Remember:
 
-- **Annotate** your script by using `#`.
+- R is case-sensitive. Make sure you store your answers using the exact name specified.
 - You will be graded on:
   - The **correctness** of your answers.
-  - The **efficiency** of your code. Don't make your script unnecessarily long and only do the essential tasks.
-  - The **clarity** of your code. Make sure you explain the steps in your script with annotations (`#`)
+  - The **efficiency** of your code. Don't make your script unnecessarily long and only do the essential steps.
+  - The **clarity** of your code. Make sure you explain the steps in your script with annotations (`#`). Without comments we don't know if you understand what is happening.
 
 ### Data
 
@@ -36,8 +36,6 @@ Load in the data you will need as follows:
 ```{r}
 data(vegdata1, vegdata2)
 ```
-
-
 
 ### Part 1
 
