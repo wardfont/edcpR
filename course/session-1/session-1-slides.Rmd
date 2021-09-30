@@ -30,7 +30,7 @@ But first try to answer your own questions through Google.
 ## EDCP exercises
 
 - 2 ECTS
-- Thursday 4-6 pm
+- Thursday 16:00-18:00
 - Implementation of theory seen in the previous lecture
   - 7 R-sessions
   - 2 field sessions
@@ -39,17 +39,13 @@ But first try to answer your own questions through Google.
 
 For the exercise portion of this course, there is **permanent evaluation**.
 
-- One task after every R-session
-- Deadline: **The day before the next session at noon (12 am)**
+- One assignment after every R-session
+- Deadline: **The day before the next session at noon (12:00)**
 - Late submission is **zero score** for that assignment
 
 ## Why use R
 
 ![](session-1-pictures/excel.jpg){height=500px}
-
-## Why use R
-
-![](session-1-pictures/R-python.jpg){height=500px}
 
 ## R
 
@@ -70,24 +66,26 @@ We will be using **Rstudio** to communicate with R.
 ![](https://cran.r-project.org/Rlogo.svg){#id .class width=500 height=100px}
 
 
-You should already have downloaded and installed **both R and Rstudio**. You need both to follow the exercises. The only program you will ever need to launch in to launch is **Rstudio**.  
+You should already have downloaded and installed **both R and Rstudio**. You need both to follow the exercises. The only program you will ever need to launch is **Rstudio**.  
 
-## Scripts an the Console
+## Rstudio Components
 
 When you open Rstudio, go to "*File - New File - R Script*" to create a new **Script**. This is your working document.
 Under your script you will see the **Console**. This is your dialogue with R.
 
 If you type something in the **Console** and press "Enter", it will be run. If you write something in your **script**, select the part you want to run and press "Ctrl" + "Enter", that part will appear in your console and will be run.
 
+Any objects R has stored appear in your **Global Environment**.
+
 ## Scripts
 
-A .R document is just a .txt document that is associated with R.
+A *.R* document is just a *.txt* document that is associated with R. A `#` let's R know the line is a comment and should be ignored.
 
 ```{r, echo=T, eval=F}
 # These are comments to make clear what is happening
 # Here I wil put input in a function and assign the output to the "result" object
 
-result <- function(Input, option = "setting")
+result <- function(input, option = "setting")
 
 ```
 
@@ -104,7 +102,7 @@ result <- function(Input, option = "setting")
 a <- 1
 ```
 
-In R values are assigned using `<-` . A shortcut for these two symbols in Rstudio is "Alt" + "-".
+In R values are assigned using `<-` . A shortcut for these two symbols in Rstudio is `Alt` + `-`.
 
 `a` is now saved as an object and is assigned the value 1. If you ask R for the object `a`, it will return its value.
 
@@ -135,7 +133,7 @@ The building blocks for objects are:
 
 Special values:
 
-- `Ìnf` - Infinity
+- `Inf` - Infinity
 - `NA` - Not available
 - `NaN` - Not a Number
 
@@ -150,6 +148,8 @@ These data types can be used on their own, or arranged in data structures:
 - **Data frame** (2D, elements can be different data types)
 
 ## Functions
+
+Always of the form `function(arguments, ...)`
 
 Linear regression model for the relationship between yield and spacing for apple trees:
 
@@ -181,18 +181,18 @@ Try:
 
 The power of R lies in its packages. They are collections of functions written by other people.
 
+You download packages to your computer using `install.packages()`. Your R session can only use the package after you load it to your library using `library()`.
+
 ```{r, echo=T, eval=F}
 install.packages("dplyr")
 library(dplyr)
 ```
 
-You download packages to your computer using `install.packages()`. Your R session can only use the package after you load it to your library using `library()`.
+You can always use "?" to get more information on the package.
 
 ```{r, echo=T, eval=F}
 ?dplyr
 ```
-
-You can alwys use "?" to get more information on the package.
 
 ## Vignettes
 
@@ -200,14 +200,12 @@ Vignettes are longer form documentation and tutorials. See which are available:
 
 ```{r, echo=T, eval=F}
 vignette(package = "dplyr")
-
 ```
 
 Open the one you want using the title.
 
 ```{r, echo=T, eval=F}
 vignette("dplyr", package = "dplyr")
-
 ```
 
 ## Google is your friend
@@ -222,11 +220,13 @@ vignette("dplyr", package = "dplyr")
 - Try again
 - Copy and paste the answer
 
+Good sources: r-bloggers.com, stackoverflow.com, ...
+
 ## How the exercises work
 
 - Toledo:
   - Slides
-  - How to use edcpR package
+  - How to use the edcpR package
 - edcpR package:
   - Session instructions
   - Assignments
@@ -236,22 +236,21 @@ vignette("dplyr", package = "dplyr")
 
 ```{r, echo=T, eval= F}
 # Package you need to install a github package
-library(devtools)
+if(!require("devtools")) install.packages("devtools"); library("devtools")
 
 # Make sure edcpR is not in use before installing
 unloadNamespace("edcpR")
 
-# Install course package
-install_github("https://github.com/wardfont/edcpR", build_vignettes = T)
+# Install/update course package
+install_github("https://github.com/wardfont/edcpR", build_vignettes = T, force = T)
 
-# Load library
+# Load package
 library(edcpR)
-
 ```
 
 ## Assignment
 
-**Deadline**: Next week Wednesday at **12:00 am**
+**Deadline**: Next week Wednesday at **12:00**
 
 No submission is **Zero** for the assignment.
 
@@ -261,7 +260,7 @@ You will be graded on:
 - **Efficiency**: Have you kept your script short and without unnecessary actions?
 - **Clarity**: Did you explain what you do in the script?
 
-## Links
+## Links for this session
 
 [Intro to R](https://ourcodingclub.github.io/2016/11/13/intro-to-r.html)  
 [Troubleshooting](https://ourcodingclub.github.io/2016/11/15/troubleshooting.html)  

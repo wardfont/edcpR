@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 library(edcpR)
 ```
 
-See the slides for this session [here](https://htmlpreview.github.io/?https://github.com/wardfont/edcpR/blob/master/course/session-1/knitted/session-1-document.html)
+See the slides for this session [here](https://htmlpreview.github.io/?https://github.com/wardfont/edcpR/blob/master/course/session-1/knitted/session-1-document.html).
 
 In this session, you can explore the possibilities of R:
 

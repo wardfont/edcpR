@@ -33,7 +33,7 @@ Remember:
 Load in the data you will need as follows:
 
 ```{r}
-data(vegdata1, vegdata2)
+data(vegdata1, vegdata2,  package = "edcpR")
 ```
 
 ## Part 1
