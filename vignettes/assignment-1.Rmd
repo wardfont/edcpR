@@ -1,5 +1,5 @@
 ---
-title: "Assignment-1"
+title: "Assignment 1"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{assignment-1}
@@ -13,11 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(edcpR)
-
 ```
-
-## Description
 
 Please complete the following problems.
 
@@ -29,7 +25,7 @@ Remember:
   - The **efficiency** of your code. Don't make your script unnecessarily long and only do the essential steps.
   - The **clarity** of your code. Make sure you explain the steps in your script with annotations (`#`). Without comments we don't know if you understand what is happening.
 
-### Data
+## Data
 
 Load in the data you will need as follows:
 
@@ -37,7 +33,7 @@ Load in the data you will need as follows:
 data(vegdata1, vegdata2)
 ```
 
-### Part 1
+## Part 1
 
 Extract the following values from the *vegdata1* dataset:
 
@@ -50,14 +46,14 @@ Make sure
 - What kind of class is stored in the *sixth* column? Store this as a string in **my_data_type**.
 - What are the dimensions of *vegdata1*? Store this as a vector in **my_dim**.
 
-### Part 2
+## Part 2
 
 Merge *vegdata1* and *vegdata2* into one data frame. Store your result in **my_data_frame**. Hint: the resulting dataframe has 144 rows.
 
-### Part 3
+## Part 3
 
 Use the package *"dplyr"* to only select rows containing data from *Grassland* from your merged data frame. Store your result in **my_grassland**. 
 
-### Submit your work
+## Submit your work
 
 Save your R-script as **Surname-FirstName-assignment-1.R**. Upload this on Toledo before **October 6th, 12:00 noon** in the assignments folder!
