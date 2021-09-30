@@ -39,7 +39,9 @@ data(vegdata1, vegdata2)
 
 ### Part 1
 
-Extract the following values from the *vegdata1* dataset: 
+Extract the following values from the *vegdata1* dataset:
+
+Make sure 
 
 - Store the column with name *Elevation* in a vector called **my_vector**.
 - Store the number in the *18th* row and *6th* column in an object called **my_number**.
@@ -58,4 +60,4 @@ Use the package *"dplyr"* to only select rows containing data from *Grassland* f
 
 ### Submit your work
 
-Remember to delete any line of code with **setwd()**. Save your R-script as **Surname_FirstName_Task1.R**. Upload this on Toledo before **September 30, 12 am** in the assignments folder!
+Save your R-script as **Surname-FirstName-assignment-1.R**. Upload this on Toledo before **October 6th, 12:00 noon** in the assignments folder!
