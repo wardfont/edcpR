@@ -12,8 +12,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-library(edcp)
+```
 
+```{r, echo = F}
+library(edcpR)
 ```
 
 Please complete the following problems.
