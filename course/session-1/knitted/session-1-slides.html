@@ -172,7 +172,7 @@ slide:not(.current) .plotly.html-widget{
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">9/24/2021</p>
+            <p style="margin-top: 6px; margin-left: -2px;">30/09/2021</p>
           </hgroup>
   </slide>
 
@@ -233,7 +233,7 @@ slide:not(.current) .plotly.html-widget{
 
 <p>We will be using <strong>Rstudio</strong> to communicate with R.</p>
 
-<p><img width="200," class="class" id="id" height="100px" src='https://upload.wikimedia.org/wikipedia/commons/d/d0/RStudio_logo_flat.svg' title=''/> <img width="500" class="class" id="id" height="100px" src='https://cran.r-project.org/Rlogo.svg' title=''/></p>
+<p><img height="100px" class="class" id="id" width="200," src='https://upload.wikimedia.org/wikipedia/commons/d/d0/RStudio_logo_flat.svg' title=''/> <img height="100px" class="class" id="id" width="500" src='https://cran.r-project.org/Rlogo.svg' title=''/></p>
 
 <p>You should already have downloaded and installed <strong>both R and Rstudio</strong>. You need both to follow the exercises. The only program you will ever need to launch is <strong>Rstudio</strong>.</p>
 
@@ -350,14 +350,14 @@ result &lt;- function(input, option = &quot;setting&quot;)</pre>
 
 <p>The power of R lies in its packages. They are collections of functions written by other people.</p>
 
+<p>You download packages to your computer using <code>install.packages()</code>. Your R session can only use the package after you load it to your library using <code>library()</code>.</p>
+
 <pre class = 'prettyprint lang-r'>install.packages(&quot;dplyr&quot;)
 library(dplyr)</pre>
 
-<p>You download packages to your computer using <code>install.packages()</code>. Your R session can only use the package after you load it to your library using <code>library()</code>.</p>
+<p>You can always use &ldquo;?&rdquo; to get more information on the package.</p>
 
 <pre class = 'prettyprint lang-r'>?dplyr</pre>
-
-<p>You can alwys use &ldquo;?&rdquo; to get more information on the package.</p>
 
 </article></slide><slide class=""><hgroup><h2>Vignettes</h2></hgroup><article  id="vignettes">
 
@@ -383,6 +383,8 @@ library(dplyr)</pre>
 <li>Copy and paste the answer</li>
 </ul>
 
+<p>Good sources: r-bloggers.com, stackoverflow.com, …</p>
+
 </article></slide><slide class=""><hgroup><h2>How the exercises work</h2></hgroup><article  id="how-the-exercises-work">
 
 <ul>
@@ -390,7 +392,7 @@ library(dplyr)</pre>
 
 <ul>
 <li>Slides</li>
-<li>How to use edcpR package</li>
+<li>How to use the edcpR package</li>
 </ul></li>
 <li>edcpR package:
 
@@ -404,20 +406,20 @@ library(dplyr)</pre>
 </article></slide><slide class=""><hgroup><h2>How to access and update the package</h2></hgroup><article  id="how-to-access-and-update-the-package">
 
 <pre class = 'prettyprint lang-r'># Package you need to install a github package
-library(devtools)
+if(!require(&quot;devtools&quot;)) install.packages(&quot;devtools&quot;); library(&quot;devtools&quot;)
 
 # Make sure edcpR is not in use before installing
 unloadNamespace(&quot;edcpR&quot;)
 
-# Install course package
-install_github(&quot;https://github.com/wardfont/edcpR&quot;, build_vignettes = T)
+# Install/update course package
+install_github(&quot;https://github.com/wardfont/edcpR&quot;, build_vignettes = T, force = T)
 
-# Load library
+# Load package
 library(edcpR)</pre>
 
 </article></slide><slide class=""><hgroup><h2>Assignment</h2></hgroup><article  id="assignment">
 
-<p><strong>Deadline</strong>: Next week Wednesday at <strong>12:00 am</strong></p>
+<p><strong>Deadline</strong>: Next week Wednesday at <strong>12:00</strong></p>
 
 <p>No submission is <strong>Zero</strong> for the assignment.</p>
 
@@ -429,7 +431,7 @@ library(edcpR)</pre>
 <li><strong>Clarity</strong>: Did you explain what you do in the script?</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Links</h2></hgroup><article  id="links">
+</article></slide><slide class=""><hgroup><h2>Links for this session</h2></hgroup><article  id="links-for-this-session">
 
 <p><a href='https://ourcodingclub.github.io/2016/11/13/intro-to-r.html' title=''>Intro to R</a><br/><a href='https://ourcodingclub.github.io/2016/11/15/troubleshooting.html' title=''>Troubleshooting</a><br/><a href='https://ourcodingclub.github.io/2017/04/25/etiquette.html' title=''>Etiquette</a><br/><a href='https://ourcodingclub.github.io/2017/01/29/datavis.html' title=''>Data visualisation</a><br/><a href='https://ourcodingclub.github.io/2017/03/29/data-vis-2.html' title=''>Data visualisation 2</a><br/><a href='http://adv-r.had.co.nz/Style.html' title=''>R Style guide</a></p></article></slide>
 

@@ -2,7 +2,7 @@
 title: "Session 1"
 subtitle: "Ecological Data Collection and Processing: Exercises"
 author: "Ward Fonteyn & Stef Haesen"
-date: "9/24/2021"
+date: "30/09/2021"
 knit: (function(inputFile, encoding){
   rmarkdown::render(inputFile, encoding = encoding, output_file = "session-1-document.html", output_format = "html_document",  output_dir = "knitted");
   rmarkdown::render(inputFile, encoding = encoding, output_file = "session-1-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
