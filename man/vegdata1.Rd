@@ -8,7 +8,7 @@
 An object of class \code{data.frame} with 72 rows and 16 columns.
 }
 \usage{
-vegdata1
+data(vegdata1)
 }
 \description{
 First dataset to be used in assignment 1

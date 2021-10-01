@@ -1,0 +1,77 @@
+---
+title: "session-2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{session-2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edcpR)
+```
+
+
+## Data
+
+use the dataset "varechem_s2" provided in the course pacakge:
+
+```{r}
+data(varechem_s2, package= "edcpR")
+```
+
+## Tips 
+
+Find useful tips and function suggestions on the cheat-sheet vignette:
+
+```{r,  echo=T, eval=F}
+browseVignettes(package = "edcpR")
+```
+
+## Part 1
+
+- Check the structure and data type of the data (and change in R if necessary)
+  - **Extra**: Try to assign meaningful levels for the variable *Managementtype*
+- Check NA and incorrect values (and change in R if necessary)
+  - **TIP**: anyNA(), complete.cases(), ...
+  - Calculate summary metrics (min, max, mean, ...) to check for anomalies
+- Visualize your data
+  - Try different types of graphs (scatterplot, histogram, boxplot...)
+  
+  
+## Part 2
+
+- Perform outlier analysis
+  - for a univariate case: let's consider S
+  - for a multivariate case: let's consider P~K here
+    - do we have influential outliers?
+    - **TIP**: olsrr-package
+    
+## Part 3
+
+- Check distribution of variables
+  - Is the data normally distributed?
+  - Make a visual inspection for the variable Potassium **(K)** and Calcium **(Ca)**
+  - Use a statistical test
+- Apply transformations to normalize variables
+  - Let's do this for the variable Calcium **(Ca)**
+- Apply transformations to linearize relationships
+  - Do this for the relationship between Iron **(Fe)** and Zinc **(Zn)**
+  
+## Assignment 2
+
+Access the assignment:
+
+```{r}
+vignette("assignment-2", package = "edcpR")
+```
+
+Remember to upload everything before **October 27, 12 am (= at noon!)**.
+

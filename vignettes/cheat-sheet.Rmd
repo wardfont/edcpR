@@ -65,7 +65,7 @@ You will be able to solve any other problem when you google it.
   - `ncol()`and `nrow()`
   - `levels()`
 
-#### Checking for special values
+### Checking for special values
 
   - `is.na()`
   - `anyNA()`
@@ -101,6 +101,7 @@ When `a` is a data.frame
   - `hist()`
   - `boxplots()`
   - `par()`
+  - `save.image()`
 
 ### Iterating
 

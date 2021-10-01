@@ -1,0 +1,72 @@
+---
+title: "Assignment 2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{assignment-2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edcpR)
+```
+
+Please complete the following problems.
+
+Remember:
+
+- R is case-sensitive. Make sure you store your answers using the exact name specified.
+- You will be graded on:
+  - The **correctness** of your answers.
+  - The **efficiency** of your code. Don't make your script unnecessarily long and only do the essential steps.
+  - The **clarity** of your code. Make sure you explain the steps in your script with annotations (`#`). Without comments, we don't know if you understand what is happening.
+
+## Data
+
+Load in the data you will need as follows:
+
+```{r}
+data(vegdata_a2,  package = "edcpR")
+```
+
+## Part 1
+
+Check the structure of the *vegdata_a2* dataset: 
+
+- Correct data types if incorrect.
+  - **TIP**: cover values are best converted to numerical. 
+  - **TIP**: Character types which show clear categories are best converted to factor.
+- Check for NA's. Remove rows containing an NA-value from the data frame.
+- Check for incorrect values. Correct if necessary.
+- Assign your final, clean data frame to an object called **my_df_1**.
+
+## Part 2
+
+Are there any outlier values in the **Elevation** variable from **my_df_1**? If so, identify the outliers and remove the corresponding rows from the data frame. Save the new data frame in an object called **my_df_2**.
+
+## Part 3
+
+Create a scatterplot using the ggplot2 package, meeting the following criteria:
+
+- Use data from *my_df_2*.
+- Elevation plotted on the x-axis & Litter cover on the y-axis.
+- Use different colours for each Vegetation Type (i.e. Forest, Grassland & Shrubland)
+- Use a theme with white background and gray grid lines
+- Add a centred title: "Relation between Litter Cover and Elevation"
+- Add a centred subtitle: "Relationship broken down by Vegetation Type"
+- Add your name as a caption to the figure.
+
+## Upload
+
+Upload the following files to Toledo
+- Your R-script as **Surname_FirstName_assignment2.R**.
+- Your scatterplot as **Surname_FirstName_assignment2.png**. Make sure everything on the graph is readible!
+
+Remember to upload everything before **October 27, 12 am (= at noon!)**.

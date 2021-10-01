@@ -1,4 +1,4 @@
-## code to prepare `vegdata1` dataset goes here
+## code to prepare `vegdata1` and `vegdata2` dataset goes here
 
 vegdata1 <- read.csv("./data-raw/vegdata1.csv", sep = ";")
 vegdata1$Date <- as.Date(vegdata1$Date, format = "%e.%m.%Y")

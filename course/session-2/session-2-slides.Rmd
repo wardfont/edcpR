@@ -1,0 +1,426 @@
+---
+title: "Session 2"
+subtitle: "Ecological Data Collection and Processing: Exercises"
+author: "Ward Fonteyn & Stef Haesen"
+date: "21/10/2021"
+knit: (function(inputFile, encoding){
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-2-document.html", output_format = "html_document",  output_dir = "knitted");
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-2-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
+  output_dir = "knitted") })
+  
+---
+
+```{r setup, include=F, echo=F}
+knitr::opts_chunk$set(echo = FALSE)
+library(DiagrammeR)
+library(knitr)
+library(kableExtra)
+rm("varechem_s2")
+```
+
+## Feedback assignment 1 (1)
+
+- don't include `install.packages()`, do include `library()`.
+- Give the objects we ask you to create exactly the same name as in the assignment.
+  - R is Capital-sensitive
+- Don't forget to save the result as an object.
+
+## Know what to look for
+
+<div class="columns-2">
+
+Data type =   
+elements
+ 
+- Character
+- Numeric
+- Integer
+- Logical
+
+
+&nbsp; 
+
+Data structure =    
+how elements are ordered
+
+- Factor
+- Vector
+- Matrix
+- List
+- Data frame
+
+
+<div>
+
+# Session 2: Data exploration {data-background=https://i.imgflip.com/105j5q.jpg data-background-size=cover}
+
+## Get to know the data (1)
+
+What kind of data did we get?
+
+- What structure has the object?
+- What data types are contained within the object?
+- Do the structure and data types make sense?
+- Are there NA-values or incorrect values?
+
+Any fishy business?
+
+![](https://media.giphy.com/media/xTiIzMvevaoCXJk7HG/giphy.gif)
+
+## Plotting ...
+
+![](https://public-media.interaction-design.org/images/encyclopedia/data_visualization_for_human_perception/sales-table-visualization.jpg){#id .class width=1000}
+
+## ... can be very useful.
+
+![](https://public-media.interaction-design.org/images/encyclopedia/data_visualization_for_human_perception/sales-line-graph-visualization.jpg){#id .class width=900}
+
+## Get to know the data (2)
+
+What is the quality of the data? How should we interpret it?
+
+Statistical tests:
+
+- Normality?
+- Outliers?
+- ...
+  
+Apply necessary transformation if needed!
+
+## Before we start
+
+If you have difficulties with any aspects of working with R, don't hesitate to say so!
+
+![](https://media.giphy.com/media/9aaCvlhV3ZeZq/giphy.gif){#id .class height=300 width=500}
+
+## Exercises for today
+
+- Check the structure of the data
+- Check NA and incorrect values
+- Visualize your data
+- Perform outlier analysis
+- Check distribution of variables
+- Apply transformations to normalize variables
+- Apply transformations to linearize relationships
+
+## Update your package
+
+Update your "edcpR" pacakge using the script provided on Toledo `update-edcpR.R`
+
+Find useful tips and function suggestions on the cheat-sheet vignette
+```{r,  echo=T, eval=F}
+browseVignettes(package = "edcpR")
+```
+
+
+## Exercises: part 1 (30 min)
+
+Use the "varechem_s2" datast in the course package.
+
+- Check the structure and data type of the data (and change in R if necessary)
+  - **Extra**: Try to assign meaningful levels for the variable *Managementtype*
+- Check NA and incorrect values (and change in R if necessary)
+  - **TIP**: anyNA(), complete.cases(), ...
+  - Calculate summary metrics (min, max, mean, ...) to check for anomalies
+- Visualize your data
+  - Try different types of graphs (scatterplot, histogram, boxplot...)
+
+## Check structure of data (1)
+
+```{r, echo=T, eval=T}
+library(edcpR)
+#Load in data
+data(varechem_s2, package = "edcpR")
+
+# First it is a good idea to take a look at the object in the Environment window
+
+# Take a look at the data, does it seem to be loaded in alright?
+head(varechem_s2)
+```
+
+## Check structure of data (2)
+
+```{r, echo=T, eval=T}
+tail(varechem_s2)
+```
+
+## Check structure of data (3)
+
+```{r, echo=T, eval=T}
+# Same information as in Environment window when clicking the blue arrow
+str(varechem_s2)
+```
+
+## Check structure of data (4)
+
+```{r, echo=T, eval=T}
+# substitute the "," in the character string with "."
+varechem_s2$K <- gsub(",", ".", varechem_s2$K)
+
+# Convert the data type to numeric
+class(varechem_s2$K) <- "numeric"
+# OR
+varechem_s2$K <- as.numeric(varechem_s2$K)
+
+# Or compact in one step:
+varechem_s2$K <- as.numeric(gsub(",", ".", varechem_s2$K))
+```
+
+## Check structure of data (5)
+
+```{r, echo=T, eval=T}
+# The managementtype data type is integer, which doesn't make sense. It should be a factor
+varechem_s2$Managementtype <- as.factor(varechem_s2$Managementtype)
+# OR
+class(varechem_s2$Managementtype) <-  "factor"
+
+# Check levels of factor
+levels(varechem_s2$Managementtype)
+
+# We could assign levels to this column
+levels(varechem_s2$Managementtype) <- c("Natural", "Agricultural", "Mixed", "Unknown")
+levels(varechem_s2$Managementtype)
+```
+
+## NA and incorrect values (1)
+ 
+```{r, echo=T, eval=T}
+# Test if any values are NA
+anyNA(varechem_s2) # Tests if there are any NA values
+head(is.na(varechem_s2)) # Location where output is TRUE is NA
+```
+
+## NA and incorrect values (2)
+
+```{r, echo=T, eval=T}
+!complete.cases(varechem_s2) # "!" is a NOT operator. This line gives if row is NOT complete. 
+# The 6th element is true, so the 6th row is incomplete
+varechem_s2[!complete.cases(varechem_s2),]
+```
+
+## NA and incorrect values (3)
+
+```{r, echo=T, eval=T}
+# Get max, min, median, mean for columns, in this case the fifth column
+max(varechem_s2$Fe) # column
+max(varechem_s2[5]) # column
+max(varechem_s2[,5]) # column
+```
+```{r, echo=T, eval=F}
+max(varechem_s2[5,]) # row, doesn't work because different data types in one row.
+```
+
+## NA and incorrect values (4)
+
+```{r, echo=T, eval=T}
+max <- apply(varechem_s2, 2, max) # 2 = apply function over each column
+max # NA as maximum is not very informative, max for factors is most occurring value.
+
+max <- apply(varechem_s2, 2, function(x){max(x, na.rm = TRUE)}) 
+max # Perfect
+min <- apply(varechem_s2, 2, function(x){min(x, na.rm = TRUE)}) # Minimum
+
+```
+
+## NA and incorrect values (5)
+
+```{r, echo=T, eval=F}
+plot(max)
+points(min, col = "red")
+
+```
+
+## NA and incorrect values (6)
+
+```{r, echo=F, eval=T}
+plot(max)
+points(min, col = "red")
+
+```
+
+## NA and incorrect values (7)
+
+```{r, echo=T, eval=T}
+colnames(varechem_s2)[8]
+varechem_s2$Ca
+```
+
+## NA and incorrect values (8)
+
+```{r, echo=T, eval=T}
+varechem_s2[2,8]
+# If it was a bigger dataframe, we wouldn't want to scan the whole table for that one value
+head(varechem_s2 == 7778.0)
+varechem_s2[varechem_s2 == 7778.0] <- 777.8
+```
+
+## Visualize your data (1)
+
+```{r, echo=T, eval=T}
+# pairs(varechem_s2)
+plot(varechem_s2)
+
+```
+
+## Visualize your data (2)
+
+```{r, echo=T, eval=T}
+par(mfrow=c(1,2))
+plot(varechem_s2$Fe, varechem_s2$Zn) # Nice relationship
+plot(varechem_s2$Fe, varechem_s2$S) # one outlier
+
+```
+
+## Visualize your data (3)
+
+```{r, echo=T, eval=T}
+par(mfrow=c(1,2))
+hist(varechem_s2$S)
+boxplot(varechem_s2$S)
+```
+
+## Visualize your data (4)
+
+```{r, echo=T, eval=T}
+boxplot(varechem_s2$P ~ varechem_s2$Landuse)
+```
+
+## Exercises: part 2 (25 min)
+
+- Perform outlier analysis
+  - for a univariate case: let's consider S
+  - for a multivariate case: let's consider P~K here
+    - do we have influential outliers?
+    - **TIP**: olsrr-package
+
+## Perform outlier analysis (1)
+
+```{r, echo=T, eval=T}
+# Univariate case
+boxplot(varechem_s2$S) #We see one outlier
+
+```
+
+## Perform outlier analysis (2)
+
+```{r, echo=T, eval=T}
+# Multivariate case: specify a relationship between 2 (or more) variables
+mod1<- lm(P~K,data=varechem_s2) #Therefore, we build a linear model (form y~x)
+par(mfrow = c(2,2))
+plot(mod1)
+```
+
+## Perform outlier analysis (3) 
+
+```{r, echo = T}
+# We'll perform an outlier analysis with the package olsrr
+library(olsrr)
+```
+
+
+## Perform outlier analysis (4)
+
+```{r, echo=t, eval=T}
+# Check studentized deleted residuals to see if there are outliers
+# Observation 11 is flagged as outlier
+ols_plot_resid_stud_fit(mod1)
+```
+
+## Perform outlier analysis (5)
+
+```{r, echo=T, eval=T}
+# Now the question is, do these points have influence:
+# We can clearly see that observation 11 has high influence
+ols_plot_cooksd_bar(mod1) 
+
+```
+
+## Perform outlier analysis (6)
+
+```{r, echo=T, eval=T}
+plot(varechem_s2$K, varechem_s2$P)
+abline(lm(P ~ K, data = varechem_s2), col = "blue")      #relationship with outlier
+abline(lm(P ~ K, data = varechem_s2[-11,]), col = "red") #relationship without outlier
+
+```
+
+## Exercises: part 3 (25 min)
+
+- Check distribution of variables
+  - Is the data normally distributed?
+  - Make a visual inspection for the variable Potassium **(K)** and Calcium **(Ca)**
+  - Use a statistical test
+- Apply transformations to normalize variables
+  - Let's do this for the variable Calcium **(Ca)**
+- Apply transformations to linearize relationships
+  - Do this for the relationship between Iron **(Fe)** and Zinc **(Zn)**
+
+## Check distribution of variables (1)
+
+```{r, echo=T, eval=T}
+# We can plot a histogram to visually check the data
+hist(varechem_s2$K, xlab="Potassium",main="Histogram of potassium")
+
+```
+
+## Check distribution of variables (2)
+
+```{r, echo=T, eval=T}
+# We can overlay the normal curve to have a reference
+hist(varechem_s2$K, density=20, prob=TRUE, xlab="Potassium",main="Histogram of potassium")
+curve(dnorm(x, mean=mean(varechem_s2$K), sd=sqrt(var(varechem_s2$K))),col="red", add=TRUE)
+```
+
+## Check distribution of variables (3)
+
+```{r, echo=T, eval=T}
+# We can also test for normality in a statistical way: shapiro-wilk test
+# although NOT recommended over visual check as it is too strict! (see slides)
+shapiro.test(varechem_s2$K)
+# p-value > 0.05 --> accept zero-hypotheses --> normal distribution
+
+```
+
+## Normalizing variables (1)
+
+```{r, echo=T, eval=T}
+# Look at a differen variable
+# We see that this case is clearly positive skewed!
+hist(varechem_s2$Ca, density=20, prob=TRUE, xlab="Calcium",main="Histogram of calcium")
+
+```
+
+## Normalizing variables (2)
+
+```{r, echo=T, eval=T}
+par(mfrow=c(1,2))
+hist(varechem_s2$Ca)
+hist(log(varechem_s2$Ca)) #log transformation seemed to help
+
+```
+
+## Normalizing linear relationships (1)
+
+```{r, echo=T, eval=T}
+par(mfrow=c(1,1))
+plot(varechem_s2$Fe,varechem_s2$Zn)
+
+```
+
+## Normalizing linear relationships (2)
+
+```{r, echo=T, eval=T}
+par(mfrow=c(1,1))
+plot(log(varechem_s2$Fe),varechem_s2$Zn)
+
+```
+
+## Assignment 2
+
+Access the assignment:
+
+```{r, echo=T, eval=F}
+vignette("assignment-2", package = "edcpR")
+```
+
+Remember to upload everything before **October 27, 12 am (= at noon!)**.
