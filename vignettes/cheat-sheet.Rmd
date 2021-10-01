@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ## Troubleshooting
 
 When you don’t see any `>` at the bottom of your console, hitting escape
-might help. If it doesn’t, clicking teh stop sign in the top right
+might help. If it doesn’t, clicking the stop sign in the top right
 corner of the console might help.
 
 You will be able to solve any other problem when you google it.
@@ -49,7 +49,7 @@ You will be able to solve any other problem when you google it.
 ### Loading data
 
   - `data()` - loading data from package
-  - `read.csv()` - loading data form .csv file. If your data is not displayed as seperate columns,
+  - `read.csv()` - loading data form .csv file. If your data is not displayed as separate columns,
     explore the use of the `sep` and `dec` arguments.
 
 ### Examining objects
