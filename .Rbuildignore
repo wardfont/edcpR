@@ -6,3 +6,4 @@
 ^data-raw$
 ^course$
 ^cran-comments\.md$
+^CRAN-RELEASE$
