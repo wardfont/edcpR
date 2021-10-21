@@ -65,7 +65,8 @@ Create a scatterplot using the ggplot2 package, meeting the following criteria:
 
 ## Upload
 
-Upload the following files to Toledo
+Upload the following files to Toledo:
+
 - Your R-script as **Surname_FirstName_assignment2.R**.
 - Your scatterplot as **Surname_FirstName_assignment2.png**. Make sure everything on the graph is readible!
 
