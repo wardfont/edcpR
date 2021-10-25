@@ -33,7 +33,7 @@ Remember:
 Load in the data you will need as follows:
 
 ```{r}
-data(vegdata_a2,  package = "edcpR")
+data(leuven_a3, nphk_a3,  package = "edcpR")
 ```
 
 ## Part 1
@@ -45,8 +45,12 @@ What can you tell on the species diversity in Leuven?
 
 ## Part 2
 
-Vegetation sampling has also been performed in the Hoge Kempen National Park (a region to the North-West of Leuven). What can you say on the species diversity from that region compared to Leuven? Answer by means of annotations within your R-script!
+Vegetation sampling has also been performed in the Hoge Kempen National Park (dataset `nphk`) (a region to the North-West of Leuven). What can you say on the species diversity from that region compared to Leuven? Answer by means of annotations within your R-script!
 
-Remember to delete the line of code with **setwd()**. Save your R-script as **Surname_FirstName_Assignment3.R**.
+## Upload
 
-Upload this document on Toledo before **October 28, 12 pm** (= at noon)!
+Upload the following files to Toledo:
+
+- R-script as **Surname_FirstName_assignment3.R**.
+
+Remember to upload everything before **November 3rd, 12 am (= at noon!)**.
