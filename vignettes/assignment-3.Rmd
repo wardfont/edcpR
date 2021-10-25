@@ -1,0 +1,52 @@
+---
+title: "Assignment 3"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{assignment-3}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edcpR)
+```
+
+Please complete the following problems.
+
+Remember:
+
+- R is case-sensitive. Make sure you store your answers using the exact name specified.
+- You will be graded on:
+  - The **correctness** of your answers.
+  - The **efficiency** of your code. Don't make your script unnecessarily long and only do the essential steps.
+  - The **clarity** of your code. Make sure you explain the steps in your script with annotations (`#`). Without comments, we don't know if you understand what is happening.
+
+## Data
+
+Load in the data you will need as follows:
+
+```{r}
+data(vegdata_a2,  package = "edcpR")
+```
+
+## Part 1
+
+What can you tell on the species diversity in Leuven? 
+
+- At plot level? Calculate all relevant indices. Make clear which index you calculate with annotations.
+- Between plots? How many plot pairs are perfectly dissimilar? Which pair of distinct plots shows the highest similarity? Answer by means of annotations within your R-script!
+
+## Part 2
+
+Vegetation sampling has also been performed in the Hoge Kempen National Park (a region to the North-West of Leuven). What can you say on the species diversity from that region compared to Leuven? Answer by means of annotations within your R-script!
+
+Remember to delete the line of code with **setwd()**. Save your R-script as **Surname_FirstName_Assignment3.R**.
+
+Upload this document on Toledo before **October 28, 12 pm** (= at noon)!

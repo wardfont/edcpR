@@ -23,7 +23,7 @@ library(edcpR)
 
 use the dataset "varechem_s2" provided in the course pacakge:
 
-```{r}
+```{r, echo=T, eval =F}
 data(varechem_s2, package= "edcpR")
 ```
 
@@ -69,7 +69,7 @@ browseVignettes(package = "edcpR")
 
 Access the assignment:
 
-```{r}
+```{r, echo=T, eval=F}
 vignette("assignment-2", package = "edcpR")
 ```
 

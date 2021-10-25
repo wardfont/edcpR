@@ -1,0 +1,76 @@
+---
+title: "Session 3"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{session-3}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edcpR)
+```
+
+## Data
+
+We will use data that is provided by the `vegan` package.
+
+```{r, echo=T, eval=F}
+library(vegan)
+data("BCI", package = "vegan")
+```
+
+## Part 1
+
+- Alfa diversity
+  - Calculate species richness, shannon and simpson indices
+    - **TIP**: `vegan` package
+  - Calculate corresponding evenness indices
+    - **TIP**: use formulas provided in the lecture slides
+  - Calculate corresponding Hill numbers
+    - **TIP**: `tsallis()` function
+  - Plot relationships between different alfa diversity measures
+  
+## Part 2
+
+- Beta diversity
+  - Calculate pairwise beta diversity
+    - **TIP**: `betadiver()`
+  - Partition beta diversity in nestedness and turnover components
+    - **TIP**: `betapart` package
+    - **TIP**: tranform to presence/abscence data!
+  - Calculate multiple site beta diversity
+    
+## Part 3
+
+- Gamma diversity
+  - Calculate chao estimators for the BCI dataset 
+    - **TIP**: `specpool()`
+  - An old dataset has the following Chao estimators: Chao = 280 (SE = 11.5)  
+    - Did we lose or gain species?
+  
+## Part 4
+
+- Functional diversity
+  - Calculate the functional diversity indices from the Tussock dataset:
+    - **TIP**: `tussock` dataset from `FD` package
+    - **TIP**: `dbFD()`
+    
+## Assignment 3
+
+Access the assignment:
+
+```{r, echo=T, eval=F}
+vignette("assignment-3", package = "edcpR")
+```
+
+Remember to upload everything before **November 3rd, 12 am (= at noon!)**.
+
+

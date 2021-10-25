@@ -13,3 +13,11 @@
 #' dataset used for assignment 2
 #' @usage data(vegdata_a2)
 "vegdata_a2"
+
+#' dataset used for assignment 3
+#' @usage data(leuven_a3)
+"leuven_a3"
+
+#' dataset used for assignment 3
+#' @usage data(nphk_a3)
+"nphk_a3"
