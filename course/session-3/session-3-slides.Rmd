@@ -20,33 +20,97 @@ library(vegan)
 
 ## Feedback assignment 2
 
-```{r, echo=T, eval=F} 
+- Deadline is wednesday at noon
+- First step is data exploration, which includes removing outliers
+- A legend should have an understandable title: "Vegetation types" instead of "Vegtype"
+- `ggplot` have themes to change background and overall look
+- Saving plots can be done using a function, or using the RStudio interface
 
-vegdata[complete.cases(vegdata),] # doens't do anything
-# vs
-vegdata <- vegdata[complete.cases(vegdata), ] # this does
+## Dates
 
-
-identify(vegdata$Elevation) #the rows containing the outliers are row 14 and 98
-#row 14 and 98 should be deleted and the new dataframe should be named differently
-my_df_2 <- my_df_1[-c(14,98), ]
-
-#vs
-my_df_2 <- my_df_1[!my_df_1$Elevation>150,]
-
+```{r, echo = T}
+# Load in the data
+library(edcpR)
+data(vegdata_a2,  package = "edcpR")
+dates <- vegdata_a2$Date
+dates
 ```
 
-```{r, echo=F, eval=T} 
+## Dates
 
-colorize <- function(x, color) {
-  if (knitr::is_latex_output()) {
-    sprintf("\\textcolor{%s}{%s}", color, x)
-  } else if (knitr::is_html_output()) {
-    sprintf("<span style='color: %s;'>%s</span>", color, 
-      x)
-  } else x
-}
+We have the following formats:
 
+- "11/03/2019"
+- "11.03.2019"
+- "43533"
+
+One is not like the others: Days since "1899-12-30"
+
+A numeric date format is used due to practical reasons: a numeric value takes up less memory then a character string.
+
+## 1899-12-30 ???
+
+Logical would be to choose the origin a "1899-12-31". This would put "1900-01-01" as day one.
+
+"Lotus 1-2-3", a predecessor of Excel: 1900 was a leap year
+
+It was not, making all their day counts wrong by one day.
+
+Microsoft noticed it was wrong, but used the format anyway and solved the problem by setting the origin at "1899-12-30".
+
+
+## Numeric date formats
+
+```{r, echo = T}
+# Some numeric dates counting days from an origin
+as.numeric(dates) # Only gives dates that can be converted to a number, the rest is NA
+```
+
+## as.Date function
+
+`as.Date()` creates a special data type: Date
+
+It can convert different formats as long as you give it the correct information:
+
+- Character date formats
+- Numeric date formats
+
+## Numeric date formats
+
+```{r echo=, message=FALSE, warning=FALSE}
+# Convert them using appropriate origin
+format_1 <- as.Date(as.numeric(dates), origin = "1899-12-30")
+format_1[101:128]
+```
+
+## Character date formats 
+
+```{r, echo = T}
+# Some character dates in two formats
+# see for symbols: https://devhints.io/datetime
+# Only gives dates that fit format, the rest is set to NA
+format_2 <- as.Date(dates, format = "%e.%m.%Y")
+format_3 <- as.Date(dates, format = "%e/%m/%Y")
+
+head(format_2)
+```
+## Combining
+
+```{r, echo = T}
+# Populate a new vector with all non-NA values of the three formats
+conv_dates <- format_1
+conv_dates[is.na(conv_dates)] <- format_2[is.na(conv_dates)]
+conv_dates[is.na(conv_dates)] <- format_3[is.na(conv_dates)]
+head(conv_dates) # all in the same format
+```
+
+## R uses a numeric date format
+
+```{r, echo = T}
+# Under the hood, R stores the dates as numeric values, but with origin "1970-01-01"
+head(conv_dates)
+head(as.numeric(conv_dates))
+head(as.Date(as.numeric(conv_dates), origin = "1970-01-01"))
 ```
 
 # Session 3: Diversity {data-background=https://scx2.b-cdn.net/gfx/news/hires/2020/eatorbeeaten.jpg data-background-size=cover}

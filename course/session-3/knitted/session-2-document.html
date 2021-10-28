@@ -174,17 +174,160 @@ pre code {
 
 <div id="feedback-assignment-2" class="section level2">
 <h2>Feedback assignment 2</h2>
-<pre class="r"><code>vegdata[complete.cases(vegdata),] # doens&#39;t do anything
-# vs
-vegdata &lt;- vegdata[complete.cases(vegdata), ] # this does
+<ul>
+<li>Deadline is wednesday at noon</li>
+<li>First step is data exploration, which includes removing outliers</li>
+<li>A legend should have an understandable title: “Vegetation types” instead of “Vegtype”</li>
+<li><code>ggplot</code> have themes to change background and overall look</li>
+<li>Saving plots can be done using a function, or using the RStudio interface</li>
+</ul>
+</div>
+<div id="dates" class="section level2">
+<h2>Dates</h2>
+<pre class="r"><code># Load in the data
+library(edcpR)
+data(vegdata_a2,  package = &quot;edcpR&quot;)
+dates &lt;- vegdata_a2$Date
+dates</code></pre>
+<pre><code>##   [1] &quot;8.07.2019&quot;  &quot;16.07.2019&quot; &quot;9.07.2019&quot;  &quot;16.07.2019&quot; &quot;1.07.2019&quot; 
+##   [6] &quot;1.07.2019&quot;  &quot;1.07.2019&quot;  &quot;2.07.2019&quot;  &quot;2.07.2019&quot;  &quot;2.07.2019&quot; 
+##  [11] &quot;2.07.2019&quot;  &quot;2.07.2019&quot;  &quot;2.07.2019&quot;  &quot;3.07.2019&quot;  &quot;3.07.2019&quot; 
+##  [16] &quot;3.07.2019&quot;  &quot;3.07.2019&quot;  &quot;3.07.2019&quot;  &quot;4.07.2019&quot;  &quot;4.07.2019&quot; 
+##  [21] &quot;4.07.2019&quot;  &quot;5.07.2019&quot;  &quot;5.07.2019&quot;  &quot;5.07.2019&quot;  &quot;5.07.2019&quot; 
+##  [26] &quot;5.07.2019&quot;  &quot;5.07.2019&quot;  &quot;8.07.2019&quot;  &quot;8.07.2019&quot;  &quot;8.07.2019&quot; 
+##  [31] &quot;8.07.2019&quot;  &quot;8.07.2019&quot;  &quot;9.07.2019&quot;  &quot;9.07.2019&quot;  &quot;9.07.2019&quot; 
+##  [36] &quot;9.07.2019&quot;  &quot;10.07.2019&quot; &quot;10.07.2019&quot; &quot;10.07.2019&quot; &quot;10.07.2019&quot;
+##  [41] &quot;10.07.2019&quot; &quot;11.07.2019&quot; &quot;11.07.2019&quot; &quot;11.07.2019&quot; &quot;11.07.2019&quot;
+##  [46] &quot;11.07.2019&quot; &quot;11.07.2019&quot; &quot;15.07.2019&quot; &quot;15.07.2019&quot; &quot;15.07.2019&quot;
+##  [51] &quot;15.07.2019&quot; &quot;15.07.2019&quot; &quot;15.07.2019&quot; &quot;16.07.2019&quot; &quot;16.07.2019&quot;
+##  [56] &quot;16.07.2019&quot; &quot;16.07.2019&quot; &quot;16.07.2019&quot; &quot;16.07.2019&quot; &quot;17.07.2019&quot;
+##  [61] &quot;17.07.2019&quot; &quot;17.07.2019&quot; &quot;17.07.2019&quot; &quot;17.07.2019&quot; &quot;18.07.2019&quot;
+##  [66] &quot;18.07.2019&quot; &quot;18.07.2019&quot; &quot;18.07.2019&quot; &quot;18.07.2019&quot; &quot;22/08/2019&quot;
+##  [71] &quot;23/08/2019&quot; &quot;22/08/2019&quot; &quot;23/08/2019&quot; &quot;27/08/2019&quot; &quot;27/08/2019&quot;
+##  [76] &quot;26/08/2019&quot; &quot;26/08/2019&quot; &quot;26/08/2019&quot; &quot;26/08/2019&quot; &quot;27/08/2019&quot;
+##  [81] &quot;28/08/2019&quot; &quot;28/08/2019&quot; &quot;28/08/2019&quot; &quot;28/08/2019&quot; &quot;28/08/2019&quot;
+##  [86] &quot;28/08/2019&quot; &quot;28/08/2019&quot; &quot;28/08/2019&quot; &quot;29/08/2019&quot; &quot;29/08/2019&quot;
+##  [91] &quot;29/08/2019&quot; &quot;29/08/2019&quot; &quot;28/08/2019&quot; &quot;29/08/2019&quot; &quot;29/08/2019&quot;
+##  [96] &quot;30/08/2019&quot; &quot;30/08/2019&quot; &quot;30/08/2019&quot; &quot;30/08/2019&quot; &quot;30/08/2019&quot;
+## [101] &quot;43505&quot;      &quot;43505&quot;      &quot;43505&quot;      &quot;43505&quot;      &quot;43505&quot;     
+## [106] &quot;43533&quot;      &quot;43533&quot;      &quot;43533&quot;      &quot;43533&quot;      &quot;43533&quot;     
+## [111] &quot;43533&quot;      &quot;43533&quot;      &quot;43533&quot;      &quot;43533&quot;      &quot;43564&quot;     
+## [116] &quot;43564&quot;      &quot;43564&quot;      &quot;43564&quot;      &quot;43564&quot;      &quot;43564&quot;     
+## [121] &quot;43564&quot;      &quot;43564&quot;      &quot;43747&quot;      &quot;43747&quot;      &quot;43747&quot;     
+## [126] &quot;43747&quot;      &quot;43747&quot;      &quot;43747&quot;      &quot;17/09/2019&quot; &quot;17/09/2019&quot;
+## [131] &quot;17/09/2019&quot; &quot;17/09/2019&quot; &quot;18/09/2019&quot; &quot;18/09/2019&quot; &quot;18/09/2019&quot;
+## [136] &quot;18/09/2019&quot; &quot;19/09/2019&quot; &quot;19/09/2019&quot; &quot;19/09/2019&quot; &quot;19/09/2019&quot;
+## [141] &quot;19/09/2019&quot; &quot;19/09/2019&quot; &quot;19/09/2019&quot; &quot;19/08/2019&quot;</code></pre>
+</div>
+<div id="dates-1" class="section level2">
+<h2>Dates</h2>
+<p>We have the following formats:</p>
+<ul>
+<li>“11/03/2019”</li>
+<li>“11.03.2019”</li>
+<li>“43533”</li>
+</ul>
+<p>One is not like the others: days since “1899-12-30” A numeric value takes up less storage space then a character string.</p>
+</div>
+<div id="section" class="section level2">
+<h2>???</h2>
+<p>Logical would be to choose the origin a “1899-12-31”. This would put “1900-01-01” as day one.</p>
+<p>“Lotus 1-2-3”, a predecessor of Excel: 1900 was a leap year</p>
+<p>It was not, making all their day counts wrong by one day.</p>
+<p>Microsoft noticed it was wrong, but used the format anyway and solved the problem by setting the origin at “1899-12-30”.</p>
+</div>
+<div id="numeric-date-formats" class="section level2">
+<h2>Numeric date formats</h2>
+<pre class="r"><code># Some numeric dates counting days from an origin
+as.numeric(dates) # Only gives dates that can be converted to a number, the rest is NA</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>##   [1]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  [13]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  [25]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  [37]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  [49]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  [61]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  [73]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  [85]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  [97]    NA    NA    NA    NA 43505 43505 43505 43505 43505 43533 43533 43533
+## [109] 43533 43533 43533 43533 43533 43533 43564 43564 43564 43564 43564 43564
+## [121] 43564 43564 43747 43747 43747 43747 43747 43747    NA    NA    NA    NA
+## [133]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</code></pre>
+</div>
+<div id="as.date-function" class="section level2">
+<h2>as.Date function</h2>
+<p><code>as.Date()</code> creates a special data type: Date</p>
+<p>It can convert different formats as long as you give it the correct information. - Character date formats - Numeric date formats</p>
+</div>
+<div id="numeric-date-formats-1" class="section level2">
+<h2>Numeric date formats</h2>
+<pre class="r"><code># Convert them using appropriate origin
+format_1 &lt;- as.Date(as.numeric(dates), origin = &quot;1899-12-30&quot;)</code></pre>
+<pre><code>## Warning in as.Date(as.numeric(dates), origin = &quot;1899-12-30&quot;): NAs introduced by
+## coercion</code></pre>
+<pre class="r"><code>format_1</code></pre>
+<pre><code>##   [1] NA           NA           NA           NA           NA          
+##   [6] NA           NA           NA           NA           NA          
+##  [11] NA           NA           NA           NA           NA          
+##  [16] NA           NA           NA           NA           NA          
+##  [21] NA           NA           NA           NA           NA          
+##  [26] NA           NA           NA           NA           NA          
+##  [31] NA           NA           NA           NA           NA          
+##  [36] NA           NA           NA           NA           NA          
+##  [41] NA           NA           NA           NA           NA          
+##  [46] NA           NA           NA           NA           NA          
+##  [51] NA           NA           NA           NA           NA          
+##  [56] NA           NA           NA           NA           NA          
+##  [61] NA           NA           NA           NA           NA          
+##  [66] NA           NA           NA           NA           NA          
+##  [71] NA           NA           NA           NA           NA          
+##  [76] NA           NA           NA           NA           NA          
+##  [81] NA           NA           NA           NA           NA          
+##  [86] NA           NA           NA           NA           NA          
+##  [91] NA           NA           NA           NA           NA          
+##  [96] NA           NA           NA           NA           NA          
+## [101] &quot;2019-02-09&quot; &quot;2019-02-09&quot; &quot;2019-02-09&quot; &quot;2019-02-09&quot; &quot;2019-02-09&quot;
+## [106] &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot;
+## [111] &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-04-09&quot;
+## [116] &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-04-09&quot;
+## [121] &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-10-09&quot; &quot;2019-10-09&quot; &quot;2019-10-09&quot;
+## [126] &quot;2019-10-09&quot; &quot;2019-10-09&quot; &quot;2019-10-09&quot; NA           NA          
+## [131] NA           NA           NA           NA           NA          
+## [136] NA           NA           NA           NA           NA          
+## [141] NA           NA           NA           NA</code></pre>
+</div>
+<div id="character-date-formats" class="section level2">
+<h2>Character date formats</h2>
+<pre class="r"><code># Some character dates in two formats
+# see for symbols: https://devhints.io/datetime
+format_2 &lt;- as.Date(dates, format = &quot;%e.%m.%Y&quot;) # Only gives dates that fit format, rest is NA
+format_3 &lt;- as.Date(dates, format = &quot;%e/%m/%Y&quot;)
 
-
-identify(vegdata$Elevation) #the rows containing the outliers are row 14 and 98
-#row 14 and 98 should be deleted and the new dataframe should be named differently
-my_df_2 &lt;- my_df_1[-c(14,98), ]
-
-#vs
-my_df_2 &lt;- my_df_1[!my_df_1$Elevation&gt;150,]</code></pre>
+head(format_2)</code></pre>
+<pre><code>## [1] &quot;2019-07-08&quot; &quot;2019-07-16&quot; &quot;2019-07-09&quot; &quot;2019-07-16&quot; &quot;2019-07-01&quot;
+## [6] &quot;2019-07-01&quot;</code></pre>
+</div>
+<div id="combining" class="section level2">
+<h2>Combining</h2>
+<pre class="r"><code># Populate a new vector with all non-NA values of the three formats
+conv_dates &lt;- format_1
+conv_dates[is.na(conv_dates)] &lt;- format_2[is.na(conv_dates)]
+conv_dates[is.na(conv_dates)] &lt;- format_3[is.na(conv_dates)]
+head(conv_dates) # all in the same format</code></pre>
+<pre><code>## [1] &quot;2019-07-08&quot; &quot;2019-07-16&quot; &quot;2019-07-09&quot; &quot;2019-07-16&quot; &quot;2019-07-01&quot;
+## [6] &quot;2019-07-01&quot;</code></pre>
+</div>
+<div id="r-uses-a-numeric-date-format" class="section level2">
+<h2>R uses a numeric date format</h2>
+<pre class="r"><code># Under the hood, R stores the dates as numeric values, but with origin &quot;1970-01-01&quot;
+head(conv_dates)</code></pre>
+<pre><code>## [1] &quot;2019-07-08&quot; &quot;2019-07-16&quot; &quot;2019-07-09&quot; &quot;2019-07-16&quot; &quot;2019-07-01&quot;
+## [6] &quot;2019-07-01&quot;</code></pre>
+<pre class="r"><code>head(as.numeric(conv_dates))</code></pre>
+<pre><code>## [1] 18085 18093 18086 18093 18078 18078</code></pre>
+<pre class="r"><code>head(as.Date(as.numeric(conv_dates), origin = &quot;1970-01-01&quot;))</code></pre>
+<pre><code>## [1] &quot;2019-07-08&quot; &quot;2019-07-16&quot; &quot;2019-07-09&quot; &quot;2019-07-16&quot; &quot;2019-07-01&quot;
+## [6] &quot;2019-07-01&quot;</code></pre>
 </div>
 <div id="session-3-diversity" class="section level1" data-background="https://scx2.b-cdn.net/gfx/news/hires/2020/eatorbeeaten.jpg" data-background-size="cover">
 <h1 data-background="https://scx2.b-cdn.net/gfx/news/hires/2020/eatorbeeaten.jpg" data-background-size="cover">Session 3: Diversity</h1>
@@ -506,10 +649,10 @@ chao_BCI</code></pre>
 <pre class="r"><code>#Take 100 random samples from a normal distribution!
 sample_BCI &lt;- rnorm(100, mean = chao_BCI, sd = chao_BCI_se)
 head(sample_BCI)</code></pre>
-<pre><code>## [1] 230.5655 229.7352 226.4108 238.5430 239.4199 238.2325</code></pre>
+<pre><code>## [1] 223.6278 227.9185 232.2499 239.6454 245.2974 236.9527</code></pre>
 <pre class="r"><code>sample &lt;- rnorm(100, mean = 280, sd = 11.5)
 head(sample)</code></pre>
-<pre><code>## [1] 286.3083 267.8252 276.3489 290.8360 308.1006 268.6004</code></pre>
+<pre><code>## [1] 277.8121 259.3528 300.5304 297.1687 276.4807 279.2148</code></pre>
 </div>
 <div id="calculate-gamma-diversity-3" class="section level2">
 <h2>Calculate gamma diversity</h2>
@@ -519,13 +662,13 @@ t.test(sample_BCI, sample)</code></pre>
 ##  Welch Two Sample t-test
 ## 
 ## data:  sample_BCI and sample
-## t = -31.811, df = 144.84, p-value &lt; 2.2e-16
+## t = -30.667, df = 164.38, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -45.15456 -39.87170
+##  -47.25349 -41.53670
 ## sample estimates:
 ## mean of x mean of y 
-##  236.5592  279.0723</code></pre>
+##  235.7160  280.1111</code></pre>
 <pre class="r"><code>#p-value &lt; 0.05 --&gt; reject the zero-hypothesis --&gt; significant difference!
 #We lost species!</code></pre>
 </div>
