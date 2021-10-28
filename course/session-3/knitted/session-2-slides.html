@@ -234,9 +234,11 @@ dates</pre>
 <li>&ldquo;43533&rdquo;</li>
 </ul>
 
-<p>One is not like the others: days since &ldquo;1899-12-30&rdquo; A numeric value takes up less storage space then a character string.</p>
+<p>One is not like the others: Days since &ldquo;1899-12-30&rdquo;</p>
 
-</article></slide><slide class=""><hgroup><h2>???</h2></hgroup><article  id="section">
+<p>A numeric date format is used due to practical reasons: a numeric value takes up less memory then a character string.</p>
+
+</article></slide><slide class=""><hgroup><h2>1899-12-30 ???</h2></hgroup><article  id="section">
 
 <p>Logical would be to choose the origin a &ldquo;1899-12-31&rdquo;. This would put &ldquo;1900-01-01&rdquo; as day one.</p>
 
@@ -270,53 +272,32 @@ as.numeric(dates) # Only gives dates that can be converted to a number, the rest
 
 <p><code>as.Date()</code> creates a special data type: Date</p>
 
-<p>It can convert different formats as long as you give it the correct information. - Character date formats - Numeric date formats</p>
+<p>It can convert different formats as long as you give it the correct information:</p>
+
+<ul>
+<li>Character date formats</li>
+<li>Numeric date formats</li>
+</ul>
 
 </article></slide><slide class=""><hgroup><h2>Numeric date formats</h2></hgroup><article  id="numeric-date-formats-1">
 
-<pre class = 'prettyprint lang-r'># Convert them using appropriate origin
-format_1 &lt;- as.Date(as.numeric(dates), origin = &quot;1899-12-30&quot;)</pre>
+<pre class = 'prettyprint lang-r'># Under the hood, R stores the dates as numeric values, but with origin &quot;1970-01-01&quot;
+format_1 &lt;- as.Date(as.numeric(dates), origin = &quot;1899-12-30&quot;)
+format_1[101:128]</pre>
 
-<pre >## Warning in as.Date(as.numeric(dates), origin = &quot;1899-12-30&quot;): NAs introduced by
-## coercion</pre>
-
-<pre class = 'prettyprint lang-r'>format_1</pre>
-
-<pre >##   [1] NA           NA           NA           NA           NA          
-##   [6] NA           NA           NA           NA           NA          
-##  [11] NA           NA           NA           NA           NA          
-##  [16] NA           NA           NA           NA           NA          
-##  [21] NA           NA           NA           NA           NA          
-##  [26] NA           NA           NA           NA           NA          
-##  [31] NA           NA           NA           NA           NA          
-##  [36] NA           NA           NA           NA           NA          
-##  [41] NA           NA           NA           NA           NA          
-##  [46] NA           NA           NA           NA           NA          
-##  [51] NA           NA           NA           NA           NA          
-##  [56] NA           NA           NA           NA           NA          
-##  [61] NA           NA           NA           NA           NA          
-##  [66] NA           NA           NA           NA           NA          
-##  [71] NA           NA           NA           NA           NA          
-##  [76] NA           NA           NA           NA           NA          
-##  [81] NA           NA           NA           NA           NA          
-##  [86] NA           NA           NA           NA           NA          
-##  [91] NA           NA           NA           NA           NA          
-##  [96] NA           NA           NA           NA           NA          
-## [101] &quot;2019-02-09&quot; &quot;2019-02-09&quot; &quot;2019-02-09&quot; &quot;2019-02-09&quot; &quot;2019-02-09&quot;
-## [106] &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot;
-## [111] &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-04-09&quot;
-## [116] &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-04-09&quot;
-## [121] &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-10-09&quot; &quot;2019-10-09&quot; &quot;2019-10-09&quot;
-## [126] &quot;2019-10-09&quot; &quot;2019-10-09&quot; &quot;2019-10-09&quot; NA           NA          
-## [131] NA           NA           NA           NA           NA          
-## [136] NA           NA           NA           NA           NA          
-## [141] NA           NA           NA           NA</pre>
+<pre >##  [1] &quot;2019-02-09&quot; &quot;2019-02-09&quot; &quot;2019-02-09&quot; &quot;2019-02-09&quot; &quot;2019-02-09&quot;
+##  [6] &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot;
+## [11] &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-03-09&quot; &quot;2019-04-09&quot;
+## [16] &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-04-09&quot;
+## [21] &quot;2019-04-09&quot; &quot;2019-04-09&quot; &quot;2019-10-09&quot; &quot;2019-10-09&quot; &quot;2019-10-09&quot;
+## [26] &quot;2019-10-09&quot; &quot;2019-10-09&quot; &quot;2019-10-09&quot;</pre>
 
 </article></slide><slide class=""><hgroup><h2>Character date formats</h2></hgroup><article  id="character-date-formats">
 
 <pre class = 'prettyprint lang-r'># Some character dates in two formats
 # see for symbols: https://devhints.io/datetime
-format_2 &lt;- as.Date(dates, format = &quot;%e.%m.%Y&quot;) # Only gives dates that fit format, rest is NA
+# Only gives dates that fit format, the rest is set to NA
+format_2 &lt;- as.Date(dates, format = &quot;%e.%m.%Y&quot;)
 format_3 &lt;- as.Date(dates, format = &quot;%e/%m/%Y&quot;)
 
 head(format_2)</pre>
@@ -717,12 +698,12 @@ chao_BCI</pre>
 sample_BCI &lt;- rnorm(100, mean = chao_BCI, sd = chao_BCI_se)
 head(sample_BCI)</pre>
 
-<pre >## [1] 227.2500 233.2194 247.0177 241.5682 234.0448 229.7280</pre>
+<pre >## [1] 230.9831 246.5028 223.9506 237.9055 235.8031 236.4025</pre>
 
 <pre class = 'prettyprint lang-r'>sample &lt;- rnorm(100, mean = 280, sd = 11.5)
 head(sample)</pre>
 
-<pre >## [1] 270.6598 306.2775 275.0680 299.8842 278.4949 289.2982</pre>
+<pre >## [1] 277.6814 295.4982 294.1960 284.5443 279.3703 266.1101</pre>
 
 </article></slide><slide class=""><hgroup><h2>Calculate gamma diversity</h2></hgroup><article  id="calculate-gamma-diversity-3">
 
@@ -733,13 +714,13 @@ t.test(sample_BCI, sample)</pre>
 ##  Welch Two Sample t-test
 ## 
 ## data:  sample_BCI and sample
-## t = -34.675, df = 155.92, p-value &lt; 2.2e-16
+## t = -34.149, df = 151.37, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -46.25781 -41.27161
+##  -46.38203 -41.30856
 ## sample estimates:
 ## mean of x mean of y 
-##  236.8188  280.5835</pre>
+##  236.6116  280.4569</pre>
 
 <pre class = 'prettyprint lang-r'>#p-value &lt; 0.05 --&gt; reject the zero-hypothesis --&gt; significant difference!
 #We lost species!</pre>
