@@ -703,12 +703,12 @@ chao_BCI</pre>
 sample_BCI &lt;- rnorm(100, mean = chao_BCI, sd = chao_BCI_se)
 head(sample_BCI)</pre>
 
-<pre >## [1] 239.8213 243.5338 244.2523 246.0007 235.8525 230.1312</pre>
+<pre >## [1] 234.8867 241.3074 227.5640 239.8616 237.8294 239.7192</pre>
 
 <pre class = 'prettyprint lang-r'>sample &lt;- rnorm(100, mean = 280, sd = 11.5)
 head(sample)</pre>
 
-<pre >## [1] 284.0660 281.7816 276.7281 258.5875 289.6635 284.1308</pre>
+<pre >## [1] 285.9460 273.0708 285.1615 281.1809 292.8543 286.7803</pre>
 
 </article></slide><slide class=""><hgroup><h2>Calculate gamma diversity</h2></hgroup><article  id="calculate-gamma-diversity-3">
 
@@ -719,13 +719,13 @@ t.test(sample_BCI, sample)</pre>
 ##  Welch Two Sample t-test
 ## 
 ## data:  sample_BCI and sample
-## t = -35.999, df = 169.16, p-value &lt; 2.2e-16
+## t = -34.717, df = 150.77, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -45.09417 -40.40554
+##  -45.59070 -40.68083
 ## sample estimates:
 ## mean of x mean of y 
-##  237.4324  280.1823</pre>
+##  236.9998  280.1355</pre>
 
 <pre class = 'prettyprint lang-r'>#p-value &lt; 0.05 --&gt; reject the zero-hypothesis --&gt; significant difference!
 #We lost species!</pre>

@@ -36,12 +36,6 @@ usethis::create_github_token()
 ## set personal access token:
 credentials::set_github_pat("xxxyyyzzz")
 
-## and store it manually in '.Renviron':
-usethis::edit_r_environ()
-## store your personal access token with: GITHUB_PAT=xxxyyyzzz
-## and make sure '.Renviron' ends with a newline
-## Save '.Renviron'
-
 # ----------------------------------------------------------------------------
 
 #### 4. Restart R! ###########################################################
