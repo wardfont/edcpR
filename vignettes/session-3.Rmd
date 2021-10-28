@@ -18,16 +18,12 @@ knitr::opts_chunk$set(
 library(edcpR)
 ```
 
-## Data
-
-We will use data that is provided by the `vegan` package.
+## Part 1
 
 ```{r, echo=T, eval=F}
 library(vegan)
 data("BCI", package = "vegan")
 ```
-
-## Part 1
 
 - Alfa diversity
   - Calculate species richness, shannon and simpson indices
@@ -57,6 +53,11 @@ data("BCI", package = "vegan")
     - Did we lose or gain species?
   
 ## Part 4
+
+```{r, echo=T, eval=F}
+library(FD)
+data("tussock", package = "FD")
+```
 
 - Functional diversity
   - Calculate the functional diversity indices from the Tussock dataset:
