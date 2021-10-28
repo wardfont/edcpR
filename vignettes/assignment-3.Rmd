@@ -45,7 +45,7 @@ What can you tell on the species diversity in Leuven?
 
 ## Part 2
 
-Vegetation sampling has also been performed in the Hoge Kempen National Park (dataset `nphk`) (a region to the North-West of Leuven). What can you say on the species diversity from that region compared to Leuven? Answer by means of annotations within your R-script!
+Vegetation sampling has also been performed in the Hoge Kempen National Park (dataset `nphk_a3`) (a region to the North-West of Leuven). What can you say on the species diversity from that region compared to Leuven? Answer by means of annotations within your R-script!
 
 ## Upload
 

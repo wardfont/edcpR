@@ -4,8 +4,8 @@ subtitle: "Ecological Data Collection and Processing: Exercises"
 author: "Ward Fonteyn & Stef Haesen"
 date: "28/10/2021"
 knit: (function(inputFile, encoding){
-  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-2-document.html", output_format = "html_document",  output_dir = "knitted");
-  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-2-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-3-document.html", output_format = "html_document",  output_dir = "knitted");
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-3-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
   output_dir = "knitted") })
   
 ---
@@ -246,8 +246,10 @@ sum(Hill[, 3]) == sum(invD)
 #Simpson diversity gives FALSE when it should be TRUE?
 sum(Hill[, 3])
 sum(invD)
-```
 
+# R somtimes holds some information back, by rounding, both are equal
+round(sum(Hill[, 3]), 3) == round(sum(invD),3)
+```
 
 ## Plot relationships (1)
 
@@ -432,7 +434,8 @@ abundance <- tussock$abun
 
 ```{r, echo=T, eval=T}
 #Now we need to clean the trait data
-#We will only use continuous traits and not seedmass because we are interested in the plant itself
+#We will only use continuous traits and not seedmass
+#   because we are interested in the plant itself
 #We also need to remove species on which we have no trait data
 traits <- traits[, c(2:7, 11)] 
 traits <- na.omit(traits)

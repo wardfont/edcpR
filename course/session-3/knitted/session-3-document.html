@@ -451,6 +451,9 @@ sum(Hill[, 3])</code></pre>
 <pre><code>## [1] 1389.517</code></pre>
 <pre class="r"><code>sum(invD)</code></pre>
 <pre><code>## [1] 1389.517</code></pre>
+<pre class="r"><code># R somtimes holds some information back, by rounding, both are equal
+round(sum(Hill[, 3]), 3) == round(sum(invD),3)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="plot-relationships-1" class="section level2">
 <h2>Plot relationships (1)</h2>
@@ -630,10 +633,10 @@ chao_BCI</code></pre>
 <pre class="r"><code>#Take 100 random samples from a normal distribution!
 sample_BCI &lt;- rnorm(100, mean = chao_BCI, sd = chao_BCI_se)
 head(sample_BCI)</code></pre>
-<pre><code>## [1] 242.0432 232.9332 234.0866 229.6302 237.5983 239.0159</code></pre>
+<pre><code>## [1] 238.7339 225.1726 239.2901 245.2007 224.9083 241.9410</code></pre>
 <pre class="r"><code>sample &lt;- rnorm(100, mean = 280, sd = 11.5)
 head(sample)</code></pre>
-<pre><code>## [1] 289.4316 285.6961 270.3120 272.3049 266.5865 286.6707</code></pre>
+<pre><code>## [1] 274.1316 280.8365 300.6884 291.3463 297.9378 262.3838</code></pre>
 </div>
 <div id="calculate-gamma-diversity-3" class="section level2">
 <h2>Calculate gamma diversity</h2>
@@ -643,13 +646,13 @@ t.test(sample_BCI, sample)</code></pre>
 ##  Welch Two Sample t-test
 ## 
 ## data:  sample_BCI and sample
-## t = -32.013, df = 155.21, p-value &lt; 2.2e-16
+## t = -31.662, df = 155.94, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -47.03071 -41.56394
+##  -48.5617 -42.8583
 ## sample estimates:
 ## mean of x mean of y 
-##  236.8294  281.1267</code></pre>
+##   236.278   281.988</code></pre>
 <pre class="r"><code>#p-value &lt; 0.05 --&gt; reject the zero-hypothesis --&gt; significant difference!
 #We lost species!</code></pre>
 </div>
@@ -681,7 +684,8 @@ abundance &lt;- tussock$abun</code></pre>
 <div id="calculate-functional-diversity-3" class="section level2">
 <h2>Calculate functional diversity (3)</h2>
 <pre class="r"><code>#Now we need to clean the trait data
-#We will only use continuous traits and not seedmass because we are interested in the plant itself
+#We will only use continuous traits and not seedmass
+#   because we are interested in the plant itself
 #We also need to remove species on which we have no trait data
 traits &lt;- traits[, c(2:7, 11)] 
 traits &lt;- na.omit(traits)
