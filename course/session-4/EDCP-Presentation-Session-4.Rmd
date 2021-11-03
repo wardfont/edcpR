@@ -17,6 +17,7 @@ library(kableExtra)
 library(FD)
 library(vegan)
 library(ltm)
+library(edcpR)
 ```
 
 ## Feedback assignment 3
@@ -52,20 +53,22 @@ Common beech (Fagus sylvatica) is increasing in Forêt de Compiegne (N. France) 
 
 *Research question: Does Fagus sylvatica (common beech) have an effect on the understory cover in temperate forests?*
 
-Use the Compiegne dataset. The Understory cover is the sum of all species individual.
+Use the Compiegne datasets. The Understory cover is the sum of all species individual.
 
-## Solution Question 1 (1)
+```{r, echo = T, eval=F}
+library(edcpR)
+data(Compiegne_env, Compiegne_sp, package = "edcpR")
+```
+
+## Solution Question 1
 
 ```{r, echo = T}
-Compiegne_env <- read.csv("./data/Compiegne_env.csv", sep = ";")
-Compiegne_sp <- read.csv("./data/Compiegne_sp.csv", sep = ";")
 Understory_cover <- rowSums(Compiegne_sp[2:dim(Compiegne_sp)[2]])
 Compiegne <- data.frame(plot = Compiegne_env$plot,
                         Fagus = Compiegne_env$Fagus,
                         Understory_cover = Understory_cover)
 head(Compiegne)
 ```
-
 
 ## Solution Question 1 (2)
 
@@ -114,11 +117,14 @@ We want to study the relationship between different soil variables to gain more 
 
 Use the varechem dataset.
 
+```{r, echo = T}
+library(vegan)
+data(varechem, package = "vegan")
+```
+
 ## Solution Question 2 (1)
 
 ```{r}
-data(varechem)
-
 par(mfrow = c(2,2))
 
 hist(varechem$Ca, prob=TRUE, xlab="Ca",main="Histogram of Calcium")
@@ -150,10 +156,10 @@ plot(lmMod)
 n <- length(varechem$Ca)
 di <- rank(varechem$Ca, ties.method = "average") - rank(varechem$pH, ties.method = "average")
 
-rs <-  1 - (6*sum(di^2))/(n*(n^2-1))
+rs <-  1 - (6*sum(di^2))/(n*(n^2-1)) # r-squared
 rs # Weak correlation
 
-t <- rs*sqrt((n-2)/(1-rs^2))
+t <- rs*sqrt((n-2)/(1-rs^2)) # Test statistic
 pt(t, n-2) # not significant
 
 ```

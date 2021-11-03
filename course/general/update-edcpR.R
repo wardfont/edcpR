@@ -15,7 +15,6 @@ library(edcpR)
 
 ## -------------- #
 
-
 ## This part explains how to access the vignettes and data -------------- #
 # Look at available vignettes in browser
 browseVignettes(package = "edcpR") # and click HTML for vignette you want to look at

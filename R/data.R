@@ -29,3 +29,7 @@
 #' dataset used for session 4
 #' @usage data(Compiegne_env)
 "Compiegne_env"
+
+#' dataset used for session 4
+#' @usage data(dune_spec)
+"dune_spec"
