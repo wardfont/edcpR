@@ -16,6 +16,7 @@ library(knitr)
 library(kableExtra)
 library(FD)
 library(vegan)
+library(edcpR)
 ```
 
 ## Feedback assignment 2

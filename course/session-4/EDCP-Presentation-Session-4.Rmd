@@ -1,0 +1,233 @@
+---
+title: "Session 4"
+subtitle: "Ecological Data Collection and Processing: Exercises"
+author: "Ward Fonteyn & Stef Haesen"
+date: "04/11/2021"
+knit: (function(inputFile, encoding){
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-3-document.html", output_format = "html_document",  output_dir = "knitted");
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-3-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
+  output_dir = "knitted") })
+---
+
+```{r setup, include=F, echo=F}
+knitr::opts_chunk$set(echo = FALSE)
+library(DiagrammeR)
+library(knitr)
+library(kableExtra)
+library(FD)
+library(vegan)
+library(ltm)
+```
+
+## Feedback assignment 3
+
+```{r, echo = T, eval = F}
+sorensen <- betadiver(absLeuven, "w")
+dissimilarity <- scores(sorensen)
+dissimilarity <- as.data.frame(dissimilarity)
+# Total amount of pairs with complete dissimilarity
+sum(dissimilarity==1) # 1690 pairs
+```
+
+Divide by two!
+
+# Session 4: Relationships
+
+## Format
+
+- Make small groups
+- Work through the question together and discuss which method should be used
+- After the given time one group explains their solution
+
+## Exercises for today
+
+Case studies:
+
+- Choosing the correct statistical test given a research question and a dataset
+- Extracting the results from R
+
+## Question 1 (20 min)
+ 
+Common beech (Fagus sylvatica) is increasing in Forêt de Compiegne (N. France) and we want to know if it has an effect on the forest understory species. We have sampled the understory in 26 forest plots. Some plots with, other without Fagus in the overstory. 
+
+*Research question: Does Fagus sylvatica (common beech) have an effect on the understory cover in temperate forests?*
+
+Use the Compiegne dataset. The Understory cover is the sum of all species individual.
+
+## Solution Question 1 (1)
+
+```{r, echo = T}
+Compiegne_env <- read.csv("./data/Compiegne_env.csv", sep = ";")
+Compiegne_sp <- read.csv("./data/Compiegne_sp.csv", sep = ";")
+Understory_cover <- rowSums(Compiegne_sp[2:dim(Compiegne_sp)[2]])
+Compiegne <- data.frame(plot = Compiegne_env$plot,
+                        Fagus = Compiegne_env$Fagus,
+                        Understory_cover = Understory_cover)
+head(Compiegne)
+```
+
+
+## Solution Question 1 (2)
+
+Point-biserial correlation coefficient (rp)
+
+- One variable in binary form
+- 2nd variable in quantitative form
+
+
+## Solution Question 1 (3)
+
+![](./pictures/pb.png)
+
+## Solution Question 1 (4)
+
+```{r, echo = T, eval = T}
+X = Compiegne$Understory_cover
+Y = Compiegne$Fagus
+
+n <- length(Y)
+
+a = sqrt((sum(Y)*(n-sum(Y)))/(n^2))
+sn <- sqrt((1/(n))*sum((X- mean(X))^2))
+
+rpb = a*(mean(X[Y==1])-mean(X[Y==0]))/sn
+rpb # very weak correlation
+
+t <-  rpb*sqrt((n-2)/(1-rpb^2))
+pt(t, n-2) # Not significant
+
+```
+
+## Solution Question 1 (5)
+
+```{r, echo = T}
+cor.test(Compiegne$Fagus, Compiegne$Understory_cover)
+biserial.cor(Compiegne$Understory_cover, Compiegne$Fagus, level = 2)
+
+```
+
+## Question 2 (20 min)
+
+We want to study the relationship between different soil variables to gain more insight in soil processes in Finnish marshes.
+
+*Research question: Is there a relationship between soil Ca content and soil pH?*
+
+Use the varechem dataset.
+
+## Solution Question 2 (1)
+
+```{r}
+data(varechem)
+
+par(mfrow = c(2,2))
+
+hist(varechem$Ca, prob=TRUE, xlab="Ca",main="Histogram of Calcium")
+m<-mean(varechem$Ca)
+std<-sqrt(var(varechem$Ca))
+curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
+
+hist(varechem$pH , prob=TRUE, xlab="pH",main="Histogram of pH")
+m<-mean(varechem$pH)
+std<-sqrt(var(varechem$pH))
+curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
+
+qqnorm(varechem$Ca, main="Normal Q-Q of Calcium")
+qqnorm(log(varechem$pH), main="Normal Q-Q of pH")
+```
+
+## Solution Question 2 (2)
+
+```{r}
+lmMod <- lm(Ca ~ pH, data=varechem)
+par(mfrow = c(2,2))
+plot(lmMod)
+
+```
+
+## Solution Question 2 (3)
+
+```{r, echo = T}
+n <- length(varechem$Ca)
+di <- rank(varechem$Ca, ties.method = "average") - rank(varechem$pH, ties.method = "average")
+
+rs <-  1 - (6*sum(di^2))/(n*(n^2-1))
+rs # Weak correlation
+
+t <- rs*sqrt((n-2)/(1-rs^2))
+pt(t, n-2) # not significant
+
+```
+
+## Solution Question 2 (4)
+
+```{r, echo = T}
+cor.test(varechem$Ca, varechem$pH, method = "spearman")
+```
+
+## Solution Question 2 (5)
+
+You can use the pearson correlation if:
+
+- Variables are quantitative
+- Linear relationship between two variables
+- No outliers
+- Normal distribution of variables
+- Homoscedasticity
+- Observations of X and Y are independent
+
+## Question 3 (15 min)
+
+Using the dune_spec dataset:
+
+*Research question: Is the species composition of a haypasture dune grassland closer to a hayfield dune grassland or to pasture dune grassland?*
+
+## Solution Question 3
+
+```{r, echo = T}
+dunespec <- read.csv("./data/dune_spec.csv", header = TRUE, sep = ";")
+
+vegdist(dunespec[,-1],method = "bray")
+vegdist(dunespec[,2:31],method = "bray")
+```
+
+## Question 4 (15 min)
+
+Using the varechem dataset:
+
+*Research question: How do the soil conditions compare between the plots?*
+
+## Solution Question 4 (1)
+
+```{r}
+varechem <- read.csv("./data/varechem.csv", header = TRUE, sep = ";")
+```
+
+
+```{r, echo = T}
+
+# Baresoil, Managmenttype & Use are no Soil conditions, so they can just be deleted from the data frame
+varechem <- varechem[, -c(13, 16, 17)]
+head(varechem)
+
+# Standardize variables
+varechem <- as.data.frame(scale(varechem[, 2:14]))
+
+```
+
+## Solution Question 4 (1)
+
+```{r, echo = T}
+# Euclidian distance
+euclidean <- vegdist(varechem, method = "euclidean")
+euclidean <- scores(euclidean)
+
+# Some possible conclusions...
+which(euclidean == min(euclidean[euclidean > 0]), arr.ind=TRUE)
+which(euclidean == max(euclidean), arr.ind=TRUE)
+```
+
+## Assignment
+
+**NO** Assignment this week.
+
+**Next week** assignment on this and next exercise session.

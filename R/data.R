@@ -21,3 +21,11 @@
 #' dataset used for assignment 3
 #' @usage data(nphk_a3)
 "nphk_a3"
+
+#' dataset used for session 4
+#' @usage data(Compiegne_sp)
+"Compiegne_sp"
+
+#' dataset used for session 4
+#' @usage data(Compiegne_env)
+"Compiegne_env"
