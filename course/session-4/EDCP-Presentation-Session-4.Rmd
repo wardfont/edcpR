@@ -18,6 +18,7 @@ library(FD)
 library(vegan)
 library(ltm)
 library(edcpR)
+library(tidyverse)
 ```
 
 ## Feedback assignment 3
@@ -204,14 +205,17 @@ Using the varechem dataset:
 
 *Research question: How do the soil conditions compare between the plots?*
 
-```{r}
+```{r, echo = F}
+rm("varechem")
+```
+
+```{r, echo = T}
 data(varechem, package = "vegan")
 ```
 
 ## Solution Question 4 (1)
 
 ```{r, echo = T}
-
 # Baresoil, is not a soil condition, so it can just be deleted from the data frame
 varechem <- varechem %>% select(-Baresoil)
 head(varechem)
