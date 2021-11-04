@@ -4,8 +4,8 @@ subtitle: "Ecological Data Collection and Processing: Exercises"
 author: "Ward Fonteyn & Stef Haesen"
 date: "04/11/2021"
 knit: (function(inputFile, encoding){
-  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-3-document.html", output_format = "html_document",  output_dir = "knitted");
-  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-3-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-4-document.html", output_format = "html_document",  output_dir = "knitted");
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-4-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
   output_dir = "knitted") })
 ---
 
@@ -23,15 +23,9 @@ library(tidyverse)
 
 ## Feedback assignment 3
 
-```{r, echo = T, eval = F}
-sorensen <- betadiver(absLeuven, "w")
-dissimilarity <- scores(sorensen)
-dissimilarity <- as.data.frame(dissimilarity)
-# Total amount of pairs with complete dissimilarity
-sum(dissimilarity==1) # 1690 pairs
-```
-
-Divide by two!
+- Data exploration is always first step
+- Make sure you can relate back to plot number
+- Dissimilarity is mirrored so divide by two!
 
 # Session 4: Relationships
 
@@ -107,7 +101,6 @@ pt(t, n-2) # Not significant
 ```{r, echo = T}
 cor.test(Compiegne$Fagus, Compiegne$Understory_cover)
 biserial.cor(Compiegne$Understory_cover, Compiegne$Fagus, level = 2)
-
 ```
 
 ## Question 2 (20 min)
@@ -188,7 +181,7 @@ Using the dune_spec dataset:
 
 *Research question: Is the species composition of a haypasture dune grassland closer to a hayfield dune grassland or to pasture dune grassland?*
 
-```{r}
+```{r, echo = T}
 data(dune_spec, package = "edcpR")
 ```
 
@@ -196,7 +189,6 @@ data(dune_spec, package = "edcpR")
 
 ```{r, echo = T}
 vegdist(dune_spec[,-1],method = "bray")
-vegdist(dune_spec[,2:31],method = "bray")
 ```
 
 ## Question 4 (15 min)
@@ -240,4 +232,4 @@ which(euclidean == max(euclidean), arr.ind=TRUE)
 
 **NO** Assignment this week.
 
-**Next week** assignment on this and the next exercise session.
+**Next session** assignment on this and the next exercise session.

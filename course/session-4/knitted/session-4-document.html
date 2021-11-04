@@ -175,12 +175,11 @@ pre code {
 
 <div id="feedback-assignment-3" class="section level2">
 <h2>Feedback assignment 3</h2>
-<pre class="r"><code>sorensen &lt;- betadiver(absLeuven, &quot;w&quot;)
-dissimilarity &lt;- scores(sorensen)
-dissimilarity &lt;- as.data.frame(dissimilarity)
-# Total amount of pairs with complete dissimilarity
-sum(dissimilarity==1) # 1690 pairs</code></pre>
-<p>Divide by two!</p>
+<ul>
+<li>Data exploration is always first step</li>
+<li>Make sure you can relate back to plot number</li>
+<li>Dissimilarity is mirrored so divide by two!</li>
+</ul>
 </div>
 <div id="session-4-relationships" class="section level1">
 <h1>Session 4: Relationships</h1>
@@ -328,14 +327,11 @@ pt(t, n-2) # not significant</code></pre>
 <h2>Question 3 (15 min)</h2>
 <p>Using the dune_spec dataset:</p>
 <p><em>Research question: Is the species composition of a haypasture dune grassland closer to a hayfield dune grassland or to pasture dune grassland?</em></p>
+<pre class="r"><code>data(dune_spec, package = &quot;edcpR&quot;)</code></pre>
 </div>
 <div id="solution-question-3" class="section level2">
 <h2>Solution Question 3</h2>
 <pre class="r"><code>vegdist(dune_spec[,-1],method = &quot;bray&quot;)</code></pre>
-<pre><code>##           1         2
-## 2 0.6393443          
-## 3 0.5517241 0.2289157</code></pre>
-<pre class="r"><code>vegdist(dune_spec[,2:31],method = &quot;bray&quot;)</code></pre>
 <pre><code>##           1         2
 ## 2 0.6393443          
 ## 3 0.5517241 0.2289157</code></pre>
@@ -381,7 +377,7 @@ which(euclidean == min(euclidean[euclidean &gt; 0]), arr.ind=TRUE)</code></pre>
 <div id="assignment" class="section level2">
 <h2>Assignment</h2>
 <p><strong>NO</strong> Assignment this week.</p>
-<p><strong>Next week</strong> assignment on this and the next exercise session.</p>
+<p><strong>Next session</strong> assignment on this and the next exercise session.</p>
 </div>
 </div>
 

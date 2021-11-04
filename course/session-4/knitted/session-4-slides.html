@@ -179,13 +179,11 @@ slide:not(.current) .plotly.html-widget{
 
 <slide class=""><hgroup><h2>Feedback assignment 3</h2></hgroup><article  id="feedback-assignment-3">
 
-<pre class = 'prettyprint lang-r'>sorensen &lt;- betadiver(absLeuven, &quot;w&quot;)
-dissimilarity &lt;- scores(sorensen)
-dissimilarity &lt;- as.data.frame(dissimilarity)
-# Total amount of pairs with complete dissimilarity
-sum(dissimilarity==1) # 1690 pairs</pre>
-
-<p>Divide by two!</p>
+<ul>
+<li>Data exploration is always first step</li>
+<li>Make sure you can relate back to plot number</li>
+<li>Dissimilarity is mirrored so divide by two!</li>
+</ul>
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Session 4: Relationships</h2></hgroup><article  id="session-4-relationships">
 
@@ -356,15 +354,11 @@ pt(t, n-2) # not significant</pre>
 
 <p><em>Research question: Is the species composition of a haypasture dune grassland closer to a hayfield dune grassland or to pasture dune grassland?</em></p>
 
+<pre class = 'prettyprint lang-r'>data(dune_spec, package = &quot;edcpR&quot;)</pre>
+
 </article></slide><slide class=""><hgroup><h2>Solution Question 3</h2></hgroup><article  id="solution-question-3">
 
 <pre class = 'prettyprint lang-r'>vegdist(dune_spec[,-1],method = &quot;bray&quot;)</pre>
-
-<pre >##           1         2
-## 2 0.6393443          
-## 3 0.5517241 0.2289157</pre>
-
-<pre class = 'prettyprint lang-r'>vegdist(dune_spec[,2:31],method = &quot;bray&quot;)</pre>
 
 <pre >##           1         2
 ## 2 0.6393443          
@@ -418,7 +412,7 @@ which(euclidean == min(euclidean[euclidean &gt; 0]), arr.ind=TRUE)</pre>
 
 <p><strong>NO</strong> Assignment this week.</p>
 
-<p><strong>Next week</strong> assignment on this and the next exercise session.</p></article></slide>
+<p><strong>Next session</strong> assignment on this and the next exercise session.</p></article></slide>
 
 
   <slide class="backdrop"></slide>
