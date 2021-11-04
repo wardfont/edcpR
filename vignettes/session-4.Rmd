@@ -1,0 +1,62 @@
+---
+title: "session-4"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{session-4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Question 1
+ 
+Common beech (Fagus sylvatica) is increasing in Forêt de Compiegne (N. France) and we want to know if it has an effect on the forest understory species. We have sampled the understory in 26 forest plots. Some plots with, other without Fagus in the overstory. 
+
+*Research question: Does Fagus sylvatica (common beech) have an effect on the understory cover in temperate forests?*
+
+Use the Compiegne datasets. The Understory cover is the sum of all species individuals:
+
+```{r, echo = T}
+library(edcpR)
+data(Compiegne_env, Compiegne_sp, package = "edcpR")
+```
+
+
+## Question 2
+
+We want to study the relationship between different soil variables to gain more insight in soil processes in Finnish marshes.
+
+*Research question: Is there a relationship between soil Ca content and soil pH?*
+
+Use the varechem dataset:
+
+```{r, echo = T}
+library(vegan)
+data(varechem, package = "vegan")
+```
+
+## Question 3
+
+Using the dune_spec dataset:
+
+*Research question: Is the species composition of a haypasture dune grassland closer to a hayfield dune grassland or to pasture dune grassland?*
+
+```{r, echo = T}
+data(dune_spec, package = "edcpR")
+```
+
+## Question 4
+
+Using the varechem dataset:
+
+*Research question: How do the soil conditions compare between the plots?*
+
+```{r, echo = T}
+data(varechem, package = "vegan")
+```
