@@ -1,5 +1,5 @@
 ---
-title: "session-4"
+title: "Session 4"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{session-4}
@@ -22,7 +22,7 @@ Common beech (Fagus sylvatica) is increasing in Forêt de Compiegne (N. France) 
 
 Use the Compiegne datasets. The Understory cover is the sum of all species individuals:
 
-```{r, echo = T}
+```{r, echo = T, eval=F}
 library(edcpR)
 data(Compiegne_env, Compiegne_sp, package = "edcpR")
 ```
@@ -36,7 +36,7 @@ We want to study the relationship between different soil variables to gain more 
 
 Use the varechem dataset:
 
-```{r, echo = T}
+```{r, echo = T, eval=F}
 library(vegan)
 data(varechem, package = "vegan")
 ```
@@ -47,7 +47,7 @@ Using the dune_spec dataset:
 
 *Research question: Is the species composition of a haypasture dune grassland closer to a hayfield dune grassland or to pasture dune grassland?*
 
-```{r, echo = T}
+```{r, echo = T, eval=F}
 data(dune_spec, package = "edcpR")
 ```
 
@@ -57,6 +57,6 @@ Using the varechem dataset:
 
 *Research question: How do the soil conditions compare between the plots?*
 
-```{r, echo = T}
+```{r, echo = T, eval=F}
 data(varechem, package = "vegan")
 ```
