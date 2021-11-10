@@ -27,31 +27,33 @@ Defining the correct statistical test based on different case studies and implem
 
 ## Question 1
 
+```{r, echo=T}
+# First update package
+library(edcpR)
+data(plant_growth, package = "edcpR")
+```
+
 We study the effect of a new fertilizer (NPK) on the growth of maize. We measured the yield in 10 control plots (Ctrl) vs 10 plots that received the fertilizer treatment.
 
 **Research question**: What is the effect of fertilizer on the biomass yield of maize?
 
-## Question 1
+## Question 1 Solution (1)
 
 ```{r, echo=T, eval=T}
-
-plant_growth <- read.csv("./data/plantgrowth.csv", header = TRUE, sep = ";")
+data(plant_growth, package = "edcpR")
 colnames(plant_growth) <- c("Yield", "Treatment")
 head(plant_growth)
-
 ```
 
-## Question 1
+## Question 1 Solution (2)
 
 ```{r, echo=T, eval=T}
-
 str(plant_growth)
 plant_growth$Treatment <- as.factor(plant_growth$Treatment)
 str(plant_growth)
-
 ```
 
-## Question 1
+## Question 1 Solution (3)
 
 ```{r, echo=T, eval=T}
 
@@ -66,24 +68,20 @@ wilcox.test(Yield ~ Treatment, data = plant_growth)
 
 # Let's consider sample size being large enough...
 
-## Question 1
+## Question 1 Solution (4)
 
 ```{r, echo=F, eval=T}
-
 m<-mean(plant_growth$Yield)
 std<-sqrt(var(plant_growth$Yield))
-
 ```
 
 ```{r, echo=T, eval=T}
 # We can check if normality holds
 hist(plant_growth$Yield, prob=TRUE, xlab="Yield",main="Histogram of Yield")
 curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
-
-
 ```
 
-## Question 1
+## Question 1 Solution (5)
 
 ```{r, echo=T, eval=T}
 
@@ -92,66 +90,58 @@ qqline(plant_growth$Yield, col = "red", lwd = 2)
 
 ```
 
-## Question 1
+## Question 1 Solution (6)
 
 ```{r, echo=T, eval=T}
-
 # Statistical test for normality (Shapiro-Wilk)
 # Not recommended, because it is too strict
 shapiro.test(plant_growth$Yield)
-
 ```
 
-## Question 1
+## Question 1 Solution (7)
 
 ```{r, echo=T, eval=T}
-
 # We can check if homoscedasticity holds
 # Strong evidence for normal distribution --> Bartlett's test has better performance
 bartlett.test(Yield ~ Treatment, data = plant_growth)
-
 ```
 
-## Question 1
+## Question 1 Solution (8)
 
 ```{r, echo=T, eval=T}
-
 # We can use the unpaired t.test (independent samples)
 t.test(Yield ~ Treatment, data = plant_growth, paired = FALSE)
-
 ```
 
 ## Question 2
+
+```{r, echo=T}
+library(datasets)
+data(iris, package = "datasets")
+```
 
 We studied the differences in flower dimensions between three iris species (Iris setosa, Iris versicolor, Iris virginica). We sampled 10 individuals of each species and measured the sepal and petal length and width.
 
 **Research question**: Do the three iris species have different sepal lengths?
 
-## Question 2
+## Question 2 Solution (1)
 
 ```{r, echo=T, eval=T}
-
-iris <- read.csv("./data/iris.csv", header = TRUE, sep = ",")
+data(iris, package = "datasets")
 head(iris)
-iris <- iris[, c(2,6)]
+iris <- iris[, c(1,5)]
 colnames(iris) <- c("sepal_length", "Species")
-
 ```
 
-## Question 2
+## Question 2 Solution (2)
 
 ```{r, echo=T, eval=T}
-
 str(iris)
-iris$Species <- as.factor(iris$Species)
-str(iris)
-
 ```
 
-## Question 2
+## Question 2 Solution (3)
 
 ```{r, echo=T, eval=T}
-
 # Difference in a quantitative variable between 3 samples
 # Sample size = 30 
 # 10 observations per sample --> non-parametric test preferred!
@@ -160,170 +150,117 @@ str(iris)
 
 # Use the kruskal-Wallis test
 kruskal.test(sepal_length ~ Species, data = iris)
-
 ```
 
-## Question 2
+## Question 2 Solution (4)
 
 ```{r, echo=T, eval=T}
-
 # Post-hoc testing to check between samples
 library(FSA)
-
-```
-
-## Question 2
-
-```{r, echo=T, eval=T}
-
-# Benjamini-Hochberg adjustment, no Bonferonni (too strict)
+# Benjamini-Hochberg adjustment, not Bonferonni (too strict)
 dunnTest(sepal_length ~ Species, data = iris, method= "bh")
-
 ```
 
 # Let's consider sample size being large enough...
 
-## Question 2
+## Question 2 Solution (5)
 
 ```{r, echo=F, eval=T}
-
 m<-mean(iris$sepal_length)
 std<-sqrt(var(iris$sepal_length))
 
-```
-
-```{r, echo=T, eval=T}
-
 hist(iris$sepal_length , prob=TRUE, xlab="Sepal lenghth",main="Histogram of sepal length")
 curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
-
-
 ```
 
-## Question 2
+## Question 2 Solution (6)
 
 ```{r, echo=T, eval=T}
-
 qqnorm(iris$sepal_length, main="Normal Q-Q of sepal length")
 qqline(iris$sepal_length, col = "red", lwd = 2)
-
 ```
 
-## Question 2
+## Question 2 Solution (7)
 
 ```{r, echo=T, eval=T}
-
 # See if data transformation can solve the problem
 iris$log_sl <- log(iris$sepal_length)
 iris$sqrt_sl <- sqrt(iris$sepal_length)
-
 ```
 
-## Question 2
+## Question 2 Solution (8)
 
 ```{r, echo=F, eval=T}
-
 m<-mean(iris$log_sl)
 std<-sqrt(var(iris$log_sl))
-
-```
-
-```{r, echo=T, eval=T}
 
 hist(iris$log_sl , prob=TRUE, xlab="Log(Sepal lenghth)",main="Logaritmic transformation")
 curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
 
 ```
 
-## Question 2
+## Question 2 Solution (9)
 
 ```{r, echo=T, eval=T}
-
 qqnorm(iris$log_sl, main="Logaritmic transformation")
 qqline(iris$log_sl, col = "red", lwd = 2)
-
 ```
 
-## Question 2
+## Question 2 Solution (10)
 
 ```{r, echo=F, eval=T}
-
 m<-mean(iris$sqrt_sl)
 std<-sqrt(var(iris$sqrt_sl))
 
-```
-
-```{r, echo=T, eval=T}
-
 hist(iris$sqrt_sl , prob=TRUE, xlab="sqrt(Sepal lenghth)",main="Square Root Transformation")
 curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
-
-
 ```
 
-## Question 2
+## Question 2 Solution (11)
 
 ```{r, echo=T, eval=T}
-
 qqnorm(iris$sqrt_sl, main="Square Root Transformation")
 qqline(iris$sqrt_sl, col = "red", lwd = 2)
-
 ```
 
-## Question 2
+## Question 2 Solution (12)
 
 ```{r, echo=T, eval=T}
-
 # Statistical test for normality (Shapiro-Wilk)
 # Not recommended, because it is too strict
 shapiro.test(iris$sepal_length)
-
 ```
 
 ```{r, echo=T, eval=F}
-
 shapiro.test(iris$log_sl)
 shapiro.test(iris$sqrt_sl)
-
 ```
 
-## Question 2
+## Question 2 Solution (13)
 
 ```{r, echo=T, eval=T}
-
 # We can check if homoscedasticity holds
 library(car)
 
-```
-
-## Question 2
-
-```{r, echo=T, eval=T}
-
 # No strong evidence for normal distribution --> Levene's test has better performance
 leveneTest(sepal_length ~ Species, data = iris)
-
 ```
 
-## Question 2
+## Question 2 Solution (14)
 
 ```{r, echo=T, eval=T}
-
 # Let's consider all assumptions are holding...
 # Compute the ANOVA
 res.aov <- aov(sepal_length ~ Species, data = iris)
 summary(res.aov)
-
 ```
 
-## Question 2
+## Question 2 Solution (15)
 
 ```{r, echo=T, eval=T}
-
 # Post-hoc testing to check between samples
 # Tuckey post-hoc test
 TukeyHSD(res.aov)
-
 ```
 
 ## Question 3

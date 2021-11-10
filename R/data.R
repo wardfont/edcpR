@@ -50,4 +50,12 @@
 #' @usage data(plant_growth)
 "plant_growth"
 
+#' dataset used for session 5
+#' @usage data(meerdaal)
+"meerdaal"
+
+#' dataset used for session 5
+#' @usage data(kembel_sp)
+"kembel_sp"
+
 
