@@ -33,3 +33,21 @@
 #' dataset used for session 4
 #' @usage data(dune_spec)
 "dune_spec"
+
+#' dataset used for assignment 4
+#' @usage data(GutterTor_Ellenberg)
+"GutterTor_Ellenberg"
+
+#' dataset used for assignment 4
+#' @usage data(GutterTor_env)
+"GutterTor_env"
+
+#' dataset used for assignment 4
+#' @usage data(GutterTor_sp)
+"GutterTor_sp"
+
+#' dataset used for session 5
+#' @usage data(plant_growth)
+"plant_growth"
+
+

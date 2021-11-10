@@ -1,0 +1,434 @@
+---
+title: "Session 5"
+subtitle: "Ecological Data Collection and Processing: Exercises"
+author: "Ward Fonteyn & Stef Haesen"
+date: "18/11/2020"
+knit: (function(inputFile, encoding){
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-4-document.html", output_format = "html_document",  output_dir = "knitted");
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-4-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
+  output_dir = "knitted") })
+---
+
+```{r setup, include=F, echo=F}
+knitr::opts_chunk$set(echo = FALSE)
+library(DiagrammeR)
+library(knitr)
+library(kableExtra)
+library(FD)
+library(vegan)
+```
+
+
+# Session 5: Comparing means
+
+## Exercises for today
+
+Defining the correct statistical test based on different case studies and implement this in R.
+
+## Question 1
+
+We study the effect of a new fertilizer (NPK) on the growth of maize. We measured the yield in 10 control plots (Ctrl) vs 10 plots that received the fertilizer treatment.
+
+**Research question**: What is the effect of fertilizer on the biomass yield of maize?
+
+## Question 1
+
+```{r, echo=T, eval=T}
+
+plant_growth <- read.csv("./data/plantgrowth.csv", header = TRUE, sep = ";")
+colnames(plant_growth) <- c("Yield", "Treatment")
+head(plant_growth)
+
+```
+
+## Question 1
+
+```{r, echo=T, eval=T}
+
+str(plant_growth)
+plant_growth$Treatment <- as.factor(plant_growth$Treatment)
+str(plant_growth)
+
+```
+
+## Question 1
+
+```{r, echo=T, eval=T}
+
+# Difference in a quantitative variable between two groups
+# Sample size = 20
+# Too small for a parametric test --> non-parametric test preferred!
+# Independent samples? --> check!
+# Independent two-group Mann-Whitney test
+wilcox.test(Yield ~ Treatment, data = plant_growth)
+
+```
+
+# Let's consider sample size being large enough...
+
+## Question 1
+
+```{r, echo=F, eval=T}
+
+m<-mean(plant_growth$Yield)
+std<-sqrt(var(plant_growth$Yield))
+
+```
+
+```{r, echo=T, eval=T}
+# We can check if normality holds
+hist(plant_growth$Yield, prob=TRUE, xlab="Yield",main="Histogram of Yield")
+curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
+
+
+```
+
+## Question 1
+
+```{r, echo=T, eval=T}
+
+qqnorm(plant_growth$Yield, main="Normal Q-Q of Yield")
+qqline(plant_growth$Yield, col = "red", lwd = 2)
+
+```
+
+## Question 1
+
+```{r, echo=T, eval=T}
+
+# Statistical test for normality (Shapiro-Wilk)
+# Not recommended, because it is too strict
+shapiro.test(plant_growth$Yield)
+
+```
+
+## Question 1
+
+```{r, echo=T, eval=T}
+
+# We can check if homoscedasticity holds
+# Strong evidence for normal distribution --> Bartlett's test has better performance
+bartlett.test(Yield ~ Treatment, data = plant_growth)
+
+```
+
+## Question 1
+
+```{r, echo=T, eval=T}
+
+# We can use the unpaired t.test (independent samples)
+t.test(Yield ~ Treatment, data = plant_growth, paired = FALSE)
+
+```
+
+## Question 2
+
+We studied the differences in flower dimensions between three iris species (Iris setosa, Iris versicolor, Iris virginica). We sampled 10 individuals of each species and measured the sepal and petal length and width.
+
+**Research question**: Do the three iris species have different sepal lengths?
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+iris <- read.csv("./data/iris.csv", header = TRUE, sep = ",")
+head(iris)
+iris <- iris[, c(2,6)]
+colnames(iris) <- c("sepal_length", "Species")
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+str(iris)
+iris$Species <- as.factor(iris$Species)
+str(iris)
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+# Difference in a quantitative variable between 3 samples
+# Sample size = 30 
+# 10 observations per sample --> non-parametric test preferred!
+# Independent samples? --> check!
+# Kruskall-Wallis test + posthoc
+
+# Use the kruskal-Wallis test
+kruskal.test(sepal_length ~ Species, data = iris)
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+# Post-hoc testing to check between samples
+library(FSA)
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+# Benjamini-Hochberg adjustment, no Bonferonni (too strict)
+dunnTest(sepal_length ~ Species, data = iris, method= "bh")
+
+```
+
+# Let's consider sample size being large enough...
+
+## Question 2
+
+```{r, echo=F, eval=T}
+
+m<-mean(iris$sepal_length)
+std<-sqrt(var(iris$sepal_length))
+
+```
+
+```{r, echo=T, eval=T}
+
+hist(iris$sepal_length , prob=TRUE, xlab="Sepal lenghth",main="Histogram of sepal length")
+curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
+
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+qqnorm(iris$sepal_length, main="Normal Q-Q of sepal length")
+qqline(iris$sepal_length, col = "red", lwd = 2)
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+# See if data transformation can solve the problem
+iris$log_sl <- log(iris$sepal_length)
+iris$sqrt_sl <- sqrt(iris$sepal_length)
+
+```
+
+## Question 2
+
+```{r, echo=F, eval=T}
+
+m<-mean(iris$log_sl)
+std<-sqrt(var(iris$log_sl))
+
+```
+
+```{r, echo=T, eval=T}
+
+hist(iris$log_sl , prob=TRUE, xlab="Log(Sepal lenghth)",main="Logaritmic transformation")
+curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+qqnorm(iris$log_sl, main="Logaritmic transformation")
+qqline(iris$log_sl, col = "red", lwd = 2)
+
+```
+
+## Question 2
+
+```{r, echo=F, eval=T}
+
+m<-mean(iris$sqrt_sl)
+std<-sqrt(var(iris$sqrt_sl))
+
+```
+
+```{r, echo=T, eval=T}
+
+hist(iris$sqrt_sl , prob=TRUE, xlab="sqrt(Sepal lenghth)",main="Square Root Transformation")
+curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
+
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+qqnorm(iris$sqrt_sl, main="Square Root Transformation")
+qqline(iris$sqrt_sl, col = "red", lwd = 2)
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+# Statistical test for normality (Shapiro-Wilk)
+# Not recommended, because it is too strict
+shapiro.test(iris$sepal_length)
+
+```
+
+```{r, echo=T, eval=F}
+
+shapiro.test(iris$log_sl)
+shapiro.test(iris$sqrt_sl)
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+# We can check if homoscedasticity holds
+library(car)
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+# No strong evidence for normal distribution --> Levene's test has better performance
+leveneTest(sepal_length ~ Species, data = iris)
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+# Let's consider all assumptions are holding...
+# Compute the ANOVA
+res.aov <- aov(sepal_length ~ Species, data = iris)
+summary(res.aov)
+
+```
+
+## Question 2
+
+```{r, echo=T, eval=T}
+
+# Post-hoc testing to check between samples
+# Tuckey post-hoc test
+TukeyHSD(res.aov)
+
+```
+
+## Question 3
+
+We have vegetation records in Meerdaal forest from 50 years ago. We know the exact location of the 13 plots and sample them again in 2018.
+
+**Research question**: Is there a difference in species richness between old and recent sampling of forest fragments in Meerdaal forest?
+
+## Question 3
+
+```{r, echo=T, eval=T}
+
+meerdaal <- read.csv("./data/meerdaal.csv", header = TRUE, sep = ";")
+head(meerdaal)
+colnames(meerdaal) <- c("Plot", "Old", "Recent")
+
+# Difference in a quantitative variable between 2 paired samples
+# Sample size = 13 
+# Too small for a parametric test --> non-parametric test
+# Assumption: independent samples --> false, it is resampling of the same plots!
+```
+
+## Question 3
+
+```{r, echo=T, eval=T}
+
+# Wilcoxon signed rank test
+wilcox.test(meerdaal$Old, meerdaal$Recent, paired = TRUE)
+
+```
+
+## Question 4
+
+We measured the abundance of species in percent cover of different plant species in 20x20m quadrats in grasslands in plots in two habitat types in Alberta. 
+
+**Research question**: Is there a difference in total species richness between two grassland types?
+
+## Question 4
+
+```{r, echo=T, eval=T}
+
+# We are comparing gamma diversity!
+# If we want to compare the mean diversity per plot (alfa diversity, use t-test)
+# Chao estimators of two groups with t-test (see Session 3: Diversity)
+kembel_sp <- read.csv("./data/kembel_sp.csv", header = TRUE, sep = ",")
+
+# Extract plots of mixed grasslands
+mixed <- kembel_sp[-c(8:17), 2:77 ]
+
+# Extract plots with fescue grass
+fes <- kembel_sp[c(8:17), 2:77]
+
+```
+
+## Question 4
+
+```{r, echo=F, eval=T}
+
+library(vegan)
+
+```
+
+```{r, echo=T, eval=T}
+
+# Get the chao-estimators for each grassland
+mixed_gamma <- specpool(mixed)
+fes_gamma <- specpool(fes)
+
+chao_mixed <- mixed_gamma$chao
+chao_mixed_se <- mixed_gamma$chao.se
+chao_fes <- fes_gamma$chao
+chao_fes_se <- fes_gamma$chao.se
+
+```
+
+## Question 4
+
+```{r, echo=T, eval=T}
+
+# Take 100 random samples from a normal distribution!
+sample_mixed <- rnorm(100, mean = chao_mixed, sd = chao_mixed_se)
+sample_fes <- rnorm(100, mean = chao_fes, sd = chao_fes_se)
+
+```
+
+## Question 4
+
+```{r, echo=T, eval=T}
+
+# Perform a t-test
+t.test(sample_mixed, sample_fes, paired = FALSE)
+
+```
+
+## Assignment 4
+
+Available on Toledo under Assignments (Assignment 4). Submit:
+
+* Word-document (**Surname_FirstName_Assignment4.docx**) 
+  * explain your methods, interpretations and conclusions
+  * maximum 1 page
+  * NO PDF-file
+* R-script (**Surname_FirstName_Assignment4.R**)
+* **two weeks** for this assignment!
+
+&nbsp;
+
+Upload everything before **November 18, 12 pm (= at noon!)**.
