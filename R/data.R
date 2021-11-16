@@ -58,4 +58,26 @@
 #' @usage data(kembel_sp)
 "kembel_sp"
 
+#' dataset used for session 5
+#' @usage data(iris_s5)
+"iris_s5"
 
+#' dataset used for assgnment 4
+#' @usage data(GutterTor_Ellenberg)
+"GutterTor_Ellenberg"
+
+#' dataset used for assgnment 4
+#' @usage data(GutterTor_env)
+"GutterTor_env"
+
+#' dataset used for assgnment 4
+#' @usage data(GutterTor_sp)
+"GutterTor_sp"
+
+#' dataset used for session 6
+#' @usage data(varechem_s6)
+"varechem_s6"
+
+#' dataset used for session 6
+#' @usage data(varespec_s6)
+"varespec_s6"

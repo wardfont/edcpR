@@ -1,0 +1,306 @@
+---
+title: "Session 5"
+subtitle: "Ecological Data Collection and Processing: Exercises"
+author: "Ward Fonteyn & Stef Haesen"
+date: "02/12/2021"
+knit: (function(inputFile, encoding){
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-6-document.html", output_format = "html_document",  output_dir = "knitted");
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-6-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
+  output_dir = "knitted") })
+---
+
+```{r setup, include=F, echo=F}
+knitr::opts_chunk$set(echo = FALSE)
+library(DiagrammeR)
+library(knitr)
+library(kableExtra)
+library(vegan)
+library(ape)
+library(FD)
+```
+
+
+# Session 6: Ordination
+
+## Ordination
+
+- Multivariate analysis
+- Detect patterns
+- Emphasis on continuity in the data
+
+Goal: reduce dimensions
+
+## Ordination methods
+
+- PCA: Principal component analysis
+- PCoA: Principal coordinate analysis
+- NMDS: Non-metric multidimensional scaling
+
+## Datasets
+
+- varespec: cover values of 44 psecies in 24 plots in lichen pastures
+- varechem: soil characteristics for the same plots
+
+## Exercises
+
+**PCA**
+
+- Perform a PCA on the environmental data and plot the results.
+- Extract the eigen values and calculate the amount of variation explained by each axis.
+
+**PCoA**
+
+- Repeat the same tasks with the PCoA.
+
+**NMDS**
+
+- Perform a NMDS on the species data. Which dissimilarity index should be used?
+- Try to plot the results and add the environmental variables to the plot.
+
+## Exercises (40 min)
+  
+**PCA**
+
+- Perform a PCA on the environmental data and plot the results.
+  - **TIP**: vegan package
+- Extract the eigen values and calculate the amount of variation explained by each axis.
+
+**PCoA**
+
+- Repeat the same tasks with the PCoA
+  - **TIP**: ape package
+  - **TIP**: gowdis() function from FD package
+
+## Loading data
+
+```{r, echo = T}
+
+sp <- read.csv(file = "./data/varespec.csv", header = TRUE, row.names = 1, sep = ",")
+env <- read.csv(file = "./data/varechem.csv", header = TRUE, row.names = 1, sep = ";")
+env$Managementtype <- as.factor(env$Managementtype)
+env$Use <- as.factor(env$Use)
+
+```
+
+## PCA (1)
+```{r, echo = T}
+# rda without conditions or constraints is PCA
+# We have nutrient contents (g/kg), soil depth (cm), pH (1-14)...
+# scale = TRUE for data on different scales!!
+PCA <- rda(env[,1:10], scale=TRUE) 
+
+```
+
+## PCA (2)
+```{r, echo = T}
+# Bar plot of relative eigen values (= percentage variance explained by each axis)
+eig <- as.vector(PCA$CA$eig)
+barplot(eig/sum(eig), xlab = "Principal Component", 
+          ylab = "Explained variance", ylim = c(0, 0.5))
+
+```
+
+## PCA (3)
+```{r, echo = T}
+# Calculate the percent of variance explained by first two or three axes
+# First two axes explain 63% of the variance
+# First three axes explain 73% of the variance, this is ok!
+sum((eig/sum(eig))[1:2])
+sum((eig/sum(eig))[1:3])
+
+# Three dimensional representation is possible, but more difficult
+# We prefer to plot in two dimensions
+# Solution: plot PC1 Vs. PC2 & PC1 vs. PC3
+
+```
+
+## PCA (4)
+
+```{r, echo = T}
+# In a biplot of a PCA, environment's scores are drawn as arrows
+# These arrows point in direction of increasing value for that variable
+biplot(PCA, choices=c(1,2), type=c("text","points")) 
+```
+
+## PCA (5)
+
+```{r, echo = T}
+# biplot of axis 1 vs 3
+biplot(PCA, choices=c(1,3), type=c("text","points")) 
+```
+
+## Exercises
+
+**PCoA**
+
+- Repeat the same tasks with the PCoA
+  - **TIP**: ape package
+  - **TIP**: gowdis() function from FD package
+
+## PCoA (1)
+
+```{r, echo = T}
+# First step: create a distance matrix
+# We have quantitative and categorical environmental variables
+# We thus use Gower distance for mixed variables
+dist <- gowdis(env)
+
+```
+
+## PCoA (2)
+
+```{r, echo = T}
+# Perform PCoA & plot the eigenvalues
+PCoA <- pcoa(dist)
+barplot(PCoA$values$Relative_eig, xlab = "Principal Component", 
+          ylab = "Explained variance", ylim = c(0, 0.45)) 
+
+```
+
+
+## PCoA (3)
+
+```{r, echo = T}
+# Some distance measures may result in negative eigenvalues --> add a correction
+PCoA <- pcoa(dist, correction = "cailliez")
+barplot(PCoA$values$Rel_corr_eig, xlab = "Principal Component", 
+          ylab = "Explained variance", ylim = c(0, 0.3))
+
+```
+
+## PCoA (4)
+
+```{r, echo = T, warning=F}
+# There are no variables plotted on this biplot (input = dissimilarity matrix) 
+biplot.pcoa(PCoA)
+
+```
+
+## PCoA (5)
+
+```{r, echo = T, warning=F}
+# However, we could work around this problem
+biplot.pcoa(PCoA, env[1:10])
+
+```
+
+## Exercises (40 min)
+
+**NMDS**
+
+- Perform a NMDS on the species data. Which dissimilarity index should be used?
+  - **TIP**: metaMDS function from vegan package
+- Try to plot the results and add the environmental vairables to the plot
+  - **TIP**: envfit function from vegan package
+
+## NMDS (1)
+
+```{r, echo = T, eval = T}
+# Determine the number of dimensions for the final NMDS
+# Run NMDS for 1 up to 10 dimensions
+# Bray-Curtis distance matrix for species matrix with cover data
+# If you don`t provide a dissimilarity matrix, metaMDS automatically applies Bray-Curtis
+A<-vector() 
+B<-vector() 
+
+for (i in 1:10) {
+  NDMS <- metaMDS(sp, distance = "bray", k=i, autotransform = FALSE, trymax=100)
+  solution <- NDMS$converged
+  stress <- NDMS$stress
+  A1 <- cbind(solution,stress)
+  B <- rbind(B,i)
+  A <- rbind(A,A1)
+}
+```
+
+## NMDS (2)
+
+```{r, echo = T, eval = T}
+#Combine results of all NMDS
+NMDSoutput<-data.frame(B,A)
+names(NMDSoutput) <- c("k","Solution?","Stress")
+NMDSoutput
+
+```
+
+## NMDS (3)
+
+```{r, echo = F}
+plot(NMDSoutput$Stress, xlab = "# of Dimensions", ylab = "Stress", main = "NMDS stress plot")
+
+```
+
+## NMDS (4)
+
+```{r, echo = F}
+plot(NMDSoutput$`Solution?`, xlab = "# of Dimensions", ylab = "Solution", main = "NMDS convergence plot")
+```
+
+## NMDS (5)
+
+```{r, echo = T, eval=T}
+# Final result depends on the initial random placement of the points 
+# We need set a seed to make the results reproducible
+set.seed(999)
+
+NMDSfinal <- metaMDS(sp, distance = "bray", k=2, autotransform = FALSE, trymax=100 )
+```
+
+## NMDS (6)
+
+```{r, echo = T, eval= T}
+# We can again check the stress
+NMDSfinal$stress
+
+```
+
+## NMDS (7)
+
+```{r, echo = T, eval= T}
+# Let’s check the results of NMDSfinal with a stressplot
+stressplot(NMDSfinal)
+
+```
+
+## NMDS (8)
+
+```{r}
+#Plot results wit text for species
+plot(NMDSfinal, type = "t")
+
+```
+
+## NMDS (9)
+
+```{r}
+#Plot results wit points for species
+plot(NMDSfinal, type = "p")
+```
+
+## NMDS (10)
+
+```{r, echo = T}
+# There are no environmental variables on the plot (same as PCoA)
+# We can again work around this
+ef <- envfit(NMDSfinal, env[1:10], permu = 999)
+ef
+
+```
+
+## NMDS (11)
+
+```{r, echo = T}
+# Plot the vectors of the significant correlations
+plot(NMDSfinal, type = "t", display = "sites")
+plot(ef, p.max = 0.05)
+
+```
+
+## Assignment
+
+There is NO assignment for this week's session:
+
+ - Combined assigned for the session on ordination and classification
+ - Online after the session on classification (December 3)
+ 
+Remember to upload Assignment 4 (Relationships & Comparing Means) by next week: **November 18, 12 pm (= at noon!)**
