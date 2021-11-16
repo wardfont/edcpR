@@ -1,0 +1,40 @@
+---
+title: "Assignment 4"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{assignment-4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edcpR)
+```
+
+We want to study the effect of soil pH and moisture content on species diversity in grasslands in Europe. We want to study many grassland sites across Europe, but financially and logistically it is not possible to measure pH and moisture content in all plots. We collect soil samples in in a small subset of the plots (25) and see if we could use Ellenberg indicator values instead.
+
+Use the GutterTor datasets:
+```{r, echo = T}
+data(GutterTor_Ellenberg, GutterTor_env, GutterTor_sp, package = "edcpR")
+```
+
+Answer the following research questions:
+
+- Are the Ellenberg values good indicators of the soil pH and moisture content in grasslands?
+- Does soil pH differ between grassland types?
+
+Write a short report on your method and results, no longer than 1.5 pages. Remember to annotate your script and inlcude all parts of the analysis. 
+
+Upload both the report and the script to Toledo:
+
+- Surname_Firstname_assignment4.docx
+- Surname_Firstname_assignment4.R
+
+Upload everything before **December 2nd, 12 pm (= at noon!)**.

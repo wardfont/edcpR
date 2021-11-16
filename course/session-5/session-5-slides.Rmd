@@ -16,6 +16,12 @@ library(knitr)
 library(kableExtra)
 library(FD)
 library(vegan)
+library(datasets)
+library(datasets)
+library(FSA)
+library(dplyr)
+library(edcpR)
+library(car)
 ```
 
 
@@ -125,6 +131,12 @@ We studied the differences in flower dimensions between three iris species (Iris
 **Research question**: Do the three iris species have different sepal lengths?
 
 ## Question 2 Solution (1)
+
+```{r}
+unloadNamespace("iris")
+rm("iris")
+```
+
 
 ```{r, echo=T, eval=T}
 data(iris, package = "datasets")
@@ -265,15 +277,18 @@ TukeyHSD(res.aov)
 
 ## Question 3
 
+```{r, echo=T}
+data(meerdaal, package = "edcpR")
+```
+
 We have vegetation records in Meerdaal forest from 50 years ago. We know the exact location of the 13 plots and sample them again in 2018.
 
 **Research question**: Is there a difference in species richness between old and recent sampling of forest fragments in Meerdaal forest?
 
-## Question 3
+## Question 3 Solution (1)
 
 ```{r, echo=T, eval=T}
-
-meerdaal <- read.csv("./data/meerdaal.csv", header = TRUE, sep = ";")
+data(meerdaal, package = "edcpR")
 head(meerdaal)
 colnames(meerdaal) <- c("Plot", "Old", "Recent")
 
@@ -283,48 +298,42 @@ colnames(meerdaal) <- c("Plot", "Old", "Recent")
 # Assumption: independent samples --> false, it is resampling of the same plots!
 ```
 
-## Question 3
+## Question 3 Solution (2)
 
 ```{r, echo=T, eval=T}
-
 # Wilcoxon signed rank test
 wilcox.test(meerdaal$Old, meerdaal$Recent, paired = TRUE)
-
 ```
 
 ## Question 4
+
+```{r, echo = T}
+data(kembel_sp, package ="edcpR")
+```
 
 We measured the abundance of species in percent cover of different plant species in 20x20m quadrats in grasslands in plots in two habitat types in Alberta. 
 
 **Research question**: Is there a difference in total species richness between two grassland types?
 
-## Question 4
+## Question 4 Solution (1)
 
 ```{r, echo=T, eval=T}
-
 # We are comparing gamma diversity!
 # If we want to compare the mean diversity per plot (alfa diversity, use t-test)
 # Chao estimators of two groups with t-test (see Session 3: Diversity)
-kembel_sp <- read.csv("./data/kembel_sp.csv", header = TRUE, sep = ",")
 
+library(dplyr)
 # Extract plots of mixed grasslands
-mixed <- kembel_sp[-c(8:17), 2:77 ]
+mixed <- kembel_sp %>% filter(grepl("mix", plot)) %>% select(-plot)
 
 # Extract plots with fescue grass
-fes <- kembel_sp[c(8:17), 2:77]
-
+fes <- kembel_sp %>% filter(grepl("fes", plot)) %>% select(-plot)
 ```
 
-## Question 4
-
-```{r, echo=F, eval=T}
-
-library(vegan)
-
-```
+## Question 4 Solution (2)
 
 ```{r, echo=T, eval=T}
-
+library(vegan)
 # Get the chao-estimators for each grassland
 mixed_gamma <- specpool(mixed)
 fes_gamma <- specpool(fes)
@@ -336,36 +345,31 @@ chao_fes_se <- fes_gamma$chao.se
 
 ```
 
-## Question 4
+## Question 4 Solution (3)
 
 ```{r, echo=T, eval=T}
-
 # Take 100 random samples from a normal distribution!
 sample_mixed <- rnorm(100, mean = chao_mixed, sd = chao_mixed_se)
 sample_fes <- rnorm(100, mean = chao_fes, sd = chao_fes_se)
-
 ```
 
-## Question 4
+## Question 4 Solution (4)
 
 ```{r, echo=T, eval=T}
-
 # Perform a t-test
 t.test(sample_mixed, sample_fes, paired = FALSE)
-
 ```
 
-## Assignment 4
+## Assignment 4 
 
 Available on Toledo under Assignments (Assignment 4). Submit:
 
-* Word-document (**Surname_FirstName_Assignment4.docx**) 
+* Word-document (**Surname_FirstName_assignment4.docx**) 
   * explain your methods, interpretations and conclusions
-  * maximum 1 page
-  * NO PDF-file
-* R-script (**Surname_FirstName_Assignment4.R**)
+  * maximum 1.5 pages
+* R-script (**Surname_FirstName_assignment4.R**)
 * **two weeks** for this assignment!
 
 &nbsp;
 
-Upload everything before **November 18, 12 pm (= at noon!)**.
+Upload everything before **December 2nd, 12 pm (= at noon!)**.
