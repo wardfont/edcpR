@@ -57,3 +57,16 @@ We measured the abundance of species in percent cover of different plant species
 
 **Research question**: Is there a difference in total species richness between two grassland types?
 
+## Assignment 4 
+
+Available on Toledo under Assignments (Assignment 4). Submit:
+
+* Word-document (**Surname_Firstname_assignment4.docx**) 
+  * explain your methods, interpretations and conclusions
+  * maximum 1.5 pages
+* R-script (**Surname_Firstname_assignment4.R**)
+* **two weeks** for this assignment!
+
+&nbsp;
+
+Upload everything before **December 1st, 12 pm (= at noon!)**.
