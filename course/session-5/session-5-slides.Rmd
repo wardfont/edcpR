@@ -39,7 +39,7 @@ unloadNamespace("plant_growth")
 rm("plant_growth")
 ```
 
-```{r, echo=T}
+```{r, echo=T, eval = F}
 # First update package
 library(edcpR)
 data(plant_growth, package = "edcpR")
@@ -129,9 +129,8 @@ t.test(Yield ~ Treatment, data = plant_growth, paired = FALSE)
 
 ## Question 2
 
-```{r, echo=T}
-library(datasets)
-data(iris, package = "datasets")
+```{r, echo=T, eval=F}
+data(iris_s5, package = "edcpR")
 ```
 
 We studied the differences in flower dimensions between three iris species (Iris setosa, Iris versicolor, Iris virginica). We sampled 10 individuals of each species and measured the sepal and petal length and width.
@@ -141,22 +140,21 @@ We studied the differences in flower dimensions between three iris species (Iris
 ## Question 2 Solution (1)
 
 ```{r}
-unloadNamespace("iris")
-rm("iris")
+unloadNamespace("iris_s5")
+rm("iris_s5")
 ```
 
-
 ```{r, echo=T, eval=T}
-data(iris, package = "datasets")
-head(iris)
-iris <- iris[, c(1,5)]
-colnames(iris) <- c("sepal_length", "Species")
+data(iris_s5, package = "edcpR")
+head(iris_s5)
+iris_s5 <- iris_s5[, c(1,5)]
+colnames(iris_s5) <- c("sepal_length", "Species")
 ```
 
 ## Question 2 Solution (2)
 
 ```{r, echo=T, eval=T}
-str(iris)
+str(iris_s5)
 ```
 
 ## Question 2 Solution (3)
@@ -169,7 +167,7 @@ str(iris)
 # Kruskall-Wallis test + posthoc
 
 # Use the kruskal-Wallis test
-kruskal.test(sepal_length ~ Species, data = iris)
+kruskal.test(sepal_length ~ Species, data = iris_s5)
 ```
 
 ## Question 2 Solution (4)
@@ -178,7 +176,7 @@ kruskal.test(sepal_length ~ Species, data = iris)
 # Post-hoc testing to check between samples
 library(FSA)
 # Benjamini-Hochberg adjustment, not Bonferonni (too strict)
-dunnTest(sepal_length ~ Species, data = iris, method= "bh")
+dunnTest(sepal_length ~ Species, data = iris_s5, method= "bh")
 ```
 
 # Let's consider sample size being large enough...
@@ -186,35 +184,35 @@ dunnTest(sepal_length ~ Species, data = iris, method= "bh")
 ## Question 2 Solution (5)
 
 ```{r, echo=F, eval=T}
-m<-mean(iris$sepal_length)
-std<-sqrt(var(iris$sepal_length))
+m<-mean(iris_s5$sepal_length)
+std<-sqrt(var(iris_s5$sepal_length))
 
-hist(iris$sepal_length , prob=TRUE, xlab="Sepal lenghth",main="Histogram of sepal length")
+hist(iris_s5$sepal_length , prob=TRUE, xlab="Sepal lenghth",main="Histogram of sepal length")
 curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
 ```
 
 ## Question 2 Solution (6)
 
 ```{r, echo=T, eval=T}
-qqnorm(iris$sepal_length, main="Normal Q-Q of sepal length")
-qqline(iris$sepal_length, col = "red", lwd = 2)
+qqnorm(iris_s5$sepal_length, main="Normal Q-Q of sepal length")
+qqline(iris_s5$sepal_length, col = "red", lwd = 2)
 ```
 
 ## Question 2 Solution (7)
 
 ```{r, echo=T, eval=T}
 # See if data transformation can solve the problem
-iris$log_sl <- log(iris$sepal_length)
-iris$sqrt_sl <- sqrt(iris$sepal_length)
+iris_s5$log_sl <- log(iris_s5$sepal_length)
+iris_s5$sqrt_sl <- sqrt(iris_s5$sepal_length)
 ```
 
 ## Question 2 Solution (8)
 
 ```{r, echo=F, eval=T}
-m<-mean(iris$log_sl)
-std<-sqrt(var(iris$log_sl))
+m<-mean(iris_s5$log_sl)
+std<-sqrt(var(iris_s5$log_sl))
 
-hist(iris$log_sl , prob=TRUE, xlab="Log(Sepal lenghth)",main="Logaritmic transformation")
+hist(iris_s5$log_sl , prob=TRUE, xlab="Log(Sepal lenghth)",main="Logaritmic transformation")
 curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
 
 ```
@@ -222,25 +220,25 @@ curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
 ## Question 2 Solution (9)
 
 ```{r, echo=T, eval=T}
-qqnorm(iris$log_sl, main="Logaritmic transformation")
-qqline(iris$log_sl, col = "red", lwd = 2)
+qqnorm(iris_s5$log_sl, main="Logaritmic transformation")
+qqline(iris_s5$log_sl, col = "red", lwd = 2)
 ```
 
 ## Question 2 Solution (10)
 
 ```{r, echo=F, eval=T}
-m<-mean(iris$sqrt_sl)
-std<-sqrt(var(iris$sqrt_sl))
+m<-mean(iris_s5$sqrt_sl)
+std<-sqrt(var(iris_s5$sqrt_sl))
 
-hist(iris$sqrt_sl , prob=TRUE, xlab="sqrt(Sepal lenghth)",main="Square Root Transformation")
+hist(iris_s5$sqrt_sl , prob=TRUE, xlab="sqrt(Sepal lenghth)",main="Square Root Transformation")
 curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
 ```
 
 ## Question 2 Solution (11)
 
 ```{r, echo=T, eval=T}
-qqnorm(iris$sqrt_sl, main="Square Root Transformation")
-qqline(iris$sqrt_sl, col = "red", lwd = 2)
+qqnorm(iris_s5$sqrt_sl, main="Square Root Transformation")
+qqline(iris_s5$sqrt_sl, col = "red", lwd = 2)
 ```
 
 ## Question 2 Solution (12)
@@ -248,12 +246,12 @@ qqline(iris$sqrt_sl, col = "red", lwd = 2)
 ```{r, echo=T, eval=T}
 # Statistical test for normality (Shapiro-Wilk)
 # Not recommended, because it is too strict
-shapiro.test(iris$sepal_length)
+shapiro.test(iris_s5$sepal_length)
 ```
 
 ```{r, echo=T, eval=F}
-shapiro.test(iris$log_sl)
-shapiro.test(iris$sqrt_sl)
+shapiro.test(iris_s5$log_sl)
+shapiro.test(iris_s5$sqrt_sl)
 ```
 
 ## Question 2 Solution (13)
@@ -263,7 +261,7 @@ shapiro.test(iris$sqrt_sl)
 library(car)
 
 # No strong evidence for normal distribution --> Levene's test has better performance
-leveneTest(sepal_length ~ Species, data = iris)
+leveneTest(sepal_length ~ Species, data = iris_s5)
 ```
 
 ## Question 2 Solution (14)
@@ -271,7 +269,7 @@ leveneTest(sepal_length ~ Species, data = iris)
 ```{r, echo=T, eval=T}
 # Let's consider all assumptions are holding...
 # Compute the ANOVA
-res.aov <- aov(sepal_length ~ Species, data = iris)
+res.aov <- aov(sepal_length ~ Species, data = iris_s5)
 summary(res.aov)
 ```
 
@@ -372,12 +370,12 @@ t.test(sample_mixed, sample_fes, paired = FALSE)
 
 Available on Toledo under Assignments (Assignment 4). Submit:
 
-* Word-document (**Surname_FirstName_assignment4.docx**) 
+* Word-document (**Surname_Firstname_assignment4.docx**) 
   * explain your methods, interpretations and conclusions
   * maximum 1.5 pages
-* R-script (**Surname_FirstName_assignment4.R**)
+* R-script (**Surname_Firstname_assignment4.R**)
 * **two weeks** for this assignment!
 
 &nbsp;
 
-Upload everything before **December 2nd, 12 pm (= at noon!)**.
+Upload everything before **December 1st, 12 pm (= at noon!)**.
