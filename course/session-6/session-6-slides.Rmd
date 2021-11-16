@@ -1,5 +1,5 @@
 ---
-title: "Session 5"
+title: "Session 6"
 subtitle: "Ecological Data Collection and Processing: Exercises"
 author: "Ward Fonteyn & Stef Haesen"
 date: "02/12/2021"
@@ -75,8 +75,8 @@ Goal: reduce dimensions
 
 ```{r, echo = T}
 
-sp <- read.csv(file = "./data/varespec.csv", header = TRUE, row.names = 1, sep = ",")
-env <- read.csv(file = "./data/varechem.csv", header = TRUE, row.names = 1, sep = ";")
+sp <- data(varespec_s6, package = "edcpR")
+env <- data(varechem_s6, package = "edcpR")
 env$Managementtype <- as.factor(env$Managementtype)
 env$Use <- as.factor(env$Use)
 
