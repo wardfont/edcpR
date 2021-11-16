@@ -1,0 +1,66 @@
+---
+title: "Session 6"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{session-6}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edcpR)
+```
+
+## Part 1
+
+```{r}
+# First update package
+library(edcpR)
+data(varespec_s6, package = "edcpR")
+data(varechem_s6, package = "edcpR")
+```
+
+**PCA**
+
+- Perform a PCA on the environmental data and plot the results.
+  - **TIP**: vegan package
+- Extract the eigen values and calculate the amount of variation explained by each axis.
+
+**PCoA**
+
+- Repeat the same tasks with the PCoA
+  - **TIP**: ape package
+  - **TIP**: gowdis() function from FD package
+
+## Part 2
+
+**PCoA**
+
+- Repeat the same tasks with the PCoA
+  - **TIP**: ape package
+  - **TIP**: gowdis() function from FD package
+  
+## Part 3
+
+**NMDS**
+
+- Perform a NMDS on the species data. Which dissimilarity index should be used?
+  - **TIP**: metaMDS function from vegan package
+- Try to plot the results and add the environmental vairables to the plot
+  - **TIP**: envfit function from vegan package
+  
+## Assignment
+
+There is NO assignment for this week's session:
+
+ - Combined assigned for the session on ordination and classification
+ - Online after the session on classification (December 9th)
+ 
+Remember to upload Assignment 4 (Relationships & Comparing Means) by next week: **December 2nd, 12 pm (= at noon!)**
