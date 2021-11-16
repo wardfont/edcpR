@@ -1,0 +1,59 @@
+---
+title: "Session 5"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{session-5}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edcpR)
+```
+## Question 1
+
+```{r, echo=T, eval = F}
+data(plant_growth, package = "edcpR")
+```
+
+We study the effect of a new fertilizer (NPK) on the growth of maize. We measured the yield in 10 control plots (Ctrl) vs 10 plots that received the fertilizer treatment.
+
+**Research question**: What is the effect of fertilizer on the biomass yield of maize?
+
+## Question 2
+
+```{r, echo=T, eval=F}
+data(iris_s5, package = "edcpR")
+```
+
+We studied the differences in flower dimensions between three iris species (Iris setosa, Iris versicolor, Iris virginica). We sampled 10 individuals of each species and measured the sepal and petal length and width.
+
+**Research question**: Do the three iris species have different sepal lengths?
+
+## Question 3
+
+```{r, echo=T}
+data(meerdaal, package = "edcpR")
+```
+
+We have vegetation records in Meerdaal forest from 50 years ago. We know the exact location of the 13 plots and sample them again in 2018.
+
+**Research question**: Is there a difference in species richness between old and recent sampling of forest fragments in Meerdaal forest?
+
+## Question 4
+
+```{r, echo = T}
+data(kembel_sp, package ="edcpR")
+```
+
+We measured the abundance of species in percent cover of different plant species in 20x20m quadrats in grasslands in plots in two habitat types in Alberta. 
+
+**Research question**: Is there a difference in total species richness between two grassland types?
+
