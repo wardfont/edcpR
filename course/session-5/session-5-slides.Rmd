@@ -4,8 +4,8 @@ subtitle: "Ecological Data Collection and Processing: Exercises"
 author: "Ward Fonteyn & Stef Haesen"
 date: "18/11/2020"
 knit: (function(inputFile, encoding){
-  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-4-document.html", output_format = "html_document",  output_dir = "knitted");
-  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-4-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-5-document.html", output_format = "html_document",  output_dir = "knitted");
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-5-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
   output_dir = "knitted") })
 ---
 
@@ -33,6 +33,12 @@ Defining the correct statistical test based on different case studies and implem
 
 ## Question 1
 
+
+```{r}
+unloadNamespace("plant_growth")
+rm("plant_growth")
+```
+
 ```{r, echo=T}
 # First update package
 library(edcpR)
@@ -44,6 +50,8 @@ We study the effect of a new fertilizer (NPK) on the growth of maize. We measure
 **Research question**: What is the effect of fertilizer on the biomass yield of maize?
 
 ## Question 1 Solution (1)
+
+
 
 ```{r, echo=T, eval=T}
 data(plant_growth, package = "edcpR")
@@ -64,7 +72,7 @@ str(plant_growth)
 ```{r, echo=T, eval=T}
 
 # Difference in a quantitative variable between two groups
-# Sample size = 20
+# Sample size  = 10
 # Too small for a parametric test --> non-parametric test preferred!
 # Independent samples? --> check!
 # Independent two-group Mann-Whitney test
