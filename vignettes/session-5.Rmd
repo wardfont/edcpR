@@ -30,7 +30,8 @@ We study the effect of a new fertilizer (NPK) on the growth of maize. We measure
 ## Question 2
 
 ```{r, echo=T, eval=F}
-data(iris_s5, package = "edcpR")
+library(datasets)
+data(iris, package = "datasets")
 ```
 
 We studied the differences in flower dimensions between three iris species (Iris setosa, Iris versicolor, Iris virginica). We sampled 10 individuals of each species and measured the sepal and petal length and width.

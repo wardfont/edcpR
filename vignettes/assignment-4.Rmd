@@ -30,7 +30,7 @@ Answer the following research questions:
 - Are the Ellenberg values good indicators of the soil pH and moisture content in grasslands?
 - Does soil pH differ between grassland types?
 
-Write a short report on your method and results, no longer than 1.5 pages. Remember to annotate your script and inlcude all parts of the analysis. 
+Write a short report on your method and results, no longer than 1 page. Remember to annotate your script and inlcude all parts of the analysis. 
 
 Upload both the report and the script to Toledo:
 
