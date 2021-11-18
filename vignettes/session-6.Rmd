@@ -33,12 +33,6 @@ data(varechem_s6, package = "edcpR")
   - **TIP**: vegan package
 - Extract the eigen values and calculate the amount of variation explained by each axis.
 
-**PCoA**
-
-- Repeat the same tasks with the PCoA
-  - **TIP**: ape package
-  - **TIP**: gowdis() function from FD package
-
 ## Part 2
 
 **PCoA**

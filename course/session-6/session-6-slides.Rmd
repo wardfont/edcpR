@@ -60,7 +60,7 @@ Goal: reduce dimensions
 
 ## Part 1
 
-```{r}
+```{r, echo = T}
 # First update package
 library(edcpR)
 data(varespec_s6, package = "edcpR")
@@ -73,12 +73,6 @@ data(varechem_s6, package = "edcpR")
   - **TIP**: vegan package
 - Extract the eigen values and calculate the amount of variation explained by each axis.
 
-**PCoA**
-
-- Repeat the same tasks with the PCoA
-  - **TIP**: ape package
-  - **TIP**: gowdis() function from FD package
-
 ## Loading data
 
 ```{r, echo = T}
@@ -87,6 +81,7 @@ data(varespec_s6, package = "edcpR")
 data(varechem_s6, package = "edcpR")
 sp <- varespec_s6
 env <- varechem_s6
+str(env[,10:17])
 env$Managementtype <- as.factor(env$Managementtype)
 env$Use <- as.factor(env$Use)
 
@@ -98,30 +93,26 @@ env$Use <- as.factor(env$Use)
 # We have nutrient contents (g/kg), soil depth (cm), pH (1-14)...
 # scale = TRUE for data on different scales!!
 PCA <- rda(env[,1:10], scale=TRUE) 
-
 ```
 
 ## PCA (2)
-```{r, echo = T}
+```{r, echo = T, fig.height = 3.5}
 # Bar plot of relative eigen values (= percentage variance explained by each axis)
 eig <- as.vector(PCA$CA$eig)
 barplot(eig/sum(eig), xlab = "Principal Component", 
           ylab = "Explained variance", ylim = c(0, 0.5))
-
 ```
 
 ## PCA (3)
 ```{r, echo = T}
 # Calculate the percent of variance explained by first two or three axes
-# First two axes explain 63% of the variance
-# First three axes explain 73% of the variance, this is ok!
+# First two axes explain 73% of the variance
+# First three axes explain 83% of the variance
 sum((eig/sum(eig))[1:2])
 sum((eig/sum(eig))[1:3])
-
 # Three dimensional representation is possible, but more difficult
 # We prefer to plot in two dimensions
 # Solution: plot PC1 Vs. PC2 & PC1 vs. PC3
-
 ```
 
 ## PCA (4)
@@ -135,7 +126,7 @@ biplot(PCA, choices=c(1,2), type=c("text","points"))
 ## PCA (5)
 
 ```{r, echo = T}
-# biplot of axis 1 vs 3
+# If we would like to include three dimensions: biplot of axis 1 vs 3
 biplot(PCA, choices=c(1,3), type=c("text","points")) 
 ```
 
@@ -159,14 +150,13 @@ dist <- gowdis(env)
 
 ## PCoA (2)
 
-```{r, echo = T}
+```{r, echo = T, fig.height = 3.5}
 # Perform PCoA & plot the eigenvalues
 PCoA <- pcoa(dist)
 barplot(PCoA$values$Relative_eig, xlab = "Principal Component", 
           ylab = "Explained variance", ylim = c(0, 0.45)) 
 
 ```
-
 
 ## PCoA (3)
 
@@ -183,7 +173,6 @@ barplot(PCoA$values$Rel_corr_eig, xlab = "Principal Component",
 ```{r, echo = T, warning=F}
 # There are no variables plotted on this biplot (input = dissimilarity matrix) 
 biplot.pcoa(PCoA)
-
 ```
 
 ## PCoA (5)
@@ -191,7 +180,6 @@ biplot.pcoa(PCoA)
 ```{r, echo = T, warning=F}
 # However, we could work around this problem
 biplot.pcoa(PCoA, env[1:10])
-
 ```
 
 ## Part 3
@@ -212,7 +200,6 @@ biplot.pcoa(PCoA, env[1:10])
 # If you don`t provide a dissimilarity matrix, metaMDS automatically applies Bray-Curtis
 A<-vector() 
 B<-vector() 
-
 for (i in 1:10) {
   NDMS <- metaMDS(sp, distance = "bray", k=i, autotransform = FALSE, trymax=100)
   solution <- NDMS$converged
@@ -251,7 +238,6 @@ plot(NMDSoutput$`Solution?`, xlab = "# of Dimensions", ylab = "Solution", main =
 # Final result depends on the initial random placement of the points 
 # We need set a seed to make the results reproducible
 set.seed(999)
-
 NMDSfinal <- metaMDS(sp, distance = "bray", k=2, autotransform = FALSE, trymax=100 )
 ```
 
@@ -260,7 +246,6 @@ NMDSfinal <- metaMDS(sp, distance = "bray", k=2, autotransform = FALSE, trymax=1
 ```{r, echo = T, eval= T}
 # We can again check the stress
 NMDSfinal$stress
-
 ```
 
 ## NMDS (7)
@@ -268,7 +253,6 @@ NMDSfinal$stress
 ```{r, echo = T, eval= T}
 # Let’s check the results of NMDSfinal with a stressplot
 stressplot(NMDSfinal)
-
 ```
 
 ## NMDS (8)
@@ -276,7 +260,6 @@ stressplot(NMDSfinal)
 ```{r}
 #Plot results wit text for species
 plot(NMDSfinal, type = "t")
-
 ```
 
 ## NMDS (9)
@@ -292,11 +275,15 @@ plot(NMDSfinal, type = "p")
 # There are no environmental variables on the plot (same as PCoA)
 # We can again work around this
 ef <- envfit(NMDSfinal, env[1:10], permu = 999)
-ef
-
 ```
 
 ## NMDS (11)
+
+```{r}
+ef
+```
+
+## NMDS (12)
 
 ```{r, echo = T}
 # Plot the vectors of the significant correlations
