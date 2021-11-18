@@ -257,14 +257,14 @@ stressplot(NMDSfinal)
 
 ## NMDS (8)
 
-```{r}
+```{r, echo = T}
 #Plot results wit text for species
 plot(NMDSfinal, type = "t")
 ```
 
 ## NMDS (9)
 
-```{r}
+```{r, echo = T}
 #Plot results wit points for species
 plot(NMDSfinal, type = "p")
 ```
