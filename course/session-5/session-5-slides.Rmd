@@ -25,7 +25,7 @@ library(car)
 ```
 
 
-# Session 5: Comparing means
+# Session 5: Comparing samples
 
 ## Exercises for today
 
@@ -91,189 +91,118 @@ std<-sqrt(var(plant_growth$Yield))
 
 ```{r, echo=T, eval=T}
 # We can check if normality holds
-hist(plant_growth$Yield, prob=TRUE, xlab="Yield",main="Histogram of Yield")
-curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
-```
-
-## Question 1 Solution (5)
-
-```{r, echo=T, eval=T}
-
-qqnorm(plant_growth$Yield, main="Normal Q-Q of Yield")
-qqline(plant_growth$Yield, col = "red", lwd = 2)
-
-```
-
-## Question 1 Solution (6)
-
-```{r, echo=T, eval=T}
-# Statistical test for normality (Shapiro-Wilk)
-# Not recommended, because it is too strict
-shapiro.test(plant_growth$Yield)
-```
-
-## Question 1 Solution (7)
-
-```{r, echo=T, eval=T}
-# We can check if homoscedasticity holds
-# Strong evidence for normal distribution --> Bartlett's test has better performance
-bartlett.test(Yield ~ Treatment, data = plant_growth)
-```
-
-## Question 1 Solution (8)
-
-```{r, echo=T, eval=T}
-# We can use the unpaired t.test (independent samples)
-t.test(Yield ~ Treatment, data = plant_growth, paired = FALSE)
+hist(plant_growth$Yield ~ plant_growth$Treatment, prob=TRUE, xlab="Yield",main="Histogram of Yield")
 ```
 
 ## Question 2
 
 ```{r, echo=T, eval=F}
-data(iris_s5, package = "edcpR")
+library(datasets)
+data(iris, package = "datasets")
 ```
 
 We studied the differences in flower dimensions between three iris species (Iris setosa, Iris versicolor, Iris virginica). We sampled 10 individuals of each species and measured the sepal and petal length and width.
 
 **Research question**: Do the three iris species have different sepal lengths?
 
-## Question 2 Solution (1)
+## Question 2 Solution 
 
 ```{r}
-unloadNamespace("iris_s5")
-rm("iris_s5")
+unloadNamespace("iris")
+rm("iris")
 ```
 
 ```{r, echo=T, eval=T}
-data(iris_s5, package = "edcpR")
-head(iris_s5)
-iris_s5 <- iris_s5[, c(1,5)]
-colnames(iris_s5) <- c("sepal_length", "Species")
+data(iris, package = "datasets")
+head(iris)
+iris <- iris[, c(1,5)]
+colnames(iris) <- c("sepal_length", "Species")
 ```
 
-## Question 2 Solution (2)
+## Question 2 Solution 
 
 ```{r, echo=T, eval=T}
-str(iris_s5)
+str(iris)
+iris$Species <- as.factor(iris$Species)
 ```
 
-## Question 2 Solution (3)
+## Question 2 Solution 
 
 ```{r, echo=T, eval=T}
 # Difference in a quantitative variable between 3 samples
-# Sample size = 30 
-# 10 observations per sample --> non-parametric test preferred!
+# Total observations = 150
+# 50 observations per  --> assumptions
 # Independent samples? --> check!
-# Kruskall-Wallis test + posthoc
-
-# Use the kruskal-Wallis test
-kruskal.test(sepal_length ~ Species, data = iris_s5)
-```
-
-## Question 2 Solution (4)
-
-```{r, echo=T, eval=T}
-# Post-hoc testing to check between samples
-library(FSA)
-# Benjamini-Hochberg adjustment, not Bonferonni (too strict)
-dunnTest(sepal_length ~ Species, data = iris_s5, method= "bh")
 ```
 
 # Let's consider sample size being large enough...
 
-## Question 2 Solution (5)
+## Question 2 Solution
 
 ```{r, echo=F, eval=T}
-m<-mean(iris_s5$sepal_length)
-std<-sqrt(var(iris_s5$sepal_length))
-
-hist(iris_s5$sepal_length , prob=TRUE, xlab="Sepal lenghth",main="Histogram of sepal length")
-curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
+par(mfrow = c(1,3))
+hist(iris %>% filter(Species == "setosa") %>% pull(sepal_length), prob=TRUE, xlab="Sepal lenghth",main="Histogram of sepal length")
+hist(iris %>% filter(Species == "versicolor") %>% pull(sepal_length) , prob=TRUE, xlab="Sepal lenghth",main="Histogram of sepal length")
+hist(iris %>% filter(Species == "virginica") %>% pull(sepal_length) , prob=TRUE, xlab="Sepal lenghth",main="Histogram of sepal length")
 ```
 
-## Question 2 Solution (6)
+## Question 2 Solution 
 
 ```{r, echo=T, eval=T}
-qqnorm(iris_s5$sepal_length, main="Normal Q-Q of sepal length")
-qqline(iris_s5$sepal_length, col = "red", lwd = 2)
-```
-
-## Question 2 Solution (7)
-
-```{r, echo=T, eval=T}
-# See if data transformation can solve the problem
-iris_s5$log_sl <- log(iris_s5$sepal_length)
-iris_s5$sqrt_sl <- sqrt(iris_s5$sepal_length)
-```
-
-## Question 2 Solution (8)
-
-```{r, echo=F, eval=T}
-m<-mean(iris_s5$log_sl)
-std<-sqrt(var(iris_s5$log_sl))
-
-hist(iris_s5$log_sl , prob=TRUE, xlab="Log(Sepal lenghth)",main="Logaritmic transformation")
-curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
+par(mfrow = c(1,3))
+qqnorm(iris %>% filter(Species == "setosa") %>% pull(sepal_length), xlab="Sepal lenghth",main="Histogram of sepal length")
+qqline(iris %>% filter(Species == "setosa") %>% pull(sepal_length), col = "red", lwd = 2)
+qqnorm(iris %>% filter(Species == "versicolor") %>% pull(sepal_length), xlab="Sepal lenghth",main="Histogram of sepal length")
+qqline(iris %>% filter(Species == "versicolor") %>% pull(sepal_length), col = "red", lwd = 2)
+qqnorm(iris %>% filter(Species == "virginica") %>% pull(sepal_length), xlab="Sepal lenghth",main="Histogram of sepal length")
+qqline(iris %>% filter(Species == "virginica") %>% pull(sepal_length), col = "red", lwd = 2)
 
 ```
 
-## Question 2 Solution (9)
-
-```{r, echo=T, eval=T}
-qqnorm(iris_s5$log_sl, main="Logaritmic transformation")
-qqline(iris_s5$log_sl, col = "red", lwd = 2)
-```
-
-## Question 2 Solution (10)
-
-```{r, echo=F, eval=T}
-m<-mean(iris_s5$sqrt_sl)
-std<-sqrt(var(iris_s5$sqrt_sl))
-
-hist(iris_s5$sqrt_sl , prob=TRUE, xlab="sqrt(Sepal lenghth)",main="Square Root Transformation")
-curve(dnorm(x, mean=m, sd=std),col="darkblue", lwd=2, add=TRUE, yaxt="n")
-```
-
-## Question 2 Solution (11)
-
-```{r, echo=T, eval=T}
-qqnorm(iris_s5$sqrt_sl, main="Square Root Transformation")
-qqline(iris_s5$sqrt_sl, col = "red", lwd = 2)
-```
-
-## Question 2 Solution (12)
+## Question 2 Solution 
 
 ```{r, echo=T, eval=T}
 # Statistical test for normality (Shapiro-Wilk)
 # Not recommended, because it is too strict
-shapiro.test(iris_s5$sepal_length)
+shapiro.test(iris %>% filter(Species == "setosa") %>% pull(sepal_length))
+shapiro.test(iris %>% filter(Species == "versicolor") %>% pull(sepal_length))
+shapiro.test(iris %>% filter(Species == "virginica") %>% pull(sepal_length))
 ```
 
-```{r, echo=T, eval=F}
-shapiro.test(iris_s5$log_sl)
-shapiro.test(iris_s5$sqrt_sl)
-```
-
-## Question 2 Solution (13)
+## Question 2 Solution
 
 ```{r, echo=T, eval=T}
 # We can check if homoscedasticity holds
-library(car)
-
-# No strong evidence for normal distribution --> Levene's test has better performance
-leveneTest(sepal_length ~ Species, data = iris_s5)
+# Strong evidence for normal distribution --> Bartlets test has better performance
+bartlett.test(sepal_length ~ Species, data = iris)
 ```
 
-## Question 2 Solution (14)
+## Question 2 Solution
+
+```{r}
+# Non-parametric tests: Kruskall-Wallis
+kruskal.test(sepal_length ~ Species, data = iris)
+```
+## Question 2 Solution
+
+```{r}
+# Post-hoc testing to check between samples
+library(FSA)
+# Benjamini-Hochberg adjustment, not Bonferonni (too strict)
+dunnTest(sepal_length ~ Species, data = iris, method= "bh")
+```
+
+
+## Question 2 Solution
 
 ```{r, echo=T, eval=T}
-# Let's consider all assumptions are holding...
+# Let's consider homoscedasticity holds ...
 # Compute the ANOVA
-res.aov <- aov(sepal_length ~ Species, data = iris_s5)
+res.aov <- aov(sepal_length ~ Species, data = iris)
 summary(res.aov)
 ```
 
-## Question 2 Solution (15)
+## Question 2 Solution
 
 ```{r, echo=T, eval=T}
 # Post-hoc testing to check between samples
@@ -372,7 +301,7 @@ Available on Toledo under Assignments (Assignment 4). Submit:
 
 * Word-document (**Surname_Firstname_assignment4.docx**) 
   * explain your methods, interpretations and conclusions
-  * maximum 1.5 pages
+  * maximum 1 pages, only essentials
 * R-script (**Surname_Firstname_assignment4.R**)
 * **two weeks** for this assignment!
 
