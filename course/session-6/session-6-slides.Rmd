@@ -200,7 +200,7 @@ sp <- varespec_s6
 A<-vector() 
 B<-vector() 
 for (i in 1:10) {
-  NDMS <- metaMDS(sp[2:45], distance = "bray", k=i, autotransform = FALSE, trymax=100)
+  NDMS <- metaMDS(sp[2:45], distance = "bray", k=i, autotransform = TRUE, trymax=100)
   solution <- NDMS$converged
   stress <- NDMS$stress
   A1 <- cbind(solution,stress)
@@ -237,7 +237,7 @@ plot(NMDSoutput$`Solution?`, xlab = "# of Dimensions", ylab = "Solution", main =
 # Final result depends on the initial random placement of the points 
 # We need set a seed to make the results reproducible
 set.seed(999)
-NMDSfinal <- metaMDS(sp[2:45], distance = "bray", k=2, autotransform = FALSE, trymax=100 )
+NMDSfinal <- metaMDS(sp[2:45], distance = "bray", k=2, autotransform = TRUE, trymax=100 )
 ```
 
 ## NMDS (6)

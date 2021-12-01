@@ -292,7 +292,7 @@ test_response <- iris[-trainrows, 5]
 # Find the optimum number of neighbours
 library(class)
 error <- c()
-for (i in 1:15) {
+for (i in 1:60) {
   knn.fit <- knn(train = train_iris, test = test_iris, cl = train_response, k = i)
   error[i] = 1 - mean(knn.fit == test_response)
 }
@@ -302,7 +302,7 @@ for (i in 1:15) {
 
 ```{r, echo=T, eval=T}
 # This result can differ due to knn's method to resolve ties
-ggplot(data = data.frame(error), aes(x = 1:15, y = error)) +
+ggplot(data = data.frame(error), aes(x = 1:60, y = error)) +
   geom_line(color = "Blue") + xlab("Number of Neighbours")
 ```
 
@@ -311,7 +311,7 @@ ggplot(data = data.frame(error), aes(x = 1:15, y = error)) +
 ```{r, echo=T, eval=T}
 # Calculate the prediction accuracy using the chosen K value
 set.seed(1)
-iris_pred <- knn(train = train_iris, test = test_iris, cl = train_response, k = 5)
+iris_pred <- knn(train = train_iris, test = test_iris, cl = train_response, k = 20)
 predicted_classification <- cbind(test_iris, iris_pred)
 true_classification <- cbind(test_iris, test_response)
 ```
@@ -370,7 +370,7 @@ B<-vector()
 
 #perform NMDS for 1, 2, 3 and 4 dimensions
 for (i in 1:4) {
-  NDMS<-metaMDS(varespec, distance = "bray",k=i, autotransform = FALSE, trymax=100 )
+  NDMS<-metaMDS(varespec, distance = "bray",k=i, autotransform = TRUE, trymax=100 )
   solution<-NDMS$converged
   stress<-NDMS$stress
   A1<-cbind(solution,stress)
@@ -392,7 +392,7 @@ NMDSoutput
 
 ```{r, echo=T, eval=T}
 k<-4
-NMDSfinal<-metaMDS(varespec, distance = "bray", k=k, autotransform = FALSE, trymax=100)
+NMDSfinal<-metaMDS(varespec, distance = "bray", k=k, autotransform = TRUE, trymax=100)
 ```
 
 ## Indicator species analysis (5)
