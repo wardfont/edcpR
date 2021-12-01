@@ -1,0 +1,46 @@
+---
+title: "assignment-4-sol"
+author: "Ward Fonteyn"
+date: "12/1/2021"
+output: html_document
+---
+
+# Feedback Assignment 4
+
+## First step of all analysis: data exploration
+
+- Are there data types that don't make sense?
+- Are there values that don't make sense?
+- Are there missing values that can cause problems?
+
+There were some pH values which were incorrect.
+
+## Calculating Ellenberg values per plot
+
+![](./pics/giw.png)
+
+If there is a value for a species, it should be added proportionally to its cover.
+
+## Relationship
+
+- Small sample size (only 25 plots)
+- Non-normal distribtuion (MIV_F and pH)
+- Non-linearity of relationschips
+- Ordinal values (mean still can be considered ordinal)
+
+**Spearman** correlation is used for *both* pH and soil moisture
+
+## Difference
+
+- Small sample size
+- Independent
+
+**Kruskal-Wallis** with post-hoc **Dunn** test
+
+## Other remarks
+
+1 page = 1 page
+
+"We followed the diagram" is not valid scientific reasoning.
+
+![](./pics/006.png)

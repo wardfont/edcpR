@@ -1,0 +1,43 @@
+---
+title: "Assignment 5"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{assignment-5}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edcpR)
+```
+
+Use the following datasets:
+
+```{r, echo = T}
+library(edcpR)
+data(GutterTor_sp, GutterTor_env, package = "edcpR")
+```
+
+**Data**: GutterTor species (cover data) and GutterTor_env
+
+Please complete the following problems:
+
+- Perform an ordination on the vegetation data.
+- Classify the different plots into different clusters.
+- Visualize the ordination. Add the different clusters on this ordination plot, together with the significant environmental variables.
+
+Remember:
+
+- **annotate** your script using comments
+
+
+Submit your R-script as **Surname_FirstName_assignment5.R**
+
+Upload everything on Toledo before **December 8, 12 pm** (= at noon)!

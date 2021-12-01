@@ -2,10 +2,11 @@
 title: "Session 7"
 subtitle: "Ecological Data Collection and Processing: Exercises"
 author: "Ward Fonteyn & Stef Haesen"
-date: "03/12/2020"
-output:
-  ioslides_presentation: 
-    widescreen: yes
+date: "02/12/2021"
+knit: (function(inputFile, encoding){
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-7-document.html", output_format = "html_document",  output_dir = "knitted");
+  rmarkdown::render(inputFile, encoding = encoding, output_file = "session-7-slides.html", output_format = "ioslides_presentation", output_options = list(widescreen = T),
+  output_dir = "knitted") })
 ---
 
 ```{r setup, include=F, echo=F}
@@ -16,50 +17,10 @@ library(kableExtra)
 library(vegan)
 library(ape)
 library(FD)
-
 ```
 
-# Feedback Assignment 4
 
-## First step of all analysis: data exploration
-
-- Are there data types that don't make sense?
-- Are there values that don't make sense?
-- Are there missing values that can cause problems?
-
-There were some pH values which were incorrect.
-
-## Calculating Ellenberg values per plot
-
-![](./pics/giw.png)
-
-If there is a value for a species, it should be added proportionally to its cover.
-
-## Relationship
-
-- Small sample size (only 25 plots)
-- Non-normal distribtuion (MIV_F and pH)
-- Non-linearity of relationschips
-- Ordinal values (mean still can be considered ordinal)
-
-**Spearman** correlation is used for *both* pH and soil moisture
-
-## Difference
-
-- Small sample size
-- Independent
-
-**Kruskal-Wallis** with post-hoc **Dunn** test
-
-## Other remarks
-
-1 page = 1 page
-
-"We followed the diagram" is not valid scientific reasoning.
-
-![](./pics/006.png)
-
-# Session 6: Classification
+# Session 7: Classification
 
 ## Classification
 
@@ -69,39 +30,14 @@ If there is a value for a species, it should be added proportionally to its cove
 
 Goal: group data in similar classes
 
-## Exercises
+## Data
 
-**Hierarchical clustering**
+```{r, echo = T}
+library(datasets)
+data(iris, package = "datasets")
+```
 
-- Construct a dissimilarity matrix for the sepal length
-- Perform an agglomerative hierarchical clustering of the dataset
-- Plot the dendrogram of the performed clustering
-- Find the optimum number of clusters
-- How does the clustering changes when you use 4 clusters instead of 3?
-- Visualize the different clusters by plotting rectangles on the dendrogram
-
-## Exercises
-
-**K means**
-
-- Find the optimum number of clusters
-- Perform a K means clustering of the iris dataset with selected number of clusters
-- Visualize the clustering using ggplot2
-
-**K nearest neighbours**
-
-- Split data into random training and random testing sets
-- Find the optimum number of neighbours
-- Perform K nearest neighbours classification
-- Visualize the clustering using ggplot2
-
-## Exercises
-
-**Indicator species analysis**
-
-- Use the varespec dataset
-- Divide the species data in clusters
-- Find indicator species for each cluster
+![](https://static.packt-cdn.com/products/9781789539462/graphics/9cede6e3-0932-430a-a17e-d30025eb2b02.png)
 
 ## Exercises (30 min)
   
@@ -118,28 +54,18 @@ Goal: group data in similar classes
 - How does the clustering changes when you use 4 clusters instead of 3?
 - Visualize the different clusters by plotting rectangles on the dendrogram
 
-## Load data
-
-```{r, echo=T, eval=T}
-iris <- read.csv("./data/iris.csv", header = TRUE , sep = ",", row.names = 1)
-head(iris)
-
-```
 
 ## Check data
 
 ```{r, echo=T, eval=T}
 str(iris)
-
 ```
 
 ## Check data
 
 ```{r, echo=T, eval=T}
-
 max <- apply(iris[, 1:4], 2, function(x){max(x, na.rm = T)}) 
 min <- apply(iris[, 1:4], 2, function(x){min(x, na.rm = T)})
-
 ```
 
 ## Check data
@@ -148,7 +74,6 @@ min <- apply(iris[, 1:4], 2, function(x){min(x, na.rm = T)})
 plot(max, xaxt = "n", ylim = c(0,8), ylab = " ")
 axis(1, at = 1:4, labels = colnames(iris[1:4]))
 points(min, col = "red")
-
 ```
 
 ## Load all necessary packages
@@ -165,11 +90,8 @@ suppressMessages(library(stats))
 
 ```{r, echo=T, eval=F}
 library(cluster)
-library(class)
-library(vegan)
-library(ggplot2)
-library(factoextra)
 library(stats)
+library(vegan)
 ```
 
 ## Hierarchical clustering (1)
@@ -199,48 +121,43 @@ cluster_flexible <- as.hclust(cluster_flexible)
 
 ```{r, echo=T, eval=T}
 plot(cluster_single)
-
 ```
 
 ## Hierarchical clustering (3)
 
 ```{r, echo=T, eval=T}
 plot(cluster_complete)
-
 ```
 
 ## Hierarchical clustering (4)
 
 ```{r, echo=T, eval=T}
 plot(cluster_ward)
-
 ```
 
 ## Hierarchical clustering (5)
 
 ```{r, echo=T, eval=T}
 plot(cluster_average)
-
 ```
 
 ## Hierarchical clustering (6)
 
 ```{r, echo=T, eval=T}
 plot(cluster_flexible)
-
 ```
 
 ## Hierarchical clustering (7)
 
-```{r, echo=T, eval=T}
-# Difficult to visually check which method is best
-# Space conserving method preferred
-# Average, Ward, Flexible
+Difficult to visually check which method is best, but:
 
-# Ward's method with Euclidean distance
-# Flexible beta (-0.25) with Bray-Curtis or Sorensen (species data!!)
+- Space conserving method preferred
+- Average, Ward, Flexible
 
-```
+Recommendation:
+
+- Ward's method with Euclidean distance
+- Flexible beta (-0.25) with Bray-Curtis or Sorensen (species data!!)
 
 ## Hierarchical clustering (8)
 
@@ -261,11 +178,8 @@ cor(dis.eu, coph_average)
 # Find the optimum number of clusters (Total within-cluster Sums of Squares)
 set.seed(1)
 k.max <- 10
-wss <- c()
-for (i in 1:k.max) {
-  wss[i] <- kmeans(iris[, 1], i, nstart = 20, iter.max = 20)$tot.withinss
-}
-
+wss <- sapply(1:k.max,
+              function(x){kmeans(iris[, 1], x, nstart = 20, iter.max = 20)$tot.withinss})
 ```
 
 ## Hierarchical clustering (10)
@@ -309,18 +223,15 @@ rect.hclust(cluster_ward , k = 3, border = 2:6)
 
 **K means**
 
+- Cluster using petal length and width
 - Find the optimum number of clusters
   - **TIP**: cluster package
-- Perform a K means clustering of the iris dataset with selected number of clusters
-  - based upon the petal length & width
 - Visualize the clustering using ggplot2
-
-## Exercises (30 min)
 
 **K nearest neighbours**
 
-- Split data into random training and random testing sets
-  - use a random 70%-30% split
+- Cluster using all four variables
+- Split data into random training and random testing sets using a random 70%-30% split
 - Find the optimum number of neighbours
   - **TIP**: class package
 - Visualize the clustering using ggplot2
@@ -339,6 +250,7 @@ k
 ## K means (2)
 
 ```{r, echo=T, eval=T}
+library(factoextra)
 fviz_gap_stat(gap_stat)
 
 ```
@@ -378,21 +290,20 @@ test_response <- iris[-trainrows, 5]
 
 ```{r, echo=T, eval=T}
 # Find the optimum number of neighbours
+library(class)
 error <- c()
 for (i in 1:15) {
   knn.fit <- knn(train = train_iris, test = test_iris, cl = train_response, k = i)
   error[i] = 1 - mean(knn.fit == test_response)
 }
-
 ```
 
 ## K nearest neighbours (3)
 
 ```{r, echo=T, eval=T}
+# This result can differ due to knn's method to resolve ties
 ggplot(data = data.frame(error), aes(x = 1:15, y = error)) +
-  geom_line(color = "Blue")
-
-
+  geom_line(color = "Blue") + xlab("Number of Neighbours")
 ```
 
 ## K nearest neighbours (4)
@@ -403,38 +314,39 @@ set.seed(1)
 iris_pred <- knn(train = train_iris, test = test_iris, cl = train_response, k = 5)
 predicted_classification <- cbind(test_iris, iris_pred)
 true_classification <- cbind(test_iris, test_response)
-
 ```
 
 ## K nearest neighbours (6)
 
 ```{r, echo=T, eval=T}
-# Visualize the clustering using ggplot2
+# Visualize the predicted classes using ggplot2
 ggplot(predicted_classification, aes(x=Petal.Width, y=Petal.Length, color=iris_pred))+
-  geom_point(size=3)
-
-
+  geom_point()
 ```
 
 ## K nearest neighbours (6)
 
 ```{r, echo=T, eval=T}
-# Visualize the clustering using ggplot2
+# Visualize the true classes using ggplot2
 ggplot(true_classification, aes(x=Petal.Width, y=Petal.Length, color=test_response))+
-  geom_point(size=3)
-
+  geom_point()
 ```
 
 ## K nearest neighbours (7)
 
-```{r, echo=T, eval=T}
-# Need an extra challenge?
+Need an extra challenge?
 
-# Try performing K nearest neighbours with cross-validation in R
-# Tip: caret-package
-```
+- Try performing K nearest neighbours with cross-validation in R
+- Tip: caret-package
+
 
 ## Exercises (30 min)
+
+```{r}
+library(vegan)
+data(varespec, package = "vegan")
+```
+
 
 **Indicator species analysis**
 
@@ -445,9 +357,10 @@ ggplot(true_classification, aes(x=Petal.Width, y=Petal.Length, color=test_respon
 
 ## Indicator species analysis (1)
 
-```{r, echo=T, eval=T}
-species <- read.csv(file = "./data/varespec.csv",header=TRUE,row.names=1,sep=",")
+```{r}
+str(varespec)
 ```
+
 
 ## Indicator species analysis (2)
 
@@ -457,7 +370,7 @@ B<-vector()
 
 #perform NMDS for 1, 2, 3 and 4 dimensions
 for (i in 1:4) {
-  NDMS<-metaMDS(species, distance = "bray",k=i, autotransform = FALSE, trymax=100 )
+  NDMS<-metaMDS(varespec, distance = "bray",k=i, autotransform = FALSE, trymax=100 )
   solution<-NDMS$converged
   stress<-NDMS$stress
   A1<-cbind(solution,stress)
@@ -473,15 +386,13 @@ for (i in 1:4) {
 NMDSoutput<-data.frame(B,A)
 names(NMDSoutput) <- c("k","Solution?","Stress")
 NMDSoutput
-
 ```
 
 ## Indicator species analysis (4)
 
 ```{r, echo=T, eval=T}
 k<-4
-NMDSfinal<-metaMDS(species, distance = "bray",k=k, autotransform = FALSE, trymax=100)
-
+NMDSfinal<-metaMDS(varespec, distance = "bray", k=k, autotransform = FALSE, trymax=100)
 ```
 
 ## Indicator species analysis (5)
@@ -503,7 +414,6 @@ for (i in 1:k.max) {
 # Find the optimum number of clusters (Total within-cluster Sums of Squares)
 plot(1:k.max, wss , type= "b", xlab = "Number of clusters (k)", 
             ylab = "Within cluster sum of squares")
-
 ```
 
 ## Indicator species analysis (6)
@@ -522,7 +432,6 @@ k
 ```{r, echo=T, eval=T}
 # Find the optimum number of clusters (GAP method)
 fviz_gap_stat(gap_stat)
-
 ```
 
 ## Indicator species analysis (8)
@@ -538,21 +447,30 @@ Kclustering$cluster
 
 ```{r, echo=T, eval=T}
 library(indicspecies)
-
-inv <- multipatt(species, Kclustering$cluster, func = "r.g", control = how(nperm=9999))
-
+inv <- multipatt(varespec, Kclustering$cluster, func = "r.g", control = how(nperm=9999))
 ```
 
 ## Indicator species analysis (10)
 
 ```{r, echo=T, eval=F}
 summary(inv)
-
 ```
 
 ## Indicator species analysis (11)
 
 ```{r, echo=F, eval=T}
 summary(inv)
-
 ```
+
+## Assignment 5
+
+Access the assignment:
+
+```{r, echo=T, eval=F}
+vignette("assignment-5", package = "edcpR")
+```
+
+Submit your R-script as **Surname_FirstName_assignment5.R**
+
+Upload everything on Toledo before **December 8, 12 pm** (= at noon)!
+

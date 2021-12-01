@@ -58,10 +58,6 @@
 #' @usage data(kembel_sp)
 "kembel_sp"
 
-#' dataset used for session 5
-#' @usage data(iris_s5)
-"iris_s5"
-
 #' dataset used for assgnment 4
 #' @usage data(GutterTor_Ellenberg)
 "GutterTor_Ellenberg"

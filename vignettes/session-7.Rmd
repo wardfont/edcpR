@@ -1,0 +1,82 @@
+---
+title: "Session 7"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{session-7}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(edcpR)
+```
+
+# Data
+
+The first three exercises use the `iris`dataset:
+
+```{r, echo = T}
+library(datasets)
+data(iris, pacakges = "datasets")
+```
+
+The last exercise uses the varespec dataset:
+```{r, echo = T}
+library(vegan)
+data(varespec, pacakges = "vegan")
+```
+
+## Hierarchical clustering
+  
+- Construct a dissimilarity matrix for the sepal length
+- Perform an agglomerative hierarchical clustering of the dataset
+  - based upon the sepal length
+  - **TIP**: `cluster` package
+- Plot the dendrogram of the performed clustering
+  - change the output from the agglomerative clustering into a hclust object
+- Find the optimum number of clusters
+  - **TIP**: `stats` package
+- How does the clustering changes when you use 4 clusters instead of 3?
+- Visualize the different clusters by plotting rectangles on the dendrogram
+
+## K means
+
+- Find the optimum number of clusters
+  - **TIP**: `cluster` package
+- Perform a K means clustering of the iris dataset with selected number of clusters
+  - based upon the petal length & width
+- Visualize the clustering using ggplot2
+
+## K nearest neighbours
+
+- Split data into random training and random testing sets
+  - use a random 70%-30% split
+- Find the optimum number of neighbours
+  - **TIP**: `class` package
+- Visualize the clustering using ggplot2
+
+## Indicator species analysis
+
+- Use the varespec dataset
+- Divide the species data in clusters
+- Find indicator species for each cluster
+  - **TIP**: `indicspecies` package
+
+## Assignment 5
+
+Access the assignment:
+
+```{r, echo=T, eval=F}
+vignette("assignment-5", package = "edcpR")
+```
+
+Submit your R-script as **Surname_FirstName_assignment5.R**
+
+Upload everything on Toledo before **December 8, 12 pm** (= at noon)!
