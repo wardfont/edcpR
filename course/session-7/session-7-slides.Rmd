@@ -1,0 +1,558 @@
+---
+title: "Session 7"
+subtitle: "Ecological Data Collection and Processing: Exercises"
+author: "Ward Fonteyn & Stef Haesen"
+date: "03/12/2020"
+output:
+  ioslides_presentation: 
+    widescreen: yes
+---
+
+```{r setup, include=F, echo=F}
+knitr::opts_chunk$set(echo = FALSE)
+library(DiagrammeR)
+library(knitr)
+library(kableExtra)
+library(vegan)
+library(ape)
+library(FD)
+
+```
+
+# Feedback Assignment 4
+
+## First step of all analysis: data exploration
+
+- Are there data types that don't make sense?
+- Are there values that don't make sense?
+- Are there missing values that can cause problems?
+
+There were some pH values which were incorrect.
+
+## Calculating Ellenberg values per plot
+
+![](./pics/giw.png)
+
+If there is a value for a species, it should be added proportionally to its cover.
+
+## Relationship
+
+- Small sample size (only 25 plots)
+- Non-normal distribtuion (MIV_F and pH)
+- Non-linearity of relationschips
+- Ordinal values (mean still can be considered ordinal)
+
+**Spearman** correlation is used for *both* pH and soil moisture
+
+## Difference
+
+- Small sample size
+- Independent
+
+**Kruskal-Wallis** with post-hoc **Dunn** test
+
+## Other remarks
+
+1 page = 1 page
+
+"We followed the diagram" is not valid scientific reasoning.
+
+![](./pics/006.png)
+
+# Session 6: Classification
+
+## Classification
+
+- Hierarchical clustering (unsupervised, hierarchical)
+-	K means (unsupervised, non-hierarchical)
+-	K nearest neighbours (supervised)
+
+Goal: group data in similar classes
+
+## Exercises
+
+**Hierarchical clustering**
+
+- Construct a dissimilarity matrix for the sepal length
+- Perform an agglomerative hierarchical clustering of the dataset
+- Plot the dendrogram of the performed clustering
+- Find the optimum number of clusters
+- How does the clustering changes when you use 4 clusters instead of 3?
+- Visualize the different clusters by plotting rectangles on the dendrogram
+
+## Exercises
+
+**K means**
+
+- Find the optimum number of clusters
+- Perform a K means clustering of the iris dataset with selected number of clusters
+- Visualize the clustering using ggplot2
+
+**K nearest neighbours**
+
+- Split data into random training and random testing sets
+- Find the optimum number of neighbours
+- Perform K nearest neighbours classification
+- Visualize the clustering using ggplot2
+
+## Exercises
+
+**Indicator species analysis**
+
+- Use the varespec dataset
+- Divide the species data in clusters
+- Find indicator species for each cluster
+
+## Exercises (30 min)
+  
+**Hierarchical clustering**
+
+- Construct a dissimilarity matrix for the sepal length
+- Perform an agglomerative hierarchical clustering of the dataset
+  - based upon the sepal length
+  - **TIP**: cluster package
+- Plot the dendrogram of the performed clustering
+  - change the output from the agglomerative clustering into a hclust object
+- Find the optimum number of clusters
+  - **TIP**: stats package
+- How does the clustering changes when you use 4 clusters instead of 3?
+- Visualize the different clusters by plotting rectangles on the dendrogram
+
+## Load data
+
+```{r, echo=T, eval=T}
+iris <- read.csv("./data/iris.csv", header = TRUE , sep = ",", row.names = 1)
+head(iris)
+
+```
+
+## Check data
+
+```{r, echo=T, eval=T}
+str(iris)
+
+```
+
+## Check data
+
+```{r, echo=T, eval=T}
+
+max <- apply(iris[, 1:4], 2, function(x){max(x, na.rm = T)}) 
+min <- apply(iris[, 1:4], 2, function(x){min(x, na.rm = T)})
+
+```
+
+## Check data
+
+```{r, echo=T, eval=T}
+plot(max, xaxt = "n", ylim = c(0,8), ylab = " ")
+axis(1, at = 1:4, labels = colnames(iris[1:4]))
+points(min, col = "red")
+
+```
+
+## Load all necessary packages
+
+```{r, echo=F, eval=T}
+suppressMessages(library(cluster))
+suppressMessages(library(class))
+suppressMessages(library(vegan))
+suppressMessages(library(ggplot2))
+suppressMessages(library(factoextra))
+suppressMessages(library(stats))
+
+```
+
+```{r, echo=T, eval=F}
+library(cluster)
+library(class)
+library(vegan)
+library(ggplot2)
+library(factoextra)
+library(stats)
+```
+
+## Hierarchical clustering (1)
+
+```{r, echo=T, eval=T}
+# Construct a dissimilarity matrix for the sepal length
+# Euclidean distance for quantitative data
+dis.eu <- vegdist(iris$Sepal.Length, method="euclidean", na.rm = TRUE)
+
+# Perform an agglomerative hierarchical clustering of the dataset
+cluster_single <- agnes(dis.eu,method = "single")
+cluster_complete <- agnes(dis.eu,method = "complete")
+cluster_ward <- agnes(dis.eu,method = "ward")
+cluster_average <- agnes(dis.eu,method = "weighted")
+cluster_flexible <- agnes(dis.eu,method = "flexible", par.method = 0.625)
+
+
+cluster_single <- as.hclust(cluster_single)
+cluster_complete <- as.hclust(cluster_complete)
+cluster_ward <- as.hclust(cluster_ward)
+cluster_average <- as.hclust(cluster_average)
+cluster_flexible <- as.hclust(cluster_flexible)
+
+```
+
+## Hierarchical clustering (2)
+
+```{r, echo=T, eval=T}
+plot(cluster_single)
+
+```
+
+## Hierarchical clustering (3)
+
+```{r, echo=T, eval=T}
+plot(cluster_complete)
+
+```
+
+## Hierarchical clustering (4)
+
+```{r, echo=T, eval=T}
+plot(cluster_ward)
+
+```
+
+## Hierarchical clustering (5)
+
+```{r, echo=T, eval=T}
+plot(cluster_average)
+
+```
+
+## Hierarchical clustering (6)
+
+```{r, echo=T, eval=T}
+plot(cluster_flexible)
+
+```
+
+## Hierarchical clustering (7)
+
+```{r, echo=T, eval=T}
+# Difficult to visually check which method is best
+# Space conserving method preferred
+# Average, Ward, Flexible
+
+# Ward's method with Euclidean distance
+# Flexible beta (-0.25) with Bray-Curtis or Sorensen (species data!!)
+
+```
+
+## Hierarchical clustering (8)
+
+```{r, echo=T, eval=T}
+# Alternative = cophenetic correlation coefficient
+# Evaluate how well the dendrogram represents the original dissimilarity matrix
+coph_ward <- cophenetic(cluster_ward)
+coph_average <- cophenetic(cluster_average)
+
+cor(dis.eu, coph_ward)
+cor(dis.eu, coph_average)
+
+```
+
+## Hierarchical clustering (9)
+
+```{r, echo=T, eval=T}
+# Find the optimum number of clusters (Total within-cluster Sums of Squares)
+set.seed(1)
+k.max <- 10
+wss <- c()
+for (i in 1:k.max) {
+  wss[i] <- kmeans(iris[, 1], i, nstart = 20, iter.max = 20)$tot.withinss
+}
+
+```
+
+## Hierarchical clustering (10)
+
+```{r, echo=T, eval=T}
+# Visual representation
+plot(1:k.max, wss , type= "b", xlab = "Number of clusters(k)", 
+      ylab = "Within cluster sum of squares")
+
+```
+
+## Hierarchical clustering (11)
+
+```{r, echo=T, eval=T}
+# What changes when you classify the dendrogram with 3 clusters or 4 clusters?
+clusters_three <- table(cutree(cluster_ward, 3))
+clusters_three
+clusters_four <- table(cutree(cluster_ward, 4))
+clusters_four
+
+```
+
+## Hierarchical clustering (12)
+
+```{r, echo=T, eval=T}
+# We see that cluster 1 is split in two new cluster (from 80 to 46 & 34)
+clusters_difference <- table(cutree(cluster_ward, 3), cutree(cluster_ward, 4))
+clusters_difference
+```
+
+## Hierarchical clustering (13)
+
+```{r, echo=T, eval=T}
+# Visualize the different clusters by plotting rectangles on the dendrogram
+plot(cluster_ward)
+rect.hclust(cluster_ward , k = 3, border = 2:6)
+
+```
+
+## Exercises (30 min)
+
+**K means**
+
+- Find the optimum number of clusters
+  - **TIP**: cluster package
+- Perform a K means clustering of the iris dataset with selected number of clusters
+  - based upon the petal length & width
+- Visualize the clustering using ggplot2
+
+## Exercises (30 min)
+
+**K nearest neighbours**
+
+- Split data into random training and random testing sets
+  - use a random 70%-30% split
+- Find the optimum number of neighbours
+  - **TIP**: class package
+- Visualize the clustering using ggplot2
+
+## K means (1)
+
+```{r, echo=T, eval=T}
+# Find the optimum number of clusters (GAP method)
+set.seed(1)
+gap_stat <- clusGap(iris[, 3:4], FUN = kmeans, nstart = 20, K.max = 10, B = 50)
+k <- maxSE(gap_stat$Tab[, "gap"], gap_stat$Tab[, "SE.sim"], method="Tibs2001SEmax")
+k
+
+```
+
+## K means (2)
+
+```{r, echo=T, eval=T}
+fviz_gap_stat(gap_stat)
+
+```
+
+## K means (3)
+
+```{r, echo=T, eval=T}
+# Perform a K means clustering of the iris dataset
+Kclustering <- kmeans(iris[,3:4], 3, nstart = 20)
+table(Kclustering$cluster,iris$Species)
+
+```
+
+## K means (4)
+
+```{r, echo=T, eval=T}
+# Visualize the clustering using ggplot2
+Kclustering$cluster <- as.factor(Kclustering$cluster)
+ggplot(iris, aes(Petal.Length, Petal.Width, color = Kclustering$cluster)) + geom_point()
+
+```
+
+## K nearest neighbours (1)
+
+```{r, echo=T, eval=T}
+# random sample a training dataset and a testing dataset
+set.seed(1)
+trainrows <- sample(1:nrow(iris), replace = F, size = 0.7*nrow(iris))
+train_iris <- iris[trainrows, 1:4]
+test_iris <- iris[-trainrows, 1:4]
+train_response <- iris[trainrows, 5]
+test_response <- iris[-trainrows, 5]
+
+```
+
+## K nearest neighbours (2)
+
+```{r, echo=T, eval=T}
+# Find the optimum number of neighbours
+error <- c()
+for (i in 1:15) {
+  knn.fit <- knn(train = train_iris, test = test_iris, cl = train_response, k = i)
+  error[i] = 1 - mean(knn.fit == test_response)
+}
+
+```
+
+## K nearest neighbours (3)
+
+```{r, echo=T, eval=T}
+ggplot(data = data.frame(error), aes(x = 1:15, y = error)) +
+  geom_line(color = "Blue")
+
+
+```
+
+## K nearest neighbours (4)
+
+```{r, echo=T, eval=T}
+# Calculate the prediction accuracy using the chosen K value
+set.seed(1)
+iris_pred <- knn(train = train_iris, test = test_iris, cl = train_response, k = 5)
+predicted_classification <- cbind(test_iris, iris_pred)
+true_classification <- cbind(test_iris, test_response)
+
+```
+
+## K nearest neighbours (6)
+
+```{r, echo=T, eval=T}
+# Visualize the clustering using ggplot2
+ggplot(predicted_classification, aes(x=Petal.Width, y=Petal.Length, color=iris_pred))+
+  geom_point(size=3)
+
+
+```
+
+## K nearest neighbours (6)
+
+```{r, echo=T, eval=T}
+# Visualize the clustering using ggplot2
+ggplot(true_classification, aes(x=Petal.Width, y=Petal.Length, color=test_response))+
+  geom_point(size=3)
+
+```
+
+## K nearest neighbours (7)
+
+```{r, echo=T, eval=T}
+# Need an extra challenge?
+
+# Try performing K nearest neighbours with cross-validation in R
+# Tip: caret-package
+```
+
+## Exercises (30 min)
+
+**Indicator species analysis**
+
+- Use the varespec dataset
+- Divide the species data in clusters
+- Find indicator species for each cluster
+  - **TIP**: indicspecies package
+
+## Indicator species analysis (1)
+
+```{r, echo=T, eval=T}
+species <- read.csv(file = "./data/varespec.csv",header=TRUE,row.names=1,sep=",")
+```
+
+## Indicator species analysis (2)
+
+```{r, echo=T, eval=T}
+A<-vector()
+B<-vector()
+
+#perform NMDS for 1, 2, 3 and 4 dimensions
+for (i in 1:4) {
+  NDMS<-metaMDS(species, distance = "bray",k=i, autotransform = FALSE, trymax=100 )
+  solution<-NDMS$converged
+  stress<-NDMS$stress
+  A1<-cbind(solution,stress)
+  j=i+1
+  B<-rbind(B,j-1)
+  A<-rbind(A,A1)
+}
+```
+
+## Indicator species analysis (3)
+
+```{r, echo=T, eval=T}
+NMDSoutput<-data.frame(B,A)
+names(NMDSoutput) <- c("k","Solution?","Stress")
+NMDSoutput
+
+```
+
+## Indicator species analysis (4)
+
+```{r, echo=T, eval=T}
+k<-4
+NMDSfinal<-metaMDS(species, distance = "bray",k=k, autotransform = FALSE, trymax=100)
+
+```
+
+## Indicator species analysis (5)
+
+```{r, echo=T, eval=T}
+# Find the optimum number of clusters (Total within-cluster Sums of Squares)
+set.seed(1)
+k.max <- 10
+wss <- c()
+for (i in 1:k.max) {
+  wss[i] <- kmeans(NMDSfinal$points, i, nstart = 20, iter.max = 20)$tot.withinss
+}
+
+```
+
+## Indicator species analysis (6)
+
+```{r, echo=T, eval=T}
+# Find the optimum number of clusters (Total within-cluster Sums of Squares)
+plot(1:k.max, wss , type= "b", xlab = "Number of clusters (k)", 
+            ylab = "Within cluster sum of squares")
+
+```
+
+## Indicator species analysis (6)
+
+```{r, echo=T, eval=T}
+# Find the optimum number of clusters (GAP method)
+set.seed(1)
+gap_stat <- clusGap(NMDSfinal$points, FUN = kmeans, nstart = 20, K.max = 10, B = 50)
+k <- maxSE(gap_stat$Tab[, "gap"], gap_stat$Tab[, "SE.sim"], method="Tibs2001SEmax")
+k
+
+```
+
+## Indicator species analysis (7)
+
+```{r, echo=T, eval=T}
+# Find the optimum number of clusters (GAP method)
+fviz_gap_stat(gap_stat)
+
+```
+
+## Indicator species analysis (8)
+
+```{r, echo=T, eval=T}
+# Perform a K means clustering of the iris dataset
+Kclustering <- kmeans(NMDSfinal$points, 3, nstart = 20)
+Kclustering$cluster
+
+```
+
+## Indicator species analysis (9)
+
+```{r, echo=T, eval=T}
+library(indicspecies)
+
+inv <- multipatt(species, Kclustering$cluster, func = "r.g", control = how(nperm=9999))
+
+```
+
+## Indicator species analysis (10)
+
+```{r, echo=T, eval=F}
+summary(inv)
+
+```
+
+## Indicator species analysis (11)
+
+```{r, echo=F, eval=T}
+summary(inv)
+
+```
