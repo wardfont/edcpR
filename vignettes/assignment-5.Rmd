@@ -29,8 +29,9 @@ data(GutterTor_sp, GutterTor_env, package = "edcpR")
 
 Please complete the following problems:
 
+- Only analyse relevant variables.
 - Perform an ordination on the vegetation data.
-- Classify the different plots into different clusters.
+- Classify the different plots into different clusters based on environmental characteristics.
 - Visualize the ordination. Add the different clusters on this ordination plot, together with the significant environmental variables.
 
 Remember:
