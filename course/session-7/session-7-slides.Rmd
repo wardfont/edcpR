@@ -106,7 +106,7 @@ cluster_single <- agnes(dis.eu,method = "single")
 cluster_complete <- agnes(dis.eu,method = "complete")
 cluster_ward <- agnes(dis.eu,method = "ward")
 cluster_average <- agnes(dis.eu,method = "weighted")
-cluster_flexible <- agnes(dis.eu,method = "flexible", par.method = 0.625)
+cluster_flexible <- agnes(dis.eu,method = "flexible", par.method = 0.625) # alpha 0.625 gives beta -0.25
 
 
 cluster_single <- as.hclust(cluster_single)
@@ -167,15 +167,16 @@ Recommendation:
 coph_ward <- cophenetic(cluster_ward)
 coph_average <- cophenetic(cluster_average)
 
+# Both score about the same
 cor(dis.eu, coph_ward)
 cor(dis.eu, coph_average)
-
 ```
 
 ## Hierarchical clustering (9)
 
 ```{r, echo=T, eval=T}
 # Find the optimum number of clusters (Total within-cluster Sums of Squares)
+
 set.seed(1)
 k.max <- 10
 wss <- sapply(1:k.max,
@@ -348,7 +349,6 @@ Need an extra challenge?
 library(vegan)
 data(varespec, package = "vegan")
 ```
-
 
 **Indicator species analysis**
 
