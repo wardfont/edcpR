@@ -266,6 +266,7 @@ Kclustering$cluster <- as.factor(Kclustering$cluster)
 ggplot(iris, aes(Petal.Length, Petal.Width, color = Kclustering$cluster)) + geom_point()
 
 ```
+
 ## Exercises (15 min)
 
 **K nearest neighbours**
