@@ -219,7 +219,7 @@ rect.hclust(cluster_ward , k = 3, border = 2:6)
 
 ```
 
-## Exercises (30 min)
+## Exercises (15 min)
 
 **K means**
 
@@ -228,13 +228,6 @@ rect.hclust(cluster_ward , k = 3, border = 2:6)
   - **TIP**: cluster package
 - Visualize the clustering using ggplot2
 
-**K nearest neighbours**
-
-- Cluster using all four variables
-- Split data into random training and random testing sets using a random 70%-30% split
-- Find the optimum number of neighbours
-  - **TIP**: class package
-- Visualize the clustering using ggplot2
 
 ## K means (1)
 
@@ -272,6 +265,15 @@ Kclustering$cluster <- as.factor(Kclustering$cluster)
 ggplot(iris, aes(Petal.Length, Petal.Width, color = Kclustering$cluster)) + geom_point()
 
 ```
+## Exercises (15 min)
+
+**K nearest neighbours**
+
+- Cluster using all four variables
+- Split data into random training and random testing sets using a random 70%-30% split
+- Find the optimum number of neighbours
+  - **TIP**: class package
+- Visualize the clustering using ggplot2
 
 ## K nearest neighbours (1)
 
