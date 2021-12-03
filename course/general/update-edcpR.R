@@ -23,7 +23,7 @@ vignette(package = "edcpR")
 
 # Open vingette in Rstudio, get the names from the overview produced by the commands above
 vignette("session-1")
-vignette("assignment-1")
+vignette("assignment-5")
 vignette("cheat-sheet")
 
 # Look at available data

@@ -2,7 +2,7 @@
 title: "Assignment 5"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{assignment-4}
+  %\VignetteIndexEntry{assignment-5}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
